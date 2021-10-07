@@ -31,6 +31,14 @@ route::get('/','loginController@index');
 route::post('/logins','loginController@login');
 route::get('/logouts','loginController@logout');
 
+route::get('/alumni/login','Alumni\Auth\AlumniLoginController@index')->name('login-alumni');
+route::post('/alumni/login', [ 'as' => 'login', 'uses' => 'LoginController@login']);
+route::post('/alumni/logins','Alumni\Auth\AlumniLoginController@login');
+route::get('/alumni/logouts','Alumni\Auth\AlumniLoginController@logout');
+route::get('/alumni/register','Alumni\Auth\AlumniRegisterController@index')->name('register');
+route::post('/alumni/registers','Alumni\Auth\AlumniRegisterController@regisAlumni')->name('regisAlumni');
+
+
 
 
 Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(){
@@ -217,6 +225,17 @@ Route::prefix('pimpinan')->group(function(){
     Route::get('/dashboard','dashboardpimpinanController@dashboard')->name('pimpinan-home');
 
 
+});
+
+Route::group(['prefix' => 'alumni',  'middleware' => 'AlumniMiddleware'],function(){
+    Route::get('/dashboard','Alumni\DashboardAlumniController@dashboard')->name('dashboard');
+    Route::get('/profile', 'Alumni\AuthAlumniController@profile')->name('alumni-profile-edit');
+    Route::post('/profile-update', 'Alumni\AuthAlumniController@updateProfile')->name('alumni-profile-update');
+    Route::post('/kuesioner', 'Alumni\Kuesioner\AlumniDetailKuesionerController@show');
+    Route::get('/prekuesioner', 'Alumni\Kuesioner\AlumniKuesionerController@show');
+    Route::post('/kuesioner/simpan', 'Alumni\Kuesioner\AlumniDetailKuesionerController@jawabKuesioner');
+    Route::get('/hasilKuesioner', 'Alumni\Kuesioner\AlumniDetailKuesionerController@hasilKuesioner');
+    Route::post('/hasilKuesioner/update/{id}', 'Alumni\Kuesioner\AlumniDetailKuesionerController@updateHasilKuesioner');
 });
 
 

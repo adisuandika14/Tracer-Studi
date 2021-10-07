@@ -50,6 +50,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'alumni' => [
+            'driver' => 'session',
+            'provider' => 'alumni',
+        ],
+        'api-alumni' => [
+            'driver' => 'token',
+            'provider' => 'alumni',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -76,7 +85,7 @@ return [
         ],
         'alumni' => [
             'driver' => 'eloquent',
-            'model' => App\tb_alumni::class,
+            'model' => App\Alumni::class,
         ],
 
         // 'users' => [
@@ -103,6 +112,13 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'alumni' => [
+            'provider' => 'alumni',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
