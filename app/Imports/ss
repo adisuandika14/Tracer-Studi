@@ -1,0 +1,88 @@
+<?php
+
+namespace App\Imports;
+
+use App\tb_alumni;
+use App\tb_angkatan;
+use App\tb_gender;
+use App\tb_prodi;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use App\Group;
+use App\User;
+use Maatwebsite\Excel\Row;
+use Maatwebsite\Excel\Concerns\OnEachRow;
+use Svg\Tag\Group as TagGroup;
+
+class AlumniImport implements OnEachRow
+{
+
+    private $prodi;
+    private $angkatan;
+    private $gender;
+
+    public function __construct()
+    {
+        $this->prodi = tb_prodi::select('id_prodi','nama_prodi')->get();
+        $this->angkatan = tb_angkatan::select('id_angkatan','tahun_angkatan')->get();
+        $this->gender = tb_gender::select('id_gender','gender')->get();
+    }
+
+    protected $fillable = [
+        'id_alumni','id_kota','id_prodi','id_angkatan','id_gender','email_alumni','nama_alumni','tahun_lulus','tahun_wisuda','alamat_alumni','no_hp','id_line','id_telegram',
+    ];
+
+
+
+    // public function model(array $row)
+    // {
+    //     // $prodi =  $this->prodi->where('nama_prodi', $row['nama_prodi'])->first(); 
+    //     // $angkatan =  $this->angkatan->where('tahun_angkatan', $row['tahun_angkatan'])->first(); 
+    //     // $gender =  $this->gender->where('gender', $row['gender'])->first(); 
+    //     return new tb_alumni([
+    //         'nama_alumni' => $row['nama_alumni'],
+    //         'gender' => $row['gender'],
+    //         'nim_alumni' => $row['nim_alumni'],
+    //         'tahun_angkatan' => $row['tahun_angkatan'],
+    //         'nama_prodi' => $row['nama_prodi'], 
+    //         'alamat_alumni' => $row['alamat_alumni'],
+    //         'tahun_lulus' => $row['tahun_lulus'],
+    //         'tahun_wisuda' => $row['tahun_wisuda'],
+    //         'no_hp' => $row['no_hp'],
+    //         'email_alumni' => $row['email_alumni'],
+    //     ]);
+    // }
+
+    public function onRow(Row $row)
+    {
+        $rowIndex = $row->getIndex();
+        $row      = $row->toArray();
+        
+        $group = tb_alumni::create([
+            'nama_alumni' => $row[1],
+            'id_gender' => $row[2],
+            'nim_alumni' => $row[3],
+            'id_angkatan' => $row[4],
+            'id_prodi' => $row[5], 
+            'alamat_alumni' => $row[6],
+            'tahun_lulus' => $row[7],
+            'tahun_wisuda' => $row[8],
+            'no_hp' => $row[9],
+            'email_alumni' => $row[10],
+        ]);
+    
+        $group->users()->create([
+            'nama_alumni' => $row['nama_alumni'],
+            'gender' => $row['gender'],
+            'nim_alumni' => $row['nim_alumni'],
+            'tahun_angkatan' => $row['tahun_angkatan'],
+            'nama_prodi' => $row['nama_prodi'], 
+            'alamat_alumni' => $row['alamat_alumni'],
+            'tahun_lulus' => $row['tahun_lulus'],
+            'tahun_wisuda' => $row['tahun_wisuda'],
+            'no_hp' => $row['no_hp'],
+            'email_alumni' => $row['email_alumni'],
+        ]);
+    }
+
+}
