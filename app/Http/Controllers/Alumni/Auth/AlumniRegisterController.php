@@ -62,16 +62,16 @@ class AlumniRegisterController extends Controller
             'alamat_alumni' => 'required',
             'email' => 'required|unique:tb_alumni',
             'password' => 'required|min:8',
-            'repeat_password' => 'required|min:8|same:password',
-            'nik' => 'required|max:16|unique:tb_alumni',
+            'repeat_password' => 'required|same:password',
+            'nik' => 'required|min:16|max:16|unique:tb_alumni',
             'id_telegram' => 'required|unique:tb_alumni',
             'id_line' => 'required|unique:tb_alumni',
             'no_hp' => 'required',
-            'file' => 'required|max:512',
+            'transkrip' => 'required|mimes:pdf|max:512',
         ],[
             'nama.required' => "Nama wajib diisi",
             'email.required' => "Email wajib diisi",
-            'prodi.required' => "Email wajib diisi",
+            'prodi.required' => "Program studi wajib dipilih",
             'gender.required' => "Jenis kelamin wajib dipilih",
             'angkatan.required' => "Angkatan wajib dipilih",
             'password.required' => "Password wajib diisi",
@@ -83,7 +83,7 @@ class AlumniRegisterController extends Controller
             'tahun_wisuda.required' => "Tahun wisuda wajib dipilih",
             'alamat_alumni.required' => "Alamat wajib diisi",
             'nim_alumni.required' => "NIM wajib diisi",
-            'file.required' => "Transkrip wajib dilampirkan",
+            'transkrip.required' => "Transkrip wajib dilampirkan",
             'no_hp.required' => "Nomor handphone wajib diisi",
 
             'email.unique' => "Email telah terdaftar",
@@ -91,6 +91,14 @@ class AlumniRegisterController extends Controller
             'nik.unique' => "NIK telah digunakan",
             'id_telegram.unique' => "ID Telegram telah digunakan",
             'id_line.unique' => "ID Line telah digunakan",
+
+            'nim.max' => "NIM maksimal 10 karakter",
+            'transkrip.max' => "Ukuran file lebih dari 500kb",
+            'transkrip.mimes' => "Hanya menerima file berekstensi pdf",
+            'nik.max' => "NIK terdiri dari 16 karakter",
+            'nik.min' => "NIK terdiri dari 16 karakter",
+            'password.min' => "Password minimal 8 karakter",
+            'repeat_password.same' => "Password tidak sama",
         ]);
 
         if($validator->fails()){

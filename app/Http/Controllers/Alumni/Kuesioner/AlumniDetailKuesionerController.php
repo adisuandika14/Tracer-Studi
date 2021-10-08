@@ -19,9 +19,9 @@ class AlumniDetailKuesionerController extends Controller
 
 
     public function show(Request $request){
-        $kuesioners = tb_detail_kuesioner::where('id_kuesioner', $request->jawabanRadio)->get();
+        $kuesioners = tb_detail_kuesioner::where('id_kuesioner', $request->jawabanRadio)
+            ->where('status', 'Konfirmasi')->get();
         $opsi = tb_opsi::get();
-        // dd($alumni);
         return view('/alumni/kuesioner', compact ('kuesioners','opsi'));
     }
 

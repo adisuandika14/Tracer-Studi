@@ -68,14 +68,6 @@
         text-align: center;
     }
 
-    /*input {*/
-    /*    padding: 10px;*/
-    /*    width: 100%;*/
-    /*    font-size: 17px;*/
-    /*    font-family: Raleway;*/
-    /*    border: 1px solid #aaaaaa;*/
-    /*}*/
-
     /* Mark input boxes that gets an error on validation: */
     input.invalid {
         background-color: #ffdddd;
@@ -215,7 +207,7 @@
                                             </div>
 
                                             <div class="form-group" >
-                                                <select name="gender" class="custom-select" id="prodi">
+                                                <select name="gender" class="custom-select" id="gender">
                                                     <option selected value="">-- Jenis Kelamin --</option>
                                                     <option value="Laki-Laki">Laki-Laki</option>
                                                     <option value="Perempuan">Perempuan</option>
@@ -254,8 +246,8 @@
                                             </div>
                                             <hr>
                                             <div class="form-group">
-                                                <label for="transkrip">Transkrip Nilai</label>
-                                                <input type="file" class="form-control-file" id="transkrip" name="transkrip" >
+                                                <label for="transkrip">Transkrip Nilai (Maks: 500kb)</label>
+                                                <input type="file" class="form-control-file" accept="application/pdf" id="transkrip" name="transkrip" >
                                             </div>
 
                                         </div>

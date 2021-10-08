@@ -31,13 +31,6 @@ route::get('/','loginController@index');
 route::post('/logins','loginController@login');
 route::get('/logouts','loginController@logout');
 
-route::get('/alumni/login','Alumni\Auth\AlumniLoginController@index')->name('login-alumni');
-route::post('/alumni/login', [ 'as' => 'login', 'uses' => 'LoginController@login']);
-route::post('/alumni/logins','Alumni\Auth\AlumniLoginController@login');
-route::get('/alumni/logouts','Alumni\Auth\AlumniLoginController@logout');
-route::get('/alumni/register','Alumni\Auth\AlumniRegisterController@index')->name('register');
-route::post('/alumni/registers','Alumni\Auth\AlumniRegisterController@regisAlumni')->name('regisAlumni');
-
 
 
 
@@ -48,10 +41,10 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
        Route::post('/profile-update', 'AuthAdminController@updateProfile')->name('pegawai-profile-update');
        Route::get('/password', 'AuthAdminController@password')->name('pegawai-password-edit');
        Route::post('/editpassword', 'AuthAdminController@editpassword')->name('pegawai-password-update');
-   
-   
 
-       
+
+
+
     // Route::get('/auth/profile', 'ProfileController@profile');
     // Route::post('/auth/profile/update','ProfileController@update');
     //Route::post('/auth/profile/upload','ProfileController@upload')->name("crop-image-upload");
@@ -95,7 +88,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/masterangkatan/update','angkatanController@update');
     Route::get('/masterangkatan/{id}/delete','angkatanController@delete');
 
-    
+
     //Master Prodi
     Route::get('/prodi','prodiController@show');
     Route::post('/masterprodi/create','prodiController@create');
@@ -118,7 +111,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     //Route::get('/kuesioner/showkuesioner/{id}','kuesionerController@detail')->name('show-kuesioner');
 
     //Route::get('/tracer','kuesionerController@showtracer');
-    
+
     //Detail Kuesioner
     Route::get('/kuesioner/showkuesioner/{id}','detailkuesionerController@detail')->name('show-kuesioner');
     Route::post('/kuesioner/showkuesioner/filter','detailkuesionerController@filter')->name('filter-kuesioner');
@@ -136,17 +129,17 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/kuesioner/stackholder/{id}/delete','stackholderkuesionerController@delete');
     //Route::get('/kuesioner/stackholder/showkuesioner/{id}','stackholderkuesionerController@detail')->name('stackholder-kuesioner');
     //Route::get('/tracer', 'stackholderkuesionerController@detailjawaban');
-    Route::get('/kuesioner/stackholder/showkuesioner/{id}/{status}', 'stackholderkuesionerController@status');  
+    Route::get('/kuesioner/stackholder/showkuesioner/{id}/{status}', 'stackholderkuesionerController@status');
     Route::post('/kuesioner/stackholder/showkuesioner/filter','stackholderkuesionerController@filter')->name('stackholder-filter');
-    
 
-        
+
+
 
     //tracer
     Route::get('/tracer', 'detailkuesionerController@tracer');
     Route::get('/tracer/{id}', 'detailkuesionerController@detailtracer');
     Route::post('/tracer/filter', 'detailkuesionerController@filtertracer');
-    
+
     //Master Pertanyaan
     Route::get('/pertanyaan','masterkuesionerController@show')->name('show-pertanyaan');
     Route::post('/pertanyaan/soal/create','masterkuesionerController@create');
@@ -183,7 +176,7 @@ Route::prefix('pimpinan')->group(function(){
     // route::get('/logouts','loginController@logout');
 
 
- 
+
     //Auth
     Route::get('/profile', 'AuthPimpinanController@profile')->name('admin-profile-edit');
     Route::post('/profile-update', 'AuthPimpinanController@updateProfile')->name('admin-profile-update');
@@ -199,7 +192,7 @@ Route::prefix('pimpinan')->group(function(){
     //Route::get('/alumni/{id}/edit','pimpinanalumniController@edit');
     Route::post('/alumni/update','pimpinanalumniController@update');
     Route::get('/alumni/{id}/delete','pimpinanalumniController@delete');
-    
+
 
 
     //Kuesioner
@@ -209,14 +202,14 @@ Route::prefix('pimpinan')->group(function(){
     Route::get('/kuesioner/{id}/delete','pimpinankuesionerController@delete');
     Route::get('/kuesioner/showkuesioner/{id}','pimpinankuesionerController@detail')->name('detail-kuesioner');
     Route::get('/tracer', 'pimpinankuesionerController@detailjawaban');
-    Route::get('/kuesioner/showkuesioner/{id}/{status}', 'pimpinankuesionerController@status');  
+    Route::get('/kuesioner/showkuesioner/{id}/{status}', 'pimpinankuesionerController@status');
     Route::post('/kuesioner/showkuesioner/filter','pimpinankuesionerController@filter')->name('filter-kuesioner');
 
 
     //Pengumuman
     Route::get('/pengumuman','pimpinanpengumumanController@show');
     Route::get('/pengumuman/showpengumuman/{id}', 'pimpinanpengumumanController@detail');
-    
+
 
     //lowongan
     Route::get('/lowongan','pimpinanlowonganController@show');
@@ -227,8 +220,26 @@ Route::prefix('pimpinan')->group(function(){
 
 });
 
-Route::group(['prefix' => 'alumni',  'middleware' => 'AlumniMiddleware'],function(){
-    Route::get('/dashboard','Alumni\DashboardAlumniController@dashboard')->name('dashboard');
+Route::group(['prefix' => 'alumni'],function(){
+    route::get('/login','Alumni\Auth\AlumniLoginController@index')->name('login-alumni');
+    route::post('/login', [ 'as' => 'login', 'uses' => 'LoginController@login']);
+    route::post('/logins','Alumni\Auth\AlumniLoginController@login');
+    route::get('/logouts','Alumni\Auth\AlumniLoginController@logout');
+    route::get('/register','Alumni\Auth\AlumniRegisterController@index')->name('register');
+    route::post('/registers','Alumni\Auth\AlumniRegisterController@regisAlumni')->name('regisAlumni');
+    Route::get('/dashboard','Alumni\DashboardAlumniController@dashboard')
+        ->middleware('AlumniMiddleware')
+        ->name('dashboard');
+    Route::get('/read-notif/{notifikasi_unique}', 'Alumni\DashboardAlumniController@bacaNotif')
+        ->middleware('AlumniMiddleware');
+    Route::get('/perbaikan', 'Alumni\AuthAlumniController@perbaikan')->name('alumni-perbaikan')
+        ->middleware('UnverifiedAlumniMiddleware');
+    Route::post('/perbaikan-update', 'Alumni\AuthAlumniController@perbaikanAlumni')->name('alumni-perbaikan-update')
+        ->middleware('UnverifiedAlumniMiddleware');
+});
+
+Route::group(['prefix' => 'alumni',  'middleware' => 'VerifiedAlumniMiddleware'],function(){
+
     Route::get('/profile', 'Alumni\AuthAlumniController@profile')->name('alumni-profile-edit');
     Route::post('/profile-update', 'Alumni\AuthAlumniController@updateProfile')->name('alumni-profile-update');
     Route::post('/kuesioner', 'Alumni\Kuesioner\AlumniDetailKuesionerController@show');
@@ -236,6 +247,7 @@ Route::group(['prefix' => 'alumni',  'middleware' => 'AlumniMiddleware'],functio
     Route::post('/kuesioner/simpan', 'Alumni\Kuesioner\AlumniDetailKuesionerController@jawabKuesioner');
     Route::get('/hasilKuesioner', 'Alumni\Kuesioner\AlumniDetailKuesionerController@hasilKuesioner');
     Route::post('/hasilKuesioner/update/{id}', 'Alumni\Kuesioner\AlumniDetailKuesionerController@updateHasilKuesioner');
+
 });
 
 

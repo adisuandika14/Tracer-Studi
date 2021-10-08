@@ -30,6 +30,7 @@
 </div>
 
 <!-- Nav Item - Pages Collapse Menu -->
+@if (Auth::user()->status == 'Konfirmasi')
 <div class="nav-item ">
     <li  class="@yield('active2')">
         <a class="nav-link" href="/alumni/profile">
@@ -46,7 +47,15 @@
             <span>Kuesioner</span></a>
     </li>
 </div>
-
+@else
+        <div class="nav-item">
+            <li class="@yield('active4')">
+                <a class="nav-link" href="/alumni/perbaikan">
+                    <i class="fas fa-fw fa-tasks"></i>
+                    <span>Perbaikan</span></a>
+            </li>
+        </div>
+@endif
 {{--<div class="nav-item">
     <li class="@yield('active8')">
         <a class="nav-link" href="/admin/tracer">

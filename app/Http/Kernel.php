@@ -65,5 +65,7 @@ class Kernel extends HttpKernel
         'ajax-session-expired' => \App\Http\Middleware\AjaxSessionExpiredMiddleware::class,
         'AdminMiddleware'=>\App\Http\Middleware\AdminMiddleware::class,
         'AlumniMiddleware'=>\App\Http\Middleware\AlumniMiddleware::class,
+        'VerifiedAlumniMiddleware'=>\App\Http\Middleware\VerifiedAlumniMiddleware::class,
+        'UnverifiedAlumniMiddleware'=>\App\Http\Middleware\UnverifiedAlumniMiddleware::class,
     ];
 }
