@@ -172,12 +172,9 @@
                                     <option selected value="">-- Pilih Program Studi --</option>
                                     @foreach ($prodi as $prodis)
                                         <option  value="{{$prodis->id_prodi}}"
-                                                 @isset($id_prodi)
-                                                 @if($prodis->id_prodi == $id_prodi)
+                                                 @if($prodis->id_prodi == auth()->guard()->user()->id_prodi)
                                                  selected
-                                            @endif
-                                            @endisset
-                                        >{{$prodis->nama_prodi}}
+                                            @endif>{{$prodis->nama_prodi}}
                                         </option>
                                     @endforeach
                                 </select>
@@ -199,8 +196,8 @@
                                 <label class="small mb-1" for="inputUsername">Jenis Kelamin</label>
                                 <select name="gender" class="custom-select" id="gender">
                                     <option selected value="">-- Jenis Kelamin --</option>
-                                    <option value="Laki-Laki">Laki-Laki</option>
-                                    <option value="Perempuan">Perempuan</option>
+                                    <option value="Laki-Laki" @if(auth()->guard()->user()->jenis_kelamin=='Laki-Laki') selected @endif>Laki-Laki</option>
+                                    <option value="Perempuan" @if(auth()->guard()->user()->jenis_kelamin=='Perempuan') selected @endif>Perempuan</option>
                                 </select>
                             </div>
                         </div>
@@ -211,11 +208,9 @@
                                     <option selected value="">-- Pilih Tahun Angkatan --</option>
                                     @foreach ($angkatan as $angkatans)
                                         <option value="{{ $angkatans->id_angkatan }}"
-                                                @isset($id_angkatan)
-                                                @if($angkatans->id_angkatan == $id_angkatan)
-                                                selected
+                                            @if($angkatans->id_angkatan == auth()->guard()->user()->id_angkatan)
+                                            selected
                                             @endif
-                                            @endisset
                                         >{{$angkatans->tahun_angkatan}}
                                         </option>
                                     @endforeach
@@ -238,7 +233,16 @@
 
                             <div class="form-group">
                                 <label for="transkrip">Transkrip Nilai (Maks: 500kb)</label>
-                                <input type="file" class="form-control-file" accept="application/pdf" id="transkrip" name="transkrip" >
+                                <div class="custom-file">
+                                    <input value="{{auth()->guard()->user()->transkrip}}" type="file" class="custom-file-input" accept="application/pdf" id="transkrip" name="transkrip">
+                                    <label for="lampiran_label" id="lampiran_label" class="custom-file-label">
+                                        @if(auth()->guard()->user()->transkrip_name != NULL)
+                                            {{auth()->guard()->user()->transkrip_name}}
+                                        @else
+                                            Pilih Transkrip
+                                        @endif
+                                    </label>
+                                </div>
                             </div>
 
                         </div>
@@ -438,7 +442,7 @@
             // A loop that checks every input field in the current tab:
             for (i = 0; i < y.length; i++) {
                 // If a field is empty...
-                if (y[i].value == "") {
+                if (y[i].value == "" && y[i].id != "transkrip") {
                     // add an "invalid" class to the field:
                     y[i].className += " invalid";
                     // and set the current valid status to false
