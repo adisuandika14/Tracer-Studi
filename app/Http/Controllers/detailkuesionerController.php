@@ -63,6 +63,15 @@ class detailkuesionerController extends Controller
             $detail_kuesioner->save();
         }
 
+        if($request->id_jenis ==  4){
+            $detail_kuesioner->id_kuesioner = $request->id_kuesioner;
+            $detail_kuesioner->id_periode = $request->id_periode;
+            $detail_kuesioner->id_jenis = 4;
+            $detail_kuesioner->pertanyaan = $request->pertanyaan;
+            $detail_kuesioner->status = "Menunggu Konfirmasi";
+            $detail_kuesioner->save();
+        }
+
         if($request->id_jenis == 1 || $request->id_jenis == 3){
             $detail_kuesioner->id_periode = $request->id_periode;
             $detail_kuesioner->id_kuesioner = $request->id_kuesioner;

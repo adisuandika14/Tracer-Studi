@@ -368,6 +368,8 @@
 
 @section('custom_javascript')
 <script>
+  //Default periode
+  $('#id_prodi').val({{$id_prodi}});
   //DeleteOpsi
   function deleteOpsi(opsi){
     $('#'+opsi).hide();
@@ -403,7 +405,7 @@ $('#prodi').change(function(){
     $("#loadingEdit").show();
     $('#update').modal('show');
     jQuery.ajax({
-      url: "/admin/kuesioner/soal/"+id+"/edit",
+      url: "/admin/kuesioner/stakeholder/"+id+"/edit",
       method: 'get',
       success: function(result){
         let opsi = 1;
@@ -411,7 +413,7 @@ $('#prodi').change(function(){
         console.log(result);
             $("#edit_id_jenis").val(result.detail_kuesioner['id_jenis']);
             $("#edit_pertanyaan").val(result.detail_kuesioner['pertanyaan']);
-            $("#edit-pertanyaan-form").attr("action", "/admin/kuesioner/soal/"+result.detail_kuesioner['id_detail_kuesioner']+"/update");
+            $("#edit-pertanyaan-form").attr("action", "/admin/kuesioner/stakeholder/"+result.detail_kuesioner['id_kuesioner_stackholder']+"/update");
             if(result.detail_kuesioner['id_jenis'] == 1 || result.detail_kuesioner['id_jenis'] == 3){
               $("#edit_opsi1").prop('required',true);
               $("#edit_opsi2").prop('required',true);

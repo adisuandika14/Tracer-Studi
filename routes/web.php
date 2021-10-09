@@ -126,11 +126,11 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
  
 
     //Kuesioner Stackholder
-    Route::get('/kuesioner/stackholder/{id}/edit', 'stackholderkuesionerController@edit');
+    Route::get('/kuesioner/stakeholder/{id}/edit', 'stackholderkuesionerController@edit');
     Route::get('/kuesioner/stackholder','stackholderkuesionerController@detail')->name('stackholder-kuesioner-show');
     Route::post('/kuesioner/stackholder/create','stackholderkuesionerController@create');
-    Route::post('/kuesioner/stackholder/update','stackholderkuesionerController@update');
-    Route::get('/kuesioner/stackholder/{id}/delete','stackholderkuesionerController@delete');
+    Route::post('/kuesioner/stakeholder/{id}/update','stackholderkuesionerController@update');
+    Route::delete('/kuesioner/stackholder/{id}/delete','stackholderkuesionerController@delete');
     //Route::get('/kuesioner/stackholder/showkuesioner/{id}','stackholderkuesionerController@detail')->name('stackholder-kuesioner');
     //Route::get('/tracer', 'stackholderkuesionerController@detailjawaban');
     Route::get('/kuesioner/stackholder/showkuesioner/{id}/{status}', 'stackholderkuesionerController@status');

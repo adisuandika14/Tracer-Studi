@@ -119,14 +119,7 @@
                     </option>
                 @endforeach
             </select>
-              <label class="switch" style="margin-left: 10px; padding: 4px;">
-                  @if($status->status == "Aktif")
-                    <input type="checkbox" id="status_{{$status->id_periode}}" onclick="statusBtn({{$status->id_periode}})" checked>
-                  @else
-                    <input type="checkbox" id="status_{{$status->id_periode}}" onclick="statusBtn({{$status->id_periode}})">
-                  @endif
-                <span class="slider round"></span>
-              </label>
+              
             
 
             <button class="btn btn-success btn-sm mt-3" data-toggle="modal" data-target="#create"><i
@@ -182,7 +175,7 @@
                                         </label>
                                       </div>
                                       @endif
-                                      @if($detailss->id_jenis == 2)
+                                      @if($detailss->id_jenis == 2 || $detailss->id_jenis == 4)
                                       <div class="form-group" style="display: none;">
                                         <input type="text" class="form-control"  placeholder="Text Jawaban Singkat">
                                       </div>
@@ -258,10 +251,11 @@
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="id_jenis" id="kuesioner" class="custom-select" required>
-                                        <option value="">-- Pilih Jenis Kuesioner --</option>
-                                        @foreach($kuesioner as $kuesioners)
-                                        <option value="{{$kuesioners->id_jenis}}">{{$kuesioners->jenis}}</option>
-                                        @endforeach
+                                      <option value="">-- Pilih Jenis Kuesioner --</option>
+                                      <option value="1">Pilihan Ganda</option>
+                                      <option value="2">Jawaban Singkat</option>
+                                      <option value="3">Checkbox</option>
+                                      <option value="4">Tanggal</option>
                                     </select>
                       </div>
                       <div class="form-group">
@@ -367,10 +361,11 @@
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="edit_id_jenis" id="edit_id_jenis" class="custom-select" required>
-                                        <option value="">-- Pilih Jenis Kuesioner --</option>
-                                        @foreach($kuesioner as $kuesioners)
-                                        <option value="{{$kuesioners->id_jenis}}">{{$kuesioners->jenis}}</option>
-                                        @endforeach
+                                      <option value="">-- Pilih Jenis Kuesioner --</option>
+                                      <option value="1">Pilihan Ganda</option>
+                                      <option value="2">Jawaban Singkat</option>
+                                      <option value="3">Checkbox</option>
+                                      <option value="4">Tanggal</option>
                                     </select>
                       </div>
                       <div class="form-group">
@@ -455,6 +450,8 @@
 
 @section('custom_javascript')
 <script>
+  //Default periode
+  $('#id_periode').val({{$id_periode}});
   //DeleteOpsi
   function deleteOpsi(opsi){
     $('#'+opsi).hide();
@@ -526,7 +523,7 @@ $('#periode').change(function(){
                       $("#edit_btnTambahOpsi").show();
                     }
                   });
-                }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
+                }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
                   $("#edit_opsi1").prop('required',false);
                   $("#edit_opsi2").prop('required',false);
                   for(let i = 1; i<=11; i++){
@@ -535,7 +532,7 @@ $('#periode').change(function(){
                   $('#edit_btnTambahOpsi').fadeOut();
                 }
               });
-            }else if(result.detail_kuesioner['id_jenis'] == 2){
+            }else if(result.detail_kuesioner['id_jenis'] == 2 || $('#edit_id_jenis').val() == 4){
               $('#edit_id_jenis').change(function() {
               if($('#edit_id_jenis').val() == 1){
                 $("#edit_opsi1").prop('required',true);
@@ -546,7 +543,7 @@ $('#periode').change(function(){
                   $("#eedit_opsi1").prop('required',true);
                   $("#eedit_opsi2").prop('required',true);
                   $('#edit_btnTambahOpsi').fadeIn();
-              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
+              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
                 $("#edit_opsi1").prop('required',false);
                 $("#edit_opsi2").prop('required',false);
                 for(let i = 1; i<=11; i++){
@@ -569,7 +566,7 @@ $('#periode').change(function(){
                     $("#edit_btnTambahOpsi").show();
                   }
                 });
-              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
+              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
                 $("#edit_opsi1").prop('required',false);
                 $("#edit_opsi2").prop('required',false);
                 for(let i = 1; i<=11; i++){
@@ -601,7 +598,7 @@ $('#periode').change(function(){
           $("#oopsi1").prop('required',true);
           $("#oopsi2").prop('required',true);
           $('#btnTambahOpsi').fadeIn();
-        }else if($('#kuesioner').val() == 2 || $('#kuesioner').val() == ""){
+        }else if($('#kuesioner').val() == 2 || $('#kuesioner').val() == 4){
           $("#oopsi1").prop('required',false);
           $("#oopsi2").prop('required',false);
           for(let i = 1; i<=11; i++){

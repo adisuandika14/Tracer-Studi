@@ -202,6 +202,7 @@ class alumniController extends Controller
             $status = new tb_notifikasi();
             $status->id_alumni = $request->id_alumni;
             $status->notifikasi = $request->notifikasi;
+            $status->notifikasi_unique = Str::random(32);
             $status->flag = '0';
             $status->save();
         }

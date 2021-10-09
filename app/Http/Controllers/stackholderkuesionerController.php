@@ -29,7 +29,7 @@ class stackholderkuesionerController extends Controller
     {
         $detail = tb_kuesioner_stackholder::where('id_prodi', $request->id_prodi)->get();
         $opsi =tb_opsi_stackholder::get();
-        $hasil = view('kuesioner.filter', ['detail' => $detail, 'opsi' => $opsi])->render();
+        $hasil = view('kuesioner.stackholder.filter', ['detail' => $detail, 'opsi' => $opsi])->render();
         // $hasil = $kategori;
         return response()->json(['success' => 'Produk difilter', 'hasil' => $hasil]);
     }
@@ -150,7 +150,7 @@ class stackholderkuesionerController extends Controller
     {
         $kuesioner_stackholder = tb_kuesioner_stackholder::find($id);
         $opsis = tb_opsi_stackholder::where('id_kuesioner_stackholder', $kuesioner_stackholder->id_kuesioner_stackholder)->get();
-        return response()->json(['success' => 'Berhasil', 'kuesioner_stackholder' => $kuesioner_stackholder, 'opsis' => $opsis]);
+        return response()->json(['success' => 'Berhasil', 'detail_kuesioner' => $kuesioner_stackholder, 'opsis' => $opsis]);
     }
 
     public function update($id, Request $request){
@@ -175,14 +175,14 @@ class stackholderkuesionerController extends Controller
         }
 
         if($request->edit_id_jenis ==  2){
-            $kuesioner_stackholder->id_periode = $request->id_periode;
+            $kuesioner_stackholder->id_prodi = $request->id_prodi;
             $kuesioner_stackholder->id_jenis = 2;
             $kuesioner_stackholder->pertanyaan = $request->edit_pertanyaan;
             $kuesioner_stackholder->update();
         }
 
         if($request->edit_id_jenis == 1 || $request->edit_id_jenis == 3){
-            $kuesioner_stackholder->id_periode = $request->id_periode;
+            $kuesioner_stackholder->id_prodi = $request->id_prodi;
             $kuesioner_stackholder->id_jenis = 1;
             $kuesioner_stackholder->pertanyaan = $request->edit_pertanyaan;
             $kuesioner_stackholder->update();
