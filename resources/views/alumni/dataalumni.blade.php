@@ -199,7 +199,7 @@
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Email</label>
                                             <input type="email" class="form-control" id="email_alumni" name="email_alumni"
-                                                value="{{$datass->email_alumni}}" readonly>
+                                                value="{{$datass->email}}" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Jenis Kelamin</label>
@@ -502,7 +502,7 @@
                   <div class="form-group">
                       <label class="font-weight-bold text-dark">Email</label>
                       <input type="email" class="form-control" id="email_alumni" name="email_alumni"
-                          value="{{$status->email_alumni}}" readonly>
+                          value="{{$status->email}}" readonly>
                   </div>
                   <div class="form-group">
                       <label class="font-weight-bold text-dark">Jenis Kelamin</label>
@@ -619,7 +619,6 @@
 
 // <!-- FIle SHow & Hide -->
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
-<script type="text/javascript">
 
 $('#myFile').each(function(){
   if ($(this).attr("href") == "") 
@@ -627,7 +626,6 @@ $('#myFile').each(function(){
   else
       $(this).show();
 });
-</script>
 <style>
 .hide {display:none !important;}
 .show {display:block !important;}

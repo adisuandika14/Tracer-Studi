@@ -101,6 +101,9 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/masterperiode/create','periodeController@create');
     Route::post('/masterperiode/update','periodeController@update');
     Route::get('/masterperiode/{id}/delete','periodeController@delete');
+    
+   
+
 
 
     //Kuesioner
@@ -119,7 +122,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::delete('/kuesioner/soal/{id}/delete', 'detailkuesionerController@delete');
     Route::get('/kuesioner/soal/{id}/edit', 'detailkuesionerController@edit');
     Route::post('/kuesioner/soal/{id}/update','detailkuesionerController@update');
-
+    Route::get('/kuesioner/showkuesioner/{id}/{status}', 'detailkuesionerController@status');
+ 
 
     //Kuesioner Stackholder
     Route::get('/kuesioner/stackholder/{id}/edit', 'stackholderkuesionerController@edit');

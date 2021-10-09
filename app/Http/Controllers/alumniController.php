@@ -163,24 +163,22 @@ class alumniController extends Controller
                     }
                 }
 
-                
-                tb_alumni::create([
-                    'nama_alumni' => $rows[$count][$hitung]['nama_alumni'],
-                    'nik' => $rows[$count][$hitung]['nik'],
-                    'jenis_kelamin' => $rows[$count][$hitung]['jenis_kelamin'],
-                    'nim_alumni' => $rows[$count][$hitung]['nim_alumni'],
-                    'id_angkatan' => $id_angkatan,
-                    'id_prodi' => $id_prodi, 
-                    'alamat_alumni' => $rows[$count][$hitung]['alamat_alumni'],
-                    'tahun_lulus' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_lulus'])->format('Y-m-d') ,
-                    'tahun_wisuda' =>  \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_wisuda'])->format('Y-m-d') ,
-                    'no_hp' => $rows[$count][$hitung]['no_hp'],
-                    'email' => $rows[$count][$hitung]['email'],
-                    'id_telegram' => $rows[$count][$hitung]['id_telegram'],
-                    'id_line' => $rows[$count][$hitung]['id_line'],
-                    $status = "Menunggu Konfirmasi",
-                    'status' => $status,
-                ]);
+                $alumni = New tb_alumni();
+                $alumni->nama_alumni = $rows[$count][$hitung]['nama_alumni'];
+                $alumni->nik = $rows[$count][$hitung]['nik'];
+                $alumni->jenis_kelamin = $rows[$count][$hitung]['jenis_kelamin'];
+                $alumni->nim_alumni = $rows[$count][$hitung]['nim_alumni'];
+                $alumni->id_angkatan = $id_angkatan;
+                $alumni->id_prodi = $id_prodi;
+                $alumni->alamat_alumni = $rows[$count][$hitung]['alamat_alumni'];
+                $alumni->tahun_lulus = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_lulus'])->format('Y-m-d');
+                $alumni->tahun_wisuda = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_wisuda'])->format('Y-m-d');
+                $alumni->no_hp = $rows[$count][$hitung]['no_hp'];
+                $alumni->email = $rows[$count][$hitung]['email'];
+                $alumni->id_telegram = $rows[$count][$hitung]['id_telegram'];
+                $alumni->id_line = $rows[$count][$hitung]['id_line'];
+                $alumni->status = "Menunggu Konfirmasi";
+                $alumni->save();
             }
         }
 	    return redirect('/admin/alumni')->with('statusInput', 'Data Berhasil Diimport');

@@ -19,9 +19,27 @@
                         <!-- <input type="text" class="form-control"  id="essay" name= "jawaban" value="" placeholder="Text Jawaban Singkat"> -->
                         @foreach ($opsi as $opsis)
                           @if($detailss->id_detail_kuesioner == $opsis->id_detail_kuesioner)
-                            <ul class="list-group mb-1">
-                              <li class="list-group-item">{{$opsis->opsi}}</li>
-                            </ul>
+                              @if($detailss->id_jenis == 3)
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                {{$opsis->opsi}}
+                                </label>
+                              </div>
+                              @endif
+                              @if($detailss->id_jenis == 1)
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                {{$opsis->opsi}}
+                                </label>
+                              </div>
+                              @endif
+                              @if($detailss->id_jenis == 2)
+                              <div class="form-group" style="display: none;">
+                                <input type="text" class="form-control"  placeholder="Text Jawaban Singkat">
+                              </div>
+                            @endif
                           @endif
                         @endforeach
                     </div>

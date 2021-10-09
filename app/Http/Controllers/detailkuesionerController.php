@@ -17,13 +17,6 @@ use App\tb_periode;
 
 class detailkuesionerController extends Controller
 {
-    // public function show(){
-    //     $detail = tb_detail_kuesioner::all();
-    //     $kuesioner = tb_kuesioner::all();
-    //     $jenis = tb_jenis_kuesioner::all();
-    //     $opsi = tb_opsi::all();
-    //         return view('/kuesioner/showkuesioner', compact ('detail','kuesioner','opsi','jenis'));
-    //     }
 
     public function detail($id)
     {
@@ -33,10 +26,11 @@ class detailkuesionerController extends Controller
         $kuesioner = tb_jenis_kuesioner::get();
         $opsi =tb_opsi::get();
         
+        $status = ['Aktif','Tidak Aktif'];
         $detail = tb_detail_kuesioner::where('id_kuesioner', $id)->where('id_periode', $id_periode)->get();
         $id_kuesioner = $id;
         //dd($detail);
-        return view('/kuesioner/showkuesioner', compact('detail','kuesioner','opsi', 'id_kuesioner', 'judul_kuesioner', 'periodes', 'id_periode'));
+        return view('/kuesioner/showkuesioner', compact('detail','kuesioner','opsi', 'id_kuesioner', 'judul_kuesioner', 'periodes', 'id_periode','status'));
     }
 
     public function filter(Request $request)
@@ -330,5 +324,13 @@ class detailkuesionerController extends Controller
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::get();
         return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan'));
+    }
+
+    public function status($id, $status)
+    {
+        $detail = tb_periode::where('id_periode', $id)->first();
+        $detail->status = $status;
+        $detail->update();
+        return response()->json(['statusInput' => 'berhasil terganti']);
     }
 }

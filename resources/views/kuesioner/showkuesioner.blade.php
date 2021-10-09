@@ -4,6 +4,75 @@
 @section('active3')
       nav-item active
 @endsection
+
+
+<style>
+  /* The switch - the box around the slider */
+  .switch {
+   position: relative;
+   display: inline-block;
+   width: 60px;
+   height: 34px;
+ }
+ 
+ /* Hide default HTML checkbox */
+ .switch input {
+   opacity: 0;
+   width: 0;
+   height: 0;
+ }
+ 
+ /* The slider */
+ .slider {
+   position: absolute;
+   cursor: pointer;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: #ccc;
+   -webkit-transition: .4s;
+   transition: .4s;
+ }
+ 
+ .slider:before {
+   position: absolute;
+   content: "";
+   height: 26px;
+   width: 26px;
+   left: 4px;
+   bottom: 4px;
+   background-color: white;
+   -webkit-transition: .4s;
+   transition: .4s;
+ }
+ 
+ input:checked + .slider {
+   background-color: #2196F3;
+ }
+ 
+ input:focus + .slider {
+   box-shadow: 0 0 1px #2196F3;
+ }
+ 
+ input:checked + .slider:before {
+   -webkit-transform: translateX(26px);
+   -ms-transform: translateX(26px);
+   transform: translateX(26px);
+ }
+ 
+ /* Rounded sliders */
+ .slider.round {
+   border-radius: 34px;
+ }
+ 
+ .slider.round:before {
+   border-radius: 50%;
+ } 
+ </style>
+
+
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 <h1 class="h3 mb-4 text-gray-800">{{$judul_kuesioner}}</h1>
@@ -45,11 +114,21 @@
           <label class=" font-weight-bold text-grey">Periode Kuesioner</label>
             <select name="prodi" class="custom-select text-center" style="width:150px; " id="periode">
                 <option selected value="">-- Pilih Periode Kuesioner --</option>
-                @foreach ($periodes as $periode)
-                    <option  value="{{$periode->id_periode}}" @if($periode->id_periode == $id_periode) selected @endif>{{ $periode->periode }}
+                @foreach ($periodes as $periode => $status)
+                    <option  value="{{$status->id_periode}}" @if($status->id_periode == $id_periode) selected @endif>{{ $status->periode }}
                     </option>
                 @endforeach
             </select>
+              <label class="switch" style="margin-left: 10px; padding: 4px;">
+                  @if($status->status == "Aktif")
+                    <input type="checkbox" id="status_{{$status->id_periode}}" onclick="statusBtn({{$status->id_periode}})" checked>
+                  @else
+                    <input type="checkbox" id="status_{{$status->id_periode}}" onclick="statusBtn({{$status->id_periode}})">
+                  @endif
+                <span class="slider round"></span>
+              </label>
+            
+
             <button class="btn btn-success btn-sm mt-3" data-toggle="modal" data-target="#create"><i
               class="fas fa-plus"></i> Tambah Sub Pertanyaaan
             </button>
@@ -94,14 +173,16 @@
                                         {{$opsis->opsi}}
                                         </label>
                                       </div>
-                                      @elseif($detailss->id_jenis == 1)
+                                      @endif
+                                      @if($detailss->id_jenis == 1)
                                       <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                         <label class="form-check-label" for="flexRadioDefault1">
                                         {{$opsis->opsi}}
                                         </label>
                                       </div>
-                                      @else
+                                      @endif
+                                      @if($detailss->id_jenis == 2)
                                       <div class="form-group" style="display: none;">
                                         <input type="text" class="form-control"  placeholder="Text Jawaban Singkat">
                                       </div>
@@ -556,6 +637,48 @@ $('#periode').change(function(){
           $('#btnTambahOpsi').fadeOut();
         }
     });
+
+//Switch Status Pengumuman
+function statusBtn(id) {
+    var checkBox = document.getElementById("status_"+id);
+    // If the checkbox is checked, display the output text
+    if (checkBox.checked == true){
+      swal({
+          title: 'Anda yakin ingin menerima kuesioner ini?',
+          icon: 'warning',
+          buttons: ["Tidak", "Ya"],
+      }).then(function(value) { 
+          if (value) {
+            jQuery.ajax({  
+              url: "/admin/kuesioner/showkuesioner/"+id+"/Aktif",
+              type: "GET",
+              success: function(result){
+              }
+          });
+        }else{
+          document.getElementById("status_"+id).checked = false;
+        }
+      });
+    } else {
+      swal({
+          title: 'Anda yakin ingin menolak kuesioner ini?',
+          icon: 'warning',
+          buttons: ["Tidak", "Ya"],
+      }).then(function(value) {
+          if (value) {
+            jQuery.ajax({
+              url: "/admin/kuesioner/showkuesioner/"+id+"/Tidak Aktif",
+              type: "GET",
+              success: function(result){
+              }
+          });
+        }else{  
+          document.getElementById("status_"+id_periode).checked = true;
+        }
+      });
+    }
+  }
+  $('#sidebarPengumuman').addClass("active");
 
   </script>
 @endsection
