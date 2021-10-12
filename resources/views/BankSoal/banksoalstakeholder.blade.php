@@ -1,82 +1,15 @@
 @extends('layoutadmin.layout')
 @section('title', 'Detail Kuesioner')
 @section('content')
-@section('active3')
+@section('active10')
+      nav-item active
+@endsection
+@section('collapse3')
       nav-item active
 @endsection
 
-
-<style>
-  /* The switch - the box around the slider */
-  .switch {
-   position: relative;
-   display: inline-block;
-   width: 60px;
-   height: 34px;
- }
- 
- /* Hide default HTML checkbox */
- .switch input {
-   opacity: 0;
-   width: 0;
-   height: 0;
- }
- 
- /* The slider */
- .slider {
-   position: absolute;
-   cursor: pointer;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
-   background-color: #ccc;
-   -webkit-transition: .4s;
-   transition: .4s;
- }
- 
- .slider:before {
-   position: absolute;
-   content: "";
-   height: 26px;
-   width: 26px;
-   left: 4px;
-   bottom: 4px;
-   background-color: white;
-   -webkit-transition: .4s;
-   transition: .4s;
- }
- 
- input:checked + .slider {
-   background-color: #2196F3;
- }
- 
- input:focus + .slider {
-   box-shadow: 0 0 1px #2196F3;
- }
- 
- input:checked + .slider:before {
-   -webkit-transform: translateX(26px);
-   -ms-transform: translateX(26px);
-   transform: translateX(26px);
- }
- 
- /* Rounded sliders */
- .slider.round {
-   border-radius: 34px;
- }
- 
- .slider.round:before {
-   border-radius: 50%;
- } 
- </style>
-
-
-
 <!-- Begin Page Content -->
 <div class="container-fluid">
-<h1 class="h4 mb-1 text-gray-800">{{$tahun_kuesioner}} - {{$periode_kuesioner}}</h1>
-<h1 class="h5 mb-4 text-gray-800">{{$judul_kuesioner}}</h1>
     @if (session()->has('statusInput'))
       <div class="row">
         <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
@@ -108,44 +41,35 @@
 
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Data Sub Pertanyaan</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Data Bank Soal Alumni</h6>
+    </div>
+    <div class="card-body">
+      <div class="form-group" style="width: 250px;">
+        <button class="btn btn-success btn-sm mt-3" data-toggle="modal" data-target="#create"><i
+          class="fas fa-plus"></i> Tambah Sub Pertanyaaan
+        </button>
     </div>
         <div class="card-body">
-          <div class="form-group" style="width: 250px;">
-          <div class="dropdown mt-4">
-            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Tambah Pertanyaan
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <button class="dropdown-item" data-toggle="modal" data-target="#create"><i class="fas fa-plus"></i> Tambah Pertanyaan Baru</button>
-              <a class="dropdown-item" href="#"><i class="fas fa-university"></i> Pilih dari Bank Soal</a>
-            </div>
-          </div>
-        </div>
-        {{-- SPINNER --}}
-        <div class="ganti" id="ganti">
+        <div class="switch" id="switch">
             <div class="table-responsive">
             <div class="container-fluid mt-4" style="align-content: center;">
                 <div class="form-group" >
                     <div class="form-group">
-                      @if($detail->isEmpty())
+                      @if($soal->isEmpty())
                       <div class="text-center">
                           Tidak ada data
                       </div>
                       @endif
-                        @foreach($detail as $detailss)
+                        @foreach($soal as $soalss)
                         <div class="card shadow mb-4">
-                            <!-- <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">{{$detailss->type_kuesioner}}</h6>
-                            </div> -->
-                            <div class="card-body">
-                              @if($detailss->id_detail_kuesioner == $detailss->id_detail_kuesioner)
-                                <p> {{ $loop->iteration }}. {{$detailss->pertanyaan}}</p>
+                            <div class="card-body" name="card" id="card">
+                              @if($soalss->id_bank_soal == $soalss->id_bank_soal)
+                                <p> {{ $loop->iteration }}. {{$soalss->pertanyaan}}</p>
                               @endif
                                 <!-- <input type="text" class="form-control"  id="essay" name= "jawaban" value="" placeholder="Text Jawaban Singkat"> -->
                                 @foreach ($opsi as $opsis)
-                                  @if($detailss->id_detail_kuesioner == $opsis->id_detail_kuesioner)
-                                    @if($detailss->id_jenis == 3)
+                                  @if($soalss->id_bank_soal == $opsis->id_bank_soal)
+                                    @if($soalss->id_jenis == 3)
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
@@ -153,7 +77,7 @@
                                         </label>
                                       </div>
                                       @endif
-                                      @if($detailss->id_jenis == 1)
+                                      @if($soalss->id_jenis == 1)
                                       <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                         <label class="form-check-label" for="flexRadioDefault1">
@@ -161,7 +85,7 @@
                                         </label>
                                       </div>
                                       @endif
-                                      @if($detailss->id_jenis == 2 || $detailss->id_jenis == 4)
+                                      @if($soalss->id_jenis == 2 || $soalss->id_jenis == 4)
                                       <div class="form-group" style="display: none;">
                                         <input type="text" class="form-control"  placeholder="Text Jawaban Singkat">
                                       </div>
@@ -171,10 +95,10 @@
                             </div>
                             <div class="modal-footer">
                                 <!-- Edit -->
-                                <button class="btn btn-primary btn-sm" onclick="edit({{$detailss->id_detail_kuesioner}})"><i class="fas fa-edit"></i>
+                                <button class="btn btn-primary btn-sm" onclick="edit({{$soalss->id_bank_soal}})"><i class="fas fa-edit"></i>
                                 </button> 
                                 <!--Delete -->
-                                <button class="btn btn-danger btn-sm" onclick="deletebc({{$detailss->id_detail_kuesioner}})"><i class="fas fa-trash"></i>
+                                <button class="btn btn-danger btn-sm" onclick="deletebc({{$soalss->id_bank_soal}})"><i class="fas fa-trash"></i>
                                 </button>
 		                        </div>
                         </div>
@@ -230,18 +154,16 @@
 
 
 	                <div class="modal-body">
-	      	          <form action="/admin/kuesioner/soal/create" method="POST">
+	      	          <form action="/admin/banksoal/alumni/create" method="POST">
                       {{csrf_field()}}
-                      <input type="text" class="form-control" id="id_kuesioner" name="id_kuesioner" value="{{$id_kuesioner}}" hidden>
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
-                                    <select name="id_jenis" id="kuesioner" class="custom-select" required>
-                                      <option value="">-- Pilih Jenis Kuesioner --</option>
-                                      <option value="1">Pilihan Ganda</option>
-                                      <option value="2">Jawaban Singkat</option>
-                                      <option value="3">Checkbox</option>
-                                      <option value="4">Tanggal</option>
-                                    </select>
+                            <select name="id_jenis" id="kuesioner" class="custom-select" required>
+                                <option value="">-- Pilih Jenis Soal --</option>
+                                @foreach($kuesioner as $kuesioners)
+                                <option value="{{$kuesioners->id_jenis}}">{{$kuesioners->jenis}}</option>
+                                @endforeach
+                            </select>
                       </div>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Pertanyaan</label>
@@ -340,19 +262,8 @@
                     </div>
                   </div>
 	                <div class="modal-body" id="bodyEdit">
-	      	          <form action="/admin/kuesioner/soal/update/" method="POST" id="edit-pertanyaan-form">
+	      	          <form action="/admin/banksoal/alumni/update" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
-                      <input type="text" class="form-control" id="edit_id_kuesioner" name="id_kuesioner" value="{{$id_kuesioner}}" hidden>
-                      <div class="form-group">
-                        <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
-                                    <select name="edit_id_jenis" id="edit_id_jenis" class="custom-select" required>
-                                      <option value="">-- Pilih Jenis Kuesioner --</option>
-                                      <option value="1">Pilihan Ganda</option>
-                                      <option value="2">Jawaban Singkat</option>
-                                      <option value="3">Checkbox</option>
-                                      <option value="4">Tanggal</option>
-                                    </select>
-                      </div>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Pertanyaan</label>
                         <input type="text" class="form-control" id="edit_pertanyaan" name="edit_pertanyaan" placeholder="">
@@ -431,38 +342,14 @@
 	              </div>
 	            </div>
     </div>
+</div>
 @endsection
 
 @section('custom_javascript')
 <script>
-  //DeleteOpsi
-  function deleteOpsi(opsi){
-    $('#'+opsi).hide();
-  }
-  //Periode
-// $('#periode').change(function(){
-//   $('#id_periode').val($(this).val());
-//   $('#ganti').hide();
-//   $('#loading').show();
-//   jQuery.ajax({
-//     url: "{{url('admin/kuesioner/showkuesioner/filter/')}}" ,
-//     method: 'post',
-//     data: {
-//         _token: $('#signup-token').val(),
-//         id_periode: $(this).val(),
-//         id_kuesioner: {{ $id_kuesioner }}
-//     },
-//     success: function (result) {
-//       console.log(result);
-//       $('#loading').hide();
-//         $('.ganti').html(result.hasil);
-//         $('#ganti').show();
-//     }
-// });
-// })
 
     function deletebc(id){
-        $("#form-delete-kuesioner").attr("action", "/admin/kuesioner/soal/"+id+"/delete");
+        $("#form-delete-kuesioner").attr("action", "/admin/banksoal/alumni/"+id+"/delete");
         $('#deleteModal').modal('show');
     }
 
@@ -471,16 +358,16 @@
     $("#loadingEdit").show();
     $('#update').modal('show');
     jQuery.ajax({
-      url: "/admin/kuesioner/soal/"+id+"/edit",
+      url: "/admin/banksoal/alumni/"+id+"/edit",
       method: 'get',
       success: function(result){
         let opsi = 1;
         let count = 1;
         console.log(result);
-            $("#edit_id_jenis").val(result.detail_kuesioner['id_jenis']);
-            $("#edit_pertanyaan").val(result.detail_kuesioner['pertanyaan']);
-            $("#edit-pertanyaan-form").attr("action", "/admin/kuesioner/soal/"+result.detail_kuesioner['id_detail_kuesioner']+"/update");
-            if(result.detail_kuesioner['id_jenis'] == 1 || result.detail_kuesioner['id_jenis'] == 3){
+            $("#edit_id_jenis").val(result.bank_soal['id_jenis']);
+            $("#edit_pertanyaan").val(result.bank_soal['pertanyaan']);
+            $("#edit-pertanyaan-form").attr("action", "/admin/banksoal/alumni/"+result.bank_soal['id_bank_soal']+"/update");
+            if(result.bank_soal['id_jenis'] == 1 || result.bank_soal['id_jenis'] == 3){
               $("#edit_opsi1").prop('required',true);
               $("#edit_opsi2").prop('required',true);
               opsi=1
@@ -506,7 +393,7 @@
                       $("#edit_btnTambahOpsi").show();
                     }
                   });
-                }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
+                }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
                   $("#edit_opsi1").prop('required',false);
                   $("#edit_opsi2").prop('required',false);
                   for(let i = 1; i<=11; i++){
@@ -515,7 +402,7 @@
                   $('#edit_btnTambahOpsi').fadeOut();
                 }
               });
-            }else if(result.detail_kuesioner['id_jenis'] == 2 || $('#edit_id_jenis').val() == 4){
+            }else if(result.bank_soal['id_jenis'] == 2){
               $('#edit_id_jenis').change(function() {
               if($('#edit_id_jenis').val() == 1){
                 $("#edit_opsi1").prop('required',true);
@@ -526,7 +413,7 @@
                   $("#eedit_opsi1").prop('required',true);
                   $("#eedit_opsi2").prop('required',true);
                   $('#edit_btnTambahOpsi').fadeIn();
-              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
+              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
                 $("#edit_opsi1").prop('required',false);
                 $("#edit_opsi2").prop('required',false);
                 for(let i = 1; i<=11; i++){
@@ -549,7 +436,7 @@
                     $("#edit_btnTambahOpsi").show();
                   }
                 });
-              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
+              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
                 $("#edit_opsi1").prop('required',false);
                 $("#edit_opsi2").prop('required',false);
                 for(let i = 1; i<=11; i++){
@@ -581,7 +468,7 @@
           $("#oopsi1").prop('required',true);
           $("#oopsi2").prop('required',true);
           $('#btnTambahOpsi').fadeIn();
-        }else if($('#kuesioner').val() == 2 || $('#kuesioner').val() == 4){
+        }else if($('#kuesioner').val() == 2 || $('#kuesioner').val() == ""){
           $("#oopsi1").prop('required',false);
           $("#oopsi2").prop('required',false);
           for(let i = 1; i<=11; i++){
@@ -617,48 +504,6 @@
           $('#btnTambahOpsi').fadeOut();
         }
     });
-
-//Switch Status Pengumuman
-function statusBtn(id) {
-    var checkBox = document.getElementById("status_"+id);
-    // If the checkbox is checked, display the output text
-    if (checkBox.checked == true){
-      swal({
-          title: 'Anda yakin ingin menerima kuesioner ini?',
-          icon: 'warning',
-          buttons: ["Tidak", "Ya"],
-      }).then(function(value) { 
-          if (value) {
-            jQuery.ajax({  
-              url: "/admin/kuesioner/showkuesioner/"+id+"/Aktif",
-              type: "GET",
-              success: function(result){
-              }
-          });
-        }else{
-          document.getElementById("status_"+id).checked = false;
-        }
-      });
-    } else {
-      swal({
-          title: 'Anda yakin ingin menolak kuesioner ini?',
-          icon: 'warning',
-          buttons: ["Tidak", "Ya"],
-      }).then(function(value) {
-          if (value) {
-            jQuery.ajax({
-              url: "/admin/kuesioner/showkuesioner/"+id+"/Tidak Aktif",
-              type: "GET",
-              success: function(result){
-              }
-          });
-        }else{  
-          document.getElementById("status_"+id_periode).checked = true;
-        }
-      });
-    }
-  }
-  $('#sidebarPengumuman').addClass("active");
 
   </script>
 @endsection

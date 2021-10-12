@@ -14,33 +14,28 @@ use App\tb_prodi;
 use App\tb_angkatan;
 use App\tb_alumni;
 use App\tb_periode;
+use App\tb_periode_kuesioner;
+use App\tb_tahun_periode;
 
 class detailkuesionerController extends Controller
 {
 
     public function detail($id)
     {
-        $id_periode = tb_periode::max('id_periode');
         $judul_kuesioner = tb_kuesioner::find($id)->type_kuesioner;
-        $periodes = tb_periode::get();
+        $periode = tb_periode_kuesioner::where('id_periode_kuesioner', tb_kuesioner::find($id)->id_periode)->first();
+        $tahun_kuesioner = tb_tahun_periode::where('id_tahun_periode', $periode->id_tahun_periode)->first()->tahun_periode;
+        $periode_kuesioner = tb_periode::where('id_periode', $periode->id_periode)->first()->periode;
         $kuesioner = tb_jenis_kuesioner::get();
         $opsi =tb_opsi::get();
         
         $status = ['Aktif','Tidak Aktif'];
-        $detail = tb_detail_kuesioner::where('id_kuesioner', $id)->where('id_periode', $id_periode)->get();
+        $detail = tb_detail_kuesioner::where('id_kuesioner', $id)->get();
         $id_kuesioner = $id;
         //dd($detail);
-        return view('/kuesioner/showkuesioner', compact('detail','kuesioner','opsi', 'id_kuesioner', 'judul_kuesioner', 'periodes', 'id_periode','status'));
+        return view('/kuesioner/showkuesioner', compact('detail','kuesioner','opsi', 'id_kuesioner', 'judul_kuesioner','status', 'tahun_kuesioner', 'periode_kuesioner'));
     }
 
-    public function filter(Request $request)
-    {
-        $detail = tb_detail_kuesioner::where('id_kuesioner', $request->id_kuesioner)->where('id_periode', $request->id_periode)->get();
-        $opsi =tb_opsi::get();
-        $hasil = view('kuesioner.filter', ['detail' => $detail, 'opsi' => $opsi])->render();
-        // $hasil = $kategori;
-        return response()->json(['success' => 'Produk difilter', 'hasil' => $hasil]);
-    }
 
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
@@ -56,7 +51,6 @@ class detailkuesionerController extends Controller
 
         if($request->id_jenis ==  2){
             $detail_kuesioner->id_kuesioner = $request->id_kuesioner;
-            $detail_kuesioner->id_periode = $request->id_periode;
             $detail_kuesioner->id_jenis = 2;
             $detail_kuesioner->pertanyaan = $request->pertanyaan;
             $detail_kuesioner->status = "Menunggu Konfirmasi";
@@ -65,7 +59,6 @@ class detailkuesionerController extends Controller
 
         if($request->id_jenis ==  4){
             $detail_kuesioner->id_kuesioner = $request->id_kuesioner;
-            $detail_kuesioner->id_periode = $request->id_periode;
             $detail_kuesioner->id_jenis = 4;
             $detail_kuesioner->pertanyaan = $request->pertanyaan;
             $detail_kuesioner->status = "Menunggu Konfirmasi";
@@ -73,7 +66,6 @@ class detailkuesionerController extends Controller
         }
 
         if($request->id_jenis == 1 || $request->id_jenis == 3){
-            $detail_kuesioner->id_periode = $request->id_periode;
             $detail_kuesioner->id_kuesioner = $request->id_kuesioner;
             $detail_kuesioner->id_jenis = $request->id_jenis;
             $detail_kuesioner->pertanyaan = $request->pertanyaan;
@@ -193,7 +185,6 @@ class detailkuesionerController extends Controller
         }
 
         if($request->edit_id_jenis ==  2){
-            $detail_kuesioner->id_periode = $request->id_periode;
             $detail_kuesioner->id_kuesioner = $request->id_kuesioner;
             $detail_kuesioner->id_jenis = 2;
             $detail_kuesioner->pertanyaan = $request->edit_pertanyaan;
@@ -202,7 +193,6 @@ class detailkuesionerController extends Controller
         }
 
         if($request->edit_id_jenis == 1 || $request->edit_id_jenis == 3){
-            $detail_kuesioner->id_periode = $request->id_periode;
             $detail_kuesioner->id_kuesioner = $request->id_kuesioner;
             $detail_kuesioner->id_jenis = 1;
             $detail_kuesioner->pertanyaan = $request->edit_pertanyaan;

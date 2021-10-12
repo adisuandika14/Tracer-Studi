@@ -13,29 +13,31 @@ use App\tb_angkatan;
 use App\tb_detail_kuesioner;
 use App\tb_opsi;
 use App\tb_jawaban;
+use App\tb_periode_kuesioner;
+use App\tb_tahun_periode;
+use App\tb_periode;
 
 use Illuminate\Support\Facades\DB;  
 
 class kuesionerController extends Controller
 {
     public function show(){
-
+        $max_id_kuesioner = tb_kuesioner::max('id_kuesioner');
+        $id_periode_kuesioner = tb_kuesioner::where('id_kuesioner', $max_id_kuesioner)->first(['id_periode'])->id_periode;
         $detail = tb_detail_kuesioner::with('relasiDetailtoKuesioner','relasiDetailtoAlumni')->get();
         $prodi = tb_prodi::all();
-        $kuesioner = tb_kuesioner::all();
+        $kuesioner = tb_kuesioner::where('id_periode', $id_periode_kuesioner)->get();
         $alumni = tb_alumni::all();
-        $master_kuesioner = tb_master_kuesioner::all();
+        $tahun_periodes = tb_periode_kuesioner::with('relasiPeriodekuesionertoTahun', 'relasiPeriodekuesionertoPeriode')->get();
         $opsi = tb_opsi::all();
-        //$type = ['Multiple','Essay'];
-    
-            return view('/kuesioner/kuesioner', compact ('alumni','detail','prodi','kuesioner','master_kuesioner','opsi'));
+            return view('/kuesioner/kuesioner', compact ('alumni','detail','prodi','kuesioner','opsi','tahun_periodes','id_periode_kuesioner'));
         }
 
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
-            'kuesioner' => 'required',
+            'type_kuesioner' => 'required',
         ],[
-             'kuesioner.required' => "Anda Belum Menambahkan Kuesioner",
+             'type_kuesioner.required' => "Anda Belum Menambahkan Kuesioner",
          ]);
 
         if($validator->fails()){
@@ -43,14 +45,11 @@ class kuesionerController extends Controller
         }
 
         $detail_kuesioner = new tb_kuesioner();
+        $detail_kuesioner->id_periode = $request->create_id_periode;
         $detail_kuesioner->type_kuesioner = $request->type_kuesioner;
         $detail_kuesioner->status = "Menunggu Konfirmasi";
         $detail_kuesioner->save();
 
-        // tb_kuesioner::create([
-        //     'type_kuesioner'=>$request->type_kuesioner,
-               
-        //     ]);
         return redirect('/admin/kuesioner')->with('statusInput','Data berhasil disimpan!');
     }
 
@@ -122,6 +121,14 @@ class kuesionerController extends Controller
 
 
         return view('/kuesioner/tracer',compact('detail'));
+    }
+
+    public function filter(Request $request)
+    {
+        $kuesioner = tb_kuesioner::where('id_periode', $request->id_periode)->get();
+        $hasil = view('kuesioner.filter_kuesioner', ['kuesioner' => $kuesioner])->render();
+        // $hasil = $kategori;
+        return response()->json(['success' => 'Produk difilter', 'hasil' => $hasil]);
     }
 
 }

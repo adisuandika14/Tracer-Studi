@@ -90,14 +90,16 @@
                                         {{$opsis->opsi}}
                                         </label>
                                       </div>
-                                      @elseif($detailss->id_jenis == 1)
+                                      @endif
+                                      @if($detailss->id_jenis == 1)
                                       <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                         <label class="form-check-label" for="flexRadioDefault1">
                                         {{$opsis->opsi}}
                                         </label>
                                       </div>
-                                      @else
+                                      @endif
+                                      @if($detailss->id_jenis == 2 || $detailss->id_jenis == 4)
                                       <div class="form-group" style="display: none;">
                                         <input type="text" class="form-control"  placeholder="Text Jawaban Singkat">
                                       </div>

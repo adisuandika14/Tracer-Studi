@@ -13,13 +13,7 @@
                             @if($detailss->id_kuesioner_stackholder == $detailss->id_kuesioner_stackholder)
                                 <p> {{ $loop->iteration }}. {{$detailss->pertanyaan}}</p>
                               @endif
-                              @foreach ($opsi as $opsis)
-                                @if($detailss->id_kuesioner_stackholder == $opsis->id_kuesioner_stackholder)
-                                  <ul class="list-group mb-1">
-                                    <li class="list-group-item">{{$opsis->opsi}}</li>
-                                  </ul>
-                                @endif
-                              @endforeach
+                              
                                 <!-- <input type="text" class="form-control"  id="essay" name= "jawaban" value="" placeholder="Text Jawaban Singkat"> -->
                                 @foreach ($opsi as $opsis)
                                   @if($detailss->id_kuesioner_stackholder == $opsis->id_kuesioner_stackholder)
@@ -30,14 +24,16 @@
                                         {{$opsis->opsi}}
                                         </label>
                                       </div>
-                                      @elseif($detailss->id_jenis == 1)
+                                      @endif
+                                      @if($detailss->id_jenis == 1)
                                       <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                         <label class="form-check-label" for="flexRadioDefault1">
                                         {{$opsis->opsi}}
                                         </label>
                                       </div>
-                                      @else
+                                      @endif
+                                      @if($detailss->id_jenis == 2 || $detailss->id_jenis == 4)
                                       <div class="form-group" style="display: none;">
                                         <input type="text" class="form-control"  placeholder="Text Jawaban Singkat">
                                       </div>

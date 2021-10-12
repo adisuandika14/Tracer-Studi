@@ -1,7 +1,10 @@
 @extends('layoutadmin.layout')
-@section('title', 'Detail Kuesioner')
+@section('title', 'Sub Pertanyaan')
 @section('content')
-@section('active3')
+@section('active10')
+      nav-item active
+@endsection
+@section('collapse3')
       nav-item active
 @endsection
 
@@ -75,8 +78,7 @@
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-<h1 class="h4 mb-1 text-gray-800">{{$tahun_kuesioner}} - {{$periode_kuesioner}}</h1>
-<h1 class="h5 mb-4 text-gray-800">{{$judul_kuesioner}}</h1>
+<h1 class="h3 mb-4 text-gray-800">{{$judul_kuesioner}}</h1>
     @if (session()->has('statusInput'))
       <div class="row">
         <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
@@ -112,17 +114,10 @@
     </div>
         <div class="card-body">
           <div class="form-group" style="width: 250px;">
-          <div class="dropdown mt-4">
-            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Tambah Pertanyaan
+            <button class="btn btn-success btn-sm mt-3" data-toggle="modal" data-target="#create"><i
+              class="fas fa-plus"></i> Tambah Sub Pertanyaaan
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <button class="dropdown-item" data-toggle="modal" data-target="#create"><i class="fas fa-plus"></i> Tambah Pertanyaan Baru</button>
-              <a class="dropdown-item" href="#"><i class="fas fa-university"></i> Pilih dari Bank Soal</a>
-            </div>
-          </div>
         </div>
-        {{-- SPINNER --}}
         <div class="ganti" id="ganti">
             <div class="table-responsive">
             <div class="container-fluid mt-4" style="align-content: center;">
@@ -135,16 +130,13 @@
                       @endif
                         @foreach($detail as $detailss)
                         <div class="card shadow mb-4">
-                            <!-- <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">{{$detailss->type_kuesioner}}</h6>
-                            </div> -->
                             <div class="card-body">
-                              @if($detailss->id_detail_kuesioner == $detailss->id_detail_kuesioner)
+                              @if($detailss->id_bank_soal_alumni == $detailss->id_bank_soal_alumni)
                                 <p> {{ $loop->iteration }}. {{$detailss->pertanyaan}}</p>
                               @endif
                                 <!-- <input type="text" class="form-control"  id="essay" name= "jawaban" value="" placeholder="Text Jawaban Singkat"> -->
                                 @foreach ($opsi as $opsis)
-                                  @if($detailss->id_detail_kuesioner == $opsis->id_detail_kuesioner)
+                                  @if($detailss->id_bank_soal_alumni == $opsis->id_bank_soal_alumni)
                                     @if($detailss->id_jenis == 3)
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -171,10 +163,10 @@
                             </div>
                             <div class="modal-footer">
                                 <!-- Edit -->
-                                <button class="btn btn-primary btn-sm" onclick="edit({{$detailss->id_detail_kuesioner}})"><i class="fas fa-edit"></i>
+                                <button class="btn btn-primary btn-sm" onclick="edit({{$detailss->id_detail_soal_alumni}})"><i class="fas fa-edit"></i>
                                 </button> 
                                 <!--Delete -->
-                                <button class="btn btn-danger btn-sm" onclick="deletebc({{$detailss->id_detail_kuesioner}})"><i class="fas fa-trash"></i>
+                                <button class="btn btn-danger btn-sm" onclick="deletebc({{$detailss->id_detail_soal_alumni}})"><i class="fas fa-trash"></i>
                                 </button>
 		                        </div>
                         </div>
@@ -230,9 +222,9 @@
 
 
 	                <div class="modal-body">
-	      	          <form action="/admin/kuesioner/soal/create" method="POST">
+	      	          <form action="/admin/banksoal/showkuesioner/create" method="POST">
                       {{csrf_field()}}
-                      <input type="text" class="form-control" id="id_kuesioner" name="id_kuesioner" value="{{$id_kuesioner}}" hidden>
+                      <input type="text" class="form-control" id="id_soal_alumni" name="id_soal_alumni" value="{{$id_soal_alumni}}" hidden>
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="id_jenis" id="kuesioner" class="custom-select" required>
@@ -340,9 +332,9 @@
                     </div>
                   </div>
 	                <div class="modal-body" id="bodyEdit">
-	      	          <form action="/admin/kuesioner/soal/update/" method="POST" id="edit-pertanyaan-form">
+	      	          <form action="/admin/banksoal/showkuesioner/update/" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
-                      <input type="text" class="form-control" id="edit_id_kuesioner" name="id_kuesioner" value="{{$id_kuesioner}}" hidden>
+                      <input type="text" class="form-control" id="edit_id_kuesioner" name="id_soal_alumni" value="{{$id_soal_alumni}}" hidden>
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="edit_id_jenis" id="edit_id_jenis" class="custom-select" required>
@@ -435,34 +427,13 @@
 
 @section('custom_javascript')
 <script>
-  //DeleteOpsi
+
+  //deleteopsi
   function deleteOpsi(opsi){
     $('#'+opsi).hide();
   }
-  //Periode
-// $('#periode').change(function(){
-//   $('#id_periode').val($(this).val());
-//   $('#ganti').hide();
-//   $('#loading').show();
-//   jQuery.ajax({
-//     url: "{{url('admin/kuesioner/showkuesioner/filter/')}}" ,
-//     method: 'post',
-//     data: {
-//         _token: $('#signup-token').val(),
-//         id_periode: $(this).val(),
-//         id_kuesioner: {{ $id_kuesioner }}
-//     },
-//     success: function (result) {
-//       console.log(result);
-//       $('#loading').hide();
-//         $('.ganti').html(result.hasil);
-//         $('#ganti').show();
-//     }
-// });
-// })
-
     function deletebc(id){
-        $("#form-delete-kuesioner").attr("action", "/admin/kuesioner/soal/"+id+"/delete");
+        $("#form-delete-kuesioner").attr("action", "/admin/banksoal/showkuesioner/"+id+"/delete");
         $('#deleteModal').modal('show');
     }
 
@@ -470,17 +441,18 @@
     $("#bodyEdit").hide();
     $("#loadingEdit").show();
     $('#update').modal('show');
+    alert(id)
     jQuery.ajax({
-      url: "/admin/kuesioner/soal/"+id+"/edit",
+      url: "/admin/banksoal/showkuesioner/"+id+"/edit",
       method: 'get',
       success: function(result){
         let opsi = 1;
         let count = 1;
         console.log(result);
-            $("#edit_id_jenis").val(result.detail_kuesioner['id_jenis']);
-            $("#edit_pertanyaan").val(result.detail_kuesioner['pertanyaan']);
-            $("#edit-pertanyaan-form").attr("action", "/admin/kuesioner/soal/"+result.detail_kuesioner['id_detail_kuesioner']+"/update");
-            if(result.detail_kuesioner['id_jenis'] == 1 || result.detail_kuesioner['id_jenis'] == 3){
+            $("#edit_id_jenis").val(result.detail_soal['id_jenis']);
+            $("#edit_pertanyaan").val(result.detail_soal['pertanyaan']);
+            $("#edit-pertanyaan-form").attr("action", "/admin/banksoal/showkueisoner/"+result.detail_soal['id_detail_soal_alumni']+"/update");
+            if(result.detail_soal['id_jenis'] == 1 || result.detail_soal['id_jenis'] == 3){
               $("#edit_opsi1").prop('required',true);
               $("#edit_opsi2").prop('required',true);
               opsi=1
@@ -515,7 +487,7 @@
                   $('#edit_btnTambahOpsi').fadeOut();
                 }
               });
-            }else if(result.detail_kuesioner['id_jenis'] == 2 || $('#edit_id_jenis').val() == 4){
+            }else if(result.detail_soal['id_jenis'] == 2 || $('#edit_id_jenis').val() == 4){
               $('#edit_id_jenis').change(function() {
               if($('#edit_id_jenis').val() == 1){
                 $("#edit_opsi1").prop('required',true);
