@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Exports\AlumniExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\tb_alumni;
@@ -195,7 +196,7 @@ class alumniController extends Controller
             $status = new tb_notifikasi();
             $status->id_alumni = $request->id_alumni;
             $status->notifikasi = 'Data Yang anda masukkan sudah Terverifikasi';
-            $status->flag = '1';
+            $status->flag = '0';
             $status->save();
         }
         elseif($request->status == "Ditolak"){
