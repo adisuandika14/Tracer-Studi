@@ -115,11 +115,11 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
   
 
    //Bank Soal stakeholder
-   Route::get('/banksoal/pengguna','banksoalController@show')->name('show-banksoal');
-   Route::post('/banksoal/pengguna/create','banksoalController@create');
-   Route::get('/banksoal/pengguna/{id}/edit', 'banksoalController@edit');
-   Route::post('/banksoal/pengguna/{id}/update','banksoalController@update');
-   Route::delete('/banksoal/pengguna/{id}/delete','banksoalController@delete');
+   Route::get('/banksoal/stakeholder','banksoalstakeholderController@show')->name('show-banksoal-stakeholder');
+   Route::post('/banksoal/stakeholder/create','banksoalstakeholderController@create');
+   Route::get('/banksoal/stakeholder/{id}/edit', 'banksoalstakeholderController@edit');
+   Route::post('/banksoal/stakeholder/{id}/update','banksoalstakeholderController@update');
+   Route::delete('/banksoal/stakeholder/{id}/delete','banksoalstakeholderController@delete');
    
 
    //Bank Soal Alumni

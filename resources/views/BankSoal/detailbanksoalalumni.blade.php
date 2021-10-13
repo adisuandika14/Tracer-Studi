@@ -441,7 +441,6 @@
     $("#bodyEdit").hide();
     $("#loadingEdit").show();
     $('#update').modal('show');
-    alert(id)
     jQuery.ajax({
       url: "/admin/banksoal/showkuesioner/"+id+"/edit",
       method: 'get',

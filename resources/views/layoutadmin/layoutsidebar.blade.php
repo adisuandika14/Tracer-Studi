@@ -76,7 +76,7 @@
                     <a class="@yield('collapse3')" href="/admin/banksoal/alumni">Bank Soal Alumni</a>
                 </div>
                 <div class="collapse-item">
-                    <a class="@yield('collapse4')" href="/admin/banksoal/pengguna">Bank Soal Stakeholder</a>
+                    <a class="@yield('collapse4')" href="/admin/banksoal/stakeholder">Bank Soal Stakeholder</a>
                 </div>
             </div>
         </div>

@@ -41,7 +41,7 @@
 
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Data Bank Soal Alumni</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Data Bank Soal Stakeholder</h6>
     </div>
     <div class="card-body">
       <div class="form-group" style="width: 250px;">
@@ -63,12 +63,12 @@
                         @foreach($soal as $soalss)
                         <div class="card shadow mb-4">
                             <div class="card-body" name="card" id="card">
-                              @if($soalss->id_bank_soal == $soalss->id_bank_soal)
+                              @if($soalss->id_soal_stakeholder == $soalss->id_soal_stakeholder)
                                 <p> {{ $loop->iteration }}. {{$soalss->pertanyaan}}</p>
                               @endif
                                 <!-- <input type="text" class="form-control"  id="essay" name= "jawaban" value="" placeholder="Text Jawaban Singkat"> -->
                                 @foreach ($opsi as $opsis)
-                                  @if($soalss->id_bank_soal == $opsis->id_bank_soal)
+                                  @if($soalss->id_soal_stakeholder == $opsis->id_soal_stakeholder)
                                     @if($soalss->id_jenis == 3)
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -95,10 +95,10 @@
                             </div>
                             <div class="modal-footer">
                                 <!-- Edit -->
-                                <button class="btn btn-primary btn-sm" onclick="edit({{$soalss->id_bank_soal}})"><i class="fas fa-edit"></i>
+                                <button class="btn btn-primary btn-sm" onclick="edit({{$soalss->id_soal_stakeholder}})"><i class="fas fa-edit"></i>
                                 </button> 
                                 <!--Delete -->
-                                <button class="btn btn-danger btn-sm" onclick="deletebc({{$soalss->id_bank_soal}})"><i class="fas fa-trash"></i>
+                                <button class="btn btn-danger btn-sm" onclick="deletebc({{$soalss->id_soal_stakeholder}})"><i class="fas fa-trash"></i>
                                 </button>
 		                        </div>
                         </div>
@@ -154,16 +154,17 @@
 
 
 	                <div class="modal-body">
-	      	          <form action="/admin/banksoal/alumni/create" method="POST">
+	      	          <form action="/admin/banksoal/stakeholder/create" method="POST">
                       {{csrf_field()}}
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
-                            <select name="id_jenis" id="kuesioner" class="custom-select" required>
-                                <option value="">-- Pilih Jenis Soal --</option>
-                                @foreach($kuesioner as $kuesioners)
-                                <option value="{{$kuesioners->id_jenis}}">{{$kuesioners->jenis}}</option>
-                                @endforeach
-                            </select>
+                                    <select name="id_jenis" id="kuesioner" class="custom-select" required>
+                                      <option value="">-- Pilih Jenis Kuesioner --</option>
+                                      <option value="1">Pilihan Ganda</option>
+                                      <option value="2">Jawaban Singkat</option>
+                                      <option value="3">Checkbox</option>
+                                      <option value="4">Tanggal</option>
+                                    </select>
                       </div>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Pertanyaan</label>
@@ -262,7 +263,7 @@
                     </div>
                   </div>
 	                <div class="modal-body" id="bodyEdit">
-	      	          <form action="/admin/banksoal/alumni/update" method="POST" id="edit-pertanyaan-form">
+	      	          <form action="/admin/banksoal/stakeholder/update" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Pertanyaan</label>
@@ -349,7 +350,7 @@
 <script>
 
     function deletebc(id){
-        $("#form-delete-kuesioner").attr("action", "/admin/banksoal/alumni/"+id+"/delete");
+        $("#form-delete-kuesioner").attr("action", "/admin/banksoal/stakeholder/"+id+"/delete");
         $('#deleteModal').modal('show');
     }
 
@@ -358,7 +359,7 @@
     $("#loadingEdit").show();
     $('#update').modal('show');
     jQuery.ajax({
-      url: "/admin/banksoal/alumni/"+id+"/edit",
+      url: "/admin/banksoal/stakeholder/"+id+"/edit",
       method: 'get',
       success: function(result){
         let opsi = 1;
@@ -366,7 +367,7 @@
         console.log(result);
             $("#edit_id_jenis").val(result.bank_soal['id_jenis']);
             $("#edit_pertanyaan").val(result.bank_soal['pertanyaan']);
-            $("#edit-pertanyaan-form").attr("action", "/admin/banksoal/alumni/"+result.bank_soal['id_bank_soal']+"/update");
+            $("#edit-pertanyaan-form").attr("action", "/admin/banksoal/stakeholder/"+result.bank_soal['id_soal_stakeholder']+"/update");
             if(result.bank_soal['id_jenis'] == 1 || result.bank_soal['id_jenis'] == 3){
               $("#edit_opsi1").prop('required',true);
               $("#edit_opsi2").prop('required',true);

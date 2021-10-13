@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\tb_prodi;
 use App\tb_jenis_kuesioner;
-use App\tb_opsi_stackholder;
+use App\tb_opsi_stakeholder;
 use App\tb_kuesioner_stackholder;
 
 class stackholderkuesionerController extends Controller
@@ -17,7 +17,7 @@ class stackholderkuesionerController extends Controller
         $id_prodi = tb_prodi::max('id_prodi');
         $prodis = tb_prodi::get();
         $kuesioner = tb_jenis_kuesioner::get();
-        $opsi =tb_opsi_stackholder::get();
+        $opsi =tb_opsi_stakeholder::get();
         
         $detail = tb_kuesioner_stackholder::get(); 
         //dd($detail);
@@ -28,7 +28,7 @@ class stackholderkuesionerController extends Controller
     public function filter(Request $request)
     {
         $detail = tb_kuesioner_stackholder::where('id_prodi', $request->id_prodi)->get();
-        $opsi =tb_opsi_stackholder::get();
+        $opsi =tb_opsi_stakeholder::get();
         $hasil = view('kuesioner.stackholder.filter', ['detail' => $detail, 'opsi' => $opsi])->render();
         // $hasil = $kategori;
         return response()->json(['success' => 'Produk difilter', 'hasil' => $hasil]);
@@ -63,65 +63,65 @@ class stackholderkuesionerController extends Controller
 
             $kuesioner_stackholder = tb_kuesioner_stackholder::find(tb_kuesioner_stackholder::max('id_kuesioner_stackholder'));
             if($request->opsi1 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi1;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
 
             if($request->opsi2 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi2;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
 
             if($request->opsi3 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi3;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
 
             if($request->opsi4 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi4;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
 
             if($request->opsi5 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi5;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->opsi6 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi6;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->opsi7 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi7;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->opsi8 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi8;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->opsi9 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi9;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->opsi10 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi10;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
@@ -136,7 +136,7 @@ class stackholderkuesionerController extends Controller
         $kuesioner_stackholder = tb_kuesioner_stackholder::find($id);
         $kuesioner_stackholder->delete();
 
-        $opsis = tb_opsi_stackholder::get();
+        $opsis = tb_opsi_stakeholder::get();
         foreach($opsis as $opsi){
             if($opsi->id_kuesioner_stackholder == $id){
                 $opsi->delete();
@@ -149,7 +149,7 @@ class stackholderkuesionerController extends Controller
     public function edit($id)
     {
         $kuesioner_stackholder = tb_kuesioner_stackholder::find($id);
-        $opsis = tb_opsi_stackholder::where('id_kuesioner_stackholder', $kuesioner_stackholder->id_kuesioner_stackholder)->get();
+        $opsis = tb_opsi_stakeholder::where('id_kuesioner_stackholder', $kuesioner_stackholder->id_kuesioner_stackholder)->get();
         return response()->json(['success' => 'Berhasil', 'detail_kuesioner' => $kuesioner_stackholder, 'opsis' => $opsis]);
     }
 
@@ -167,7 +167,7 @@ class stackholderkuesionerController extends Controller
 
         $kuesioner_stackholder = tb_kuesioner_stackholder::find($id);
 
-        $opsis = tb_opsi_stackholder::get();
+        $opsis = tb_opsi_stakeholder::get();
         foreach($opsis as $opsi){
             if($opsi->id_kuesioner_stackholder == $id){
                 $opsi->delete();
@@ -188,65 +188,65 @@ class stackholderkuesionerController extends Controller
             $kuesioner_stackholder->update();
 
             if($request->edit_opsi1 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi1;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi2 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi2;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi3 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi3;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi4 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi4;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi5 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi5;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->edit_opsi6 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi6;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->edit_opsi7 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi7;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->edit_opsi8 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi8;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->edit_opsi9 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi9;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
             }
             if($request->edit_opsi10 != ""){
-                $opsi = new tb_opsi_stackholder();
+                $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi10;
                 $opsi->id_kuesioner_stackholder = $kuesioner_stackholder->id_kuesioner_stackholder;
                 $opsi->save();
