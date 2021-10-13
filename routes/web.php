@@ -140,11 +140,13 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
 
 
     //Kuesioner
-    Route::get('/kuesioner','kuesionerController@show')->name('show-kuesioner');;
+    Route::get('/kuesioner','kuesionerController@show')->name('show-kuesioner');
     Route::post('/kuesioner/create','kuesionerController@create');
     Route::post('/kuesioner/update','kuesionerController@update');
     Route::get('/kuesioner/{id}/delete','kuesionerController@delete');
     Route::post('/kuesioner/filter','kuesionerController@filter')->name('filter-kuesioner');
+    Route::get('/kuesioner/get-bank-soal/{id_periode}','kuesionerController@bank_soal_data')->name('get-bank-soal-kuesioner');
+    Route::post('/kuesioner/create/{id_periode}','kuesionerController@create_from_bank_soal');
 
     //Route::get('/tracer','kuesionerController@showtracer');
 

@@ -36,6 +36,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/modal_fullscreen.css')}}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/95583e2c69.js" crossorigin="anonymous"></script>
 
     <link href="{{ asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">

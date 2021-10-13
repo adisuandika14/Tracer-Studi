@@ -16,7 +16,7 @@ use App\tb_jawaban;
 use App\tb_periode_kuesioner;
 use App\tb_tahun_periode;
 use App\tb_periode;
-
+use App\tb_soal_alumni;
 use Illuminate\Support\Facades\DB;  
 
 class kuesionerController extends Controller
@@ -129,6 +129,28 @@ class kuesionerController extends Controller
         $hasil = view('kuesioner.filter_kuesioner', ['kuesioner' => $kuesioner])->render();
         // $hasil = $kategori;
         return response()->json(['success' => 'Produk difilter', 'hasil' => $hasil]);
+    }
+
+    public function bank_soal_data($id_periode){
+        $kuesioner = tb_kuesioner::where('id_periode', $id_periode)->pluck('id_bank_soal')->toArray();
+        $bank_soal_kuesioner = tb_soal_alumni::whereNotIn('id_soal_alumni', array_filter($kuesioner))->get();
+        return response()->json($bank_soal_kuesioner);
+    }
+
+    public function create_from_bank_soal($id_periode, Request $request){
+        $all_bank_soal = tb_soal_alumni::get();
+        foreach($all_bank_soal as $bank_soal){
+            if($request->{'bank_soal_' .$bank_soal->id_soal_alumni}  != ""){
+                $detail_kuesioner = new tb_kuesioner();
+                $detail_kuesioner->id_periode = $id_periode;
+                $detail_kuesioner->type_kuesioner = $bank_soal->pertanyaan;
+                $detail_kuesioner->status = "Menunggu Konfirmasi";
+                $detail_kuesioner->id_bank_soal = $bank_soal->id_soal_alumni;
+                $detail_kuesioner->save();
+            }
+            
+        }
+        return redirect('/admin/kuesioner')->with('statusInput','Data berhasil disimpan!');
     }
 
 }
