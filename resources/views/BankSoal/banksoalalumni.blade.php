@@ -120,7 +120,7 @@
               </div>
               <div class="modal-body">
                 <form action="/admin/banksoal/alumni/update" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="id_soal_alumni" value="{{$datas->pertanyaan}}">
+                <input type="hidden" name="id_soal_alumni" value="{{$datas->id_soal_alumni}}">
                   {{ csrf_field() }}
                   <div class="form-group">
                     <label class="font-weight-bold text-dark">Edit Bank Soal</label>

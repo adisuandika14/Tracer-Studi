@@ -48,12 +48,18 @@ class banksoalalumniController extends Controller
         }
 
         public function update(Request $request){
-            $res = NULL;
-            $updatedata = tb_soal_alumni::find($request->id_soal_alumni);
-            $updatedata->pertanyaan = $request->pertanyaan;
+            $validator = Validator::make($request->all(), [
+                'pertanyaan' => 'required',
+                'pertanyaan' => 'required',
+            ]);
     
-            $updatedata->update();
-            //dd($updatedata);
+            if($validator->fails()){
+                return back()->withErrors($validator);
+            }
+            $res = NULL;
+            $bank_soal = tb_soal_alumni::find($request->id_soal_alumni);
+            $bank_soal->pertanyaan = $request->pertanyaan;
+            $bank_soal->update();
            return redirect('/admin/banksoal/alumni')->with('statusInput','Data berhasil diupdate!');
         }
 
