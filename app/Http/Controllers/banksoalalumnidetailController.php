@@ -9,6 +9,7 @@ use App\tb_soal_alumni;
 use App\tb_jenis_kuesioner;
 use App\tb_detail_soal_alumni;
 use App\tb_opsi_bank_soal_alumni;
+use App\tb_bank_soal_alumni;
 
 class banksoalalumnidetailController extends Controller
 {
@@ -46,7 +47,6 @@ class banksoalalumnidetailController extends Controller
 
         if($request->id_jenis ==  4){
             $detail_kuesioner->id_soal_alumni = $request->id_soal_alumni;
-            $detail_kuesioner->id_periode = $request->id_periode;
             $detail_kuesioner->id_jenis = 4;
             $detail_kuesioner->pertanyaan = $request->pertanyaan;
             $detail_kuesioner->status = "Menunggu Konfirmasi";
@@ -54,76 +54,75 @@ class banksoalalumnidetailController extends Controller
         }
 
         if($request->id_jenis == 1 || $request->id_jenis == 3){
-            $detail_kuesioner->id_periode = $request->id_periode;
             $detail_kuesioner->id_soal_alumni = $request->id_soal_alumni;
             $detail_kuesioner->id_jenis = $request->id_jenis;
             $detail_kuesioner->pertanyaan = $request->pertanyaan;
             $detail_kuesioner->status = "Menunggu Konfirmasi";
             $detail_kuesioner->save();
 
-            $detail_kuesioner = tb_detail_soal_alumni::find(tb_detail_soal_alumni::max('id_detail_kuesioner'));
+            $detail_kuesioner = tb_detail_soal_alumni::find(tb_detail_soal_alumni::max('id_detail_soal_alumni'));
             if($request->opsi1 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi1;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
 
             if($request->opsi2 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi2;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
 
             if($request->opsi3 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi3;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
 
             if($request->opsi4 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi4;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
 
             if($request->opsi5 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi5;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->opsi6 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi6;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->opsi7 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi7;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->opsi8 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi8;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->opsi9 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi9;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->opsi10 != ""){
-                $opsi = new tb_bank_soal_alumni();
+                $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->opsi10;
-                $opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                $opsi->id_soal_alumni = $detail_kuesioner->id_detail_soal_alumni;
                 $opsi->save();
             }
         }

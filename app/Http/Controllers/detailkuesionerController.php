@@ -13,6 +13,8 @@ use App\tb_jawaban;
 use App\tb_prodi;
 use App\tb_angkatan;
 use App\tb_alumni;
+use App\tb_detail_soal_alumni;
+use App\tb_opsi_bank_soal_alumni;
 use App\tb_periode;
 use App\tb_periode_kuesioner;
 use App\tb_tahun_periode;
@@ -331,5 +333,60 @@ class detailkuesionerController extends Controller
         $detail->status = $status;
         $detail->update();
         return response()->json(['statusInput' => 'berhasil terganti']);
+    }
+
+    public function bank_soal_data($id){
+        $detail_kuesioner = tb_detail_kuesioner::where('id_kuesioner', $id)->pluck('id_bank_soal')->toArray();
+        $bank_soal_kuesioner = tb_detail_soal_alumni::whereNotIn('id_detail_soal_alumni', array_filter($detail_kuesioner))->get();
+        return response()->json($bank_soal_kuesioner);
+    }
+
+    public function create_from_bank_soal($id, Request $request){
+        $all_bank_soal = tb_detail_soal_alumni::get();
+        foreach($all_bank_soal as $bank_soal){
+            if($request->{'bank_soal_' .$bank_soal->id_detail_soal_alumni}  != ""){
+
+                $detail_kuesioner = new tb_detail_kuesioner();
+                if($bank_soal->id_jenis ==  2){
+                    $detail_kuesioner->id_kuesioner = $id;
+                    $detail_kuesioner->id_jenis = $request->id_jenis;
+                    $detail_kuesioner->id_bank_soal = $bank_soal->id_detail_soal_alumni;
+                    $detail_kuesioner->pertanyaan = $bank_soal->pertanyaan;
+                    $detail_kuesioner->status = "Menunggu Konfirmasi";
+                    $detail_kuesioner->save();
+                }
+        
+                if($bank_soal->id_jenis ==  4){
+                    $detail_kuesioner->id_kuesioner = $id;
+                    $detail_kuesioner->id_jenis = $request->id_jenis;
+                    $detail_kuesioner->id_bank_soal = $bank_soal->id_detail_soal_alumni;
+                    $detail_kuesioner->pertanyaan = $bank_soal->pertanyaan;
+                    $detail_kuesioner->status = "Menunggu Konfirmasi";
+                    $detail_kuesioner->save();
+                }
+
+                if($bank_soal->id_jenis == 1 || $bank_soal->id_jenis == 3){
+                    $detail_kuesioner->id_kuesioner = $id;
+                    $detail_kuesioner->id_jenis = $bank_soal->id_jenis;
+                    $detail_kuesioner->id_bank_soal = $bank_soal->id_detail_soal_alumni;
+                    $detail_kuesioner->pertanyaan = $bank_soal->pertanyaan;
+                    $detail_kuesioner->status = "Menunggu Konfirmasi";
+                    $detail_kuesioner->save();
+
+                    $detail_kuesioner = tb_detail_kuesioner::find(tb_detail_kuesioner::max('id_detail_kuesioner'));
+                    $opsis = tb_opsi_bank_soal_alumni::where('id_soal_alumni', $bank_soal->id_detail_soal_alumni)->get();
+                    foreach($opsis as $opsi){
+                        $new_opsi = new tb_opsi();
+                        $new_opsi->opsi = $opsi->opsi;
+                        $new_opsi->id_detail_kuesioner = $detail_kuesioner->id_detail_kuesioner;
+                        $new_opsi->save();
+                    }
+                }
+
+
+            }
+            
+        }
+        return redirect()->route('show-kuesioner', $id)->with('statusInput', 'Data berhasil disimpan');
     }
 }

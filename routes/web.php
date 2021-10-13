@@ -158,7 +158,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/kuesioner/soal/{id}/edit', 'detailkuesionerController@edit');
     Route::post('/kuesioner/soal/{id}/update','detailkuesionerController@update');
     Route::get('/kuesioner/showkuesioner/{id}/{status}', 'detailkuesionerController@status');
- 
+    Route::get('/kuesioner/get-bank-soal/showkuesioner/{id}','detailkuesionerController@bank_soal_data')->name('get-bank-soal-kuesioner-detail');
+    Route::post('/kuesioner/post-bank-soal/showkuesioner/{id}','detailkuesionerController@create_from_bank_soal');
 
     //Kuesioner Stackholder
     Route::get('/kuesioner/stakeholder/{id}/edit', 'stackholderkuesionerController@edit');

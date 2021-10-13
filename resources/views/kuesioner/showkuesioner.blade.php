@@ -118,7 +118,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <button class="dropdown-item" data-toggle="modal" data-target="#create"><i class="fas fa-plus"></i> Tambah Pertanyaan Baru</button>
-              <a class="dropdown-item" href="#"><i class="fas fa-university"></i> Pilih dari Bank Soal</a>
+              <button class="dropdown-item" type="button" id="pilih_dari_bank_soal"><i class="fas fa-university"></i> Pilih dari Bank Soal</button>
             </div>
           </div>
         </div>
@@ -431,6 +431,74 @@
 	              </div>
 	            </div>
     </div>
+
+    {{-- PICK FROM BANK SOAL --}}
+<div class="modal fade modal-fullscreen" id="pilih_dari_bank_soal_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Pilih Pertanyaan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        
+        {{-- SPINNER --}}
+        <div id="loading_bank_soal" class="text-center mt-5" style="display:none;">
+          <input id="signup-token" name="_token" type="hidden" value="{{csrf_token()}}">
+          {{-- SPINNER --}}
+          <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        {{-- SPINNER --}}
+
+        <div id="tabel_bank_soal">
+          <div class="modal-body">
+            <form action="/admin/kuesioner/create" method="POST" id="simpan_bank_soal_form">
+              {{csrf_field()}}
+              <div class="table-responsive">
+                <table class="table table-bordered" id="" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th style="text-align: center; width:5%;">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="pilih_semua_soal">
+                          <label class="form-check-label" for="flexCheckDefault">
+                            Pilih semua
+                            </label>
+                        </div>
+                      </th>
+                      <th style="text-align:center;">Pertanyaan</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bank_soal_data">
+                  @foreach ($kuesioner as $quiz)
+                    <tr class="success">
+                      <td style="text-align: center;">
+                        <div class="form-check">
+                          <input class="form-check-input bank_soal_checkbox" type="checkbox" id="soal">
+                        </div>
+                      </td>
+                      <td >{{ $quiz->type_kuesioner }}</td>     
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                  <button type="submit" class="btn btn-success" id="button_submit_bank_soal">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('custom_javascript')
@@ -439,27 +507,38 @@
   function deleteOpsi(opsi){
     $('#'+opsi).hide();
   }
-  //Periode
-// $('#periode').change(function(){
-//   $('#id_periode').val($(this).val());
-//   $('#ganti').hide();
-//   $('#loading').show();
-//   jQuery.ajax({
-//     url: "{{url('admin/kuesioner/showkuesioner/filter/')}}" ,
-//     method: 'post',
-//     data: {
-//         _token: $('#signup-token').val(),
-//         id_periode: $(this).val(),
-//         id_kuesioner: {{ $id_kuesioner }}
-//     },
-//     success: function (result) {
-//       console.log(result);
-//       $('#loading').hide();
-//         $('.ganti').html(result.hasil);
-//         $('#ganti').show();
-//     }
-// });
-// })
+
+  //Choose Bank Soal
+  $('#pilih_dari_bank_soal').click(function(){
+    $('#tabel_bank_soal').hide();
+    $('#loading_bank_soal').show();
+    $.ajax({
+      type: 'GET',
+      url: '/admin/kuesioner/get-bank-soal/showkuesioner/{{ $id_kuesioner }}',
+      success: function (response){
+        console.log(response);
+        $('#simpan_bank_soal_form').attr('action', '/admin/kuesioner/post-bank-soal/showkuesioner/{{ $id_kuesioner }}');
+        $('#bank_soal_data').empty();
+        response.forEach(element => {
+            $('#bank_soal_data').append('<tr class="success"><td style="text-align: center;"><div class="form-check"><input class="form-check-input bank_soal_checkbox" type="checkbox" name="bank_soal_'+element['id_detail_soal_alumni']+'" id="bank_soal_'+element['id_detail_soal_alumni']+'"></div></td><td >'+element['pertanyaan']+'</td></tr>');
+        });
+        $('#tabel_bank_soal').show();
+        $('#loading_bank_soal').hide();
+      }
+    });
+    $('#pilih_dari_bank_soal_modal').modal('show');
+
+    //Check all
+    $('#pilih_semua_soal').change(function() {
+        if(this.checked) {
+          $('.bank_soal_checkbox').attr('checked', true);
+        }else{
+          $('.bank_soal_checkbox').attr('checked', false);
+        }
+        $('#textbox1').val(this.checked);        
+    });
+  });
+
 
     function deletebc(id){
         $("#form-delete-kuesioner").attr("action", "/admin/kuesioner/soal/"+id+"/delete");

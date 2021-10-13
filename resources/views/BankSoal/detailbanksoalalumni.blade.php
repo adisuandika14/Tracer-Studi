@@ -136,7 +136,7 @@
                               @endif
                                 <!-- <input type="text" class="form-control"  id="essay" name= "jawaban" value="" placeholder="Text Jawaban Singkat"> -->
                                 @foreach ($opsi as $opsis)
-                                  @if($detailss->id_bank_soal_alumni == $opsis->id_bank_soal_alumni)
+                                  @if($detailss->id_detail_soal_alumni == $opsis->id_soal_alumni)
                                     @if($detailss->id_jenis == 3)
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">

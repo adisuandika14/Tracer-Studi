@@ -313,11 +313,7 @@
     });
   });
 
-  
-
-
-
-
+  //Periode
   $('#periode').change(function(){
     $('#create_id_periode').val($(this).val());
     $('#ganti').hide();
