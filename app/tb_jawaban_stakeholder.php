@@ -25,4 +25,9 @@ class tb_jawaban_stakeholder extends Model
     {
         return $this->belongsTo('App\tb_opsi_stackholder','id_opsi_stackholder','id_opsi_stackholder');
     }
+
+    public function relasiJawabanstakeholdertoStakeholder()
+    {
+        return $this->belongsTo('App\tb_stakeholder','id_stakeholder','id_stakeholder');
+    }
 }

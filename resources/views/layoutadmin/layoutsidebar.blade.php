@@ -114,7 +114,7 @@
                     <a class="@yield('collapse5')" href="/admin/reportalumni">Report Alumni</a>
                 </div>
                 <div class="collapse-item">
-                    <a class="@yield('collapse6')" href="/admin/reportpengguna">Report Stakeholder</a>
+                    <a class="@yield('collapse6')" href="/admin/reportstakeholder">Report Stakeholder</a>
                 </div>
             </div>
         </div>

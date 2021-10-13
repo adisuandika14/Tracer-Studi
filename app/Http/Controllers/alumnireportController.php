@@ -19,7 +19,7 @@ class alumnireportController extends Controller
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::get();
         $periode = tb_periode::get();
-        return view ('/reportalumni/reportalumni', compact('tracers', 'prodi', 'angkatan','periode'));
+        return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan','periode'));
     }
 
     public function detailtracer($id){
@@ -27,7 +27,7 @@ class alumnireportController extends Controller
         $jawaban = tb_jawaban::with('relasiJawabantoDetail')->where('id_alumni', $alumni->id_alumni)->get();
 
         //dd($detailjawaban);
-        return view ('/kuesioner/detail-tracer', compact('alumni', 'jawaban'));
+        return view ('/report/detail-tracer', compact('alumni', 'jawaban'));
     }
 
     public function filtertracer(Request $request){
@@ -39,14 +39,14 @@ class alumnireportController extends Controller
             $prodi = tb_prodi::get();
             $angkatan = tb_angkatan::get();
             $id_angkatan = $request->angkatan;
-            return view ('/reportalumni/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_angkatan'));
+            return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_angkatan'));
         }else if($request->prodi != "" && $request->angkatan == ""){
             $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
             $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
             $prodi = tb_prodi::get();
             $angkatan = tb_angkatan::get();
             $id_prodi = $request->prodi;
-            return view ('/reportalumni/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_prodi'));
+            return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_prodi'));
         }else if($request->prodi != "" && $request->angkatan != ""){
             $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
             $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
@@ -54,7 +54,7 @@ class alumnireportController extends Controller
             $angkatan = tb_angkatan::get();
             $id_angkatan = $request->angkatan;
             $id_prodi = $request->prodi;
-            return view ('/reportalumni/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_prodi', 'id_angkatan'));
+            return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_prodi', 'id_angkatan'));
         }
 
 
@@ -63,6 +63,6 @@ class alumnireportController extends Controller
         $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->get();
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::get();
-        return view ('reportalumni/reportalumni', compact('tracers', 'prodi', 'angkatan'));
+        return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan'));
     }
 }

@@ -175,6 +175,11 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/reportalumni/{id}', 'alumnireportController@detailtracer');
     Route::post('/reportalumni/filter', 'alumnireportController@filtertracer');
 
+    //Report 
+    Route::get('/reportstakeholder', 'stakeholderreportController@report');
+    Route::get('/reportstakeholder/{id}', 'stakeholderreportController@detailreport');
+    Route::post('/reportstakeholder/filter', 'stakeholderreportController@filterreport');
+
 
 
 
