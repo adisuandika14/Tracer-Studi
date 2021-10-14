@@ -51,8 +51,8 @@
             <div class="table-responsive">
             <div class="small mb-1">Filter Data Tracer </div>
             <!-- <a style="margin-bottom: 10px;" class= "btn btn-warning dropdown-toggle text-white" id="toggles" ><i class="fas fa-search"></i> Advanced Search</a> -->
-            <form  method="POST" action="/admin/reportalumni/filter">
-                @csrf
+            <!-- <form  method="POST" action="/admin/reportalumni/filter">
+                @csrf -->
                 <table class="table" style="width: 85%;" id="example" cellspacing="0">
                     <tr>
                         <td style="width: 5%;">
@@ -90,15 +90,33 @@
                             </div> 
                         </td>
                         <td style="width: 5%;">
-                            <button style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" type="submit" > <i class="fas fa-search"></i> Filter</button>
+                            <div class="form-group">  
+                                <select name="kategori_1" class="custom-select" id="kategori_1" >
+                                    <option selected value="">-- Pilih Kategori Lulusan --</option>
+                                    @foreach ($kategori_1 as $k)
+                                        <option value="{{ $k->id_soal_alumni }}"
+                                            @isset($pertanyaan)
+                                                @if($k->id_soal_alumni == $id_soal_alumni)
+                                                    selected
+                                                @endif
+                                            @endisset
+                                            >{{$k->pertanyaan}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div> 
+                        </td>
+                        <td style="width: 5%;">
+                            <a  style="margin-bottom: 10px;" class= "btn btn-info text-white" id="filter"> <i class="fas fa-search"></i> Filter </a>
+                            <!-- <button style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" type="" id="filter" > <i class="fas fa-search"></i> Filter</button> -->
                             <a style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" href="/admin/tracer" > <i class="fas fa-sync"></i> Reset</a>
                         </td>
                     </tr>
                 </table>
-            </form>
+            <!-- </form> -->
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
                 <thead>
-                <tr>
+                <tr id="header">
                     <th>No.</th>
                     <th style="text-align:center;">Nama Alumni</th>
                     <th style="text-align:center;">Program Studi</th>
@@ -109,9 +127,9 @@
                 </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="datacell">
                 @foreach($tracers as $details)
-                <tr class="success">
+                <tr class="success" >
                     <td style="width: 1%;">{{ $loop->iteration }}</td>
                         <td style="width: 15%;">{{ $details->nama_alumni }}</td>
                         <td style="width: 10%;">{{ $details->relasiAlumnitoProdi->nama_prodi }}</td>
@@ -130,6 +148,46 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('#filter').on('click',function(e){
+            e.preventDefault();
+            const prodi = $('#prodi').val()
+            const angkatan = $('#angkatan').val()
+            const kategori_1 = $('#kategori_1').val()
+            // var ctx3 = document.getElementById('pertambahanAnggota');
+
+            $.ajax({
+                method : 'POST',
+                url : '/admin/reportalumni/filter',
+                data : {
+                "_token" : "{{ csrf_token() }}",
+                prodi : prodi,
+                angkatan : angkatan,
+                kategori_1 : kategori_1,
+                },
+                beforeSend : function() {
+                          $("#filter").attr('disabled', true);
+                },
+                success : (res) => {
+                    let yearval = ''
+                    let i
+                    res.map((val, i) => {
+                        yearval += ` ${val.i} `,
+                        i += 1
+                    })
+                    alert(yearval)
+                    $("#filter").removeAttr('disabled');
+                    $("#datacell").detach();
+                    $("#datacell").html(`
+                        ${yearval} 
+                    `);
+                }
+            }).done(()=>{})
+        })
+    })
+</script>
 @endsection
 
 

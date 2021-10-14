@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '82a83c5647504344314527ea0a1abf63d7c8870c',
+    'reference' => '8a7a7abe9b732e097e11f7db8ea5c8f63f134be1',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -171,12 +171,12 @@
     ),
     'facade/ignition' => 
     array (
-      'pretty_version' => '2.14.0',
-      'version' => '2.14.0.0',
+      'pretty_version' => '2.15.0',
+      'version' => '2.15.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c6126e291bd44ad3fe482537a145fc70e3320598',
+      'reference' => '3ee6e94815462bcf09bca0efc1c9069685df8da3',
     ),
     'facade/ignition-contracts' => 
     array (
@@ -243,12 +243,12 @@
     ),
     'guzzlehttp/promises' => 
     array (
-      'pretty_version' => '1.4.1',
-      'version' => '1.4.1.0',
+      'pretty_version' => '1.5.0',
+      'version' => '1.5.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8e7d04f1f6450fef59366c399cfad4b9383aa30d',
+      'reference' => '136a635e2b4a49b9d79e9c8fee267ffb257fdba0',
     ),
     'guzzlehttp/psr7' => 
     array (
@@ -530,7 +530,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '82a83c5647504344314527ea0a1abf63d7c8870c',
+      'reference' => '8a7a7abe9b732e097e11f7db8ea5c8f63f134be1',
     ),
     'laravel/tinker' => 
     array (
@@ -954,12 +954,12 @@
     ),
     'psy/psysh' => 
     array (
-      'pretty_version' => 'v0.10.8',
-      'version' => '0.10.8.0',
+      'pretty_version' => 'v0.10.9',
+      'version' => '0.10.9.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'e4573f47750dd6c92dca5aee543fa77513cbd8d3',
+      'reference' => '01281336c4ae557fe4a994544f30d3a1bc204375',
     ),
     'ralouphie/getallheaders' => 
     array (
@@ -972,12 +972,12 @@
     ),
     'ramsey/collection' => 
     array (
-      'pretty_version' => '1.2.1',
-      'version' => '1.2.1.0',
+      'pretty_version' => '1.2.2',
+      'version' => '1.2.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'eaca1dc1054ddd10cbd83c1461907bee6fb528fa',
+      'reference' => 'cccc74ee5e328031b15640b51056ee8d3bb66c0a',
     ),
     'ramsey/uuid' => 
     array (
