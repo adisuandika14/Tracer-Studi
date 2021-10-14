@@ -610,20 +610,7 @@
                 $("#edit_opsi2").prop('required',false);
                 for(let i = 1; i<=11; i++){
                   $('#edit_opsi'+i).fadeOut();
-                }
-                $('#edit_btnTambahOpsi').fadeOut();
-              }
-            });
-            }
-            $('#edit_id_jenis').change(function() {
-              if($('#edit_id_jenis').val() == 1 ||$('#edit_id_jenis').val() == 3){
-                $("#edit_opsi1").prop('required',true);
-                $("#edit_opsi2").prop('required',true);
-                opsi=1;
-                result.opsis.forEach(element => {
-                  $("#eedit_opsi"+opsi).val(element['opsi']);
-                  $("#edit_opsi"+opsi).fadeIn();
-                  opsi = opsi + 1;
+                }  
                   if(opsi<5){
                     $("#edit_btnTambahOpsi").show();
                   }

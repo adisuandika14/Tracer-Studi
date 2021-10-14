@@ -53,7 +53,7 @@
                     <a class="@yield('collapse1')" href="/admin/kuesioner">Kuesioner Alumni</a>
                 </div>
                 <div class="collapse-item">
-                    <a class="@yield('collapse2')" href="/admin/kuesioner/stackholder">Kuesioner Stakeholder</a>
+                    <a class="@yield('collapse2')" href="/admin/kuesioner/stakeholder">Kuesioner Stakeholder</a>
                 </div>
             </div>
         </div>
@@ -91,13 +91,13 @@
     </li>
 </div>
 
-<!-- <div class="nav-item">
+<div class="nav-item">
     <li class="@yield('active8')">
         <a class="nav-link" href="/admin/tracer">
             <i class="fas fa-fw fa-users"></i>
             <span>Data Tracer</span></a>
     </li>
-</div> -->
+</div>
 
 <!-- Nav Item - Pages Collapse Menu -->
 <div class="nav-item">

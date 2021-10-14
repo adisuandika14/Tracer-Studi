@@ -114,12 +114,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
    Route::get('/periodekuesioner/{id}/delete','kuesionerperiodeController@delete');
   
 
-   //Bank Soal stakeholder
-   Route::get('/banksoal/stakeholder','banksoalstakeholderController@show')->name('show-banksoal-stakeholder');
-   Route::post('/banksoal/stakeholder/create','banksoalstakeholderController@create');
-   Route::get('/banksoal/stakeholder/{id}/edit', 'banksoalstakeholderController@edit');
-   Route::post('/banksoal/stakeholder/{id}/update','banksoalstakeholderController@update');
-   Route::delete('/banksoal/stakeholder/{id}/delete','banksoalstakeholderController@delete');
+
    
 
    //Bank Soal Alumni
@@ -162,15 +157,30 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/kuesioner/post-bank-soal/showkuesioner/{id}','detailkuesionerController@create_from_bank_soal');
 
     //Kuesioner Stackholder
-    Route::get('/kuesioner/stakeholder/{id}/edit', 'stackholderkuesionerController@edit');
-    Route::get('/kuesioner/stackholder','stackholderkuesionerController@detail')->name('stackholder-kuesioner-show');
-    Route::post('/kuesioner/stackholder/create','stackholderkuesionerController@create');
-    Route::post('/kuesioner/stakeholder/{id}/update','stackholderkuesionerController@update');
-    Route::delete('/kuesioner/stackholder/{id}/delete','stackholderkuesionerController@delete');
-    //Route::get('/kuesioner/stackholder/showkuesioner/{id}','stackholderkuesionerController@detail')->name('stackholder-kuesioner');
-    //Route::get('/tracer', 'stackholderkuesionerController@detailjawaban');
-    Route::get('/kuesioner/stackholder/showkuesioner/{id}/{status}', 'stackholderkuesionerController@status');
-    Route::post('/kuesioner/stackholder/showkuesioner/filter','stackholderkuesionerController@filter')->name('stackholder-filter');
+    Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionerController@edit');
+    Route::get('/kuesioner/stakeholder','stakeholderkuesionerController@show')->name('stackholder-kuesioner-show');
+    Route::post('/kuesioner/stakeholder/create','stakeholderkuesionerController@create');
+    Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionerController@update');
+    Route::delete('/kuesioner/stakeholder/{id}/delete','stakeholderkuesionerController@delete');
+    Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'stakeholderkuesionerController@status');
+    Route::post('/kuesioner/stakeholder/filter','stakeholderkuesionerController@filter')->name('stackholder-filter');
+
+    //  //Detail Kuesioner Stackholder
+    //  Route::get('/kuesioner/stakeholder/{id}/edit', 'stackholderkuesionedetailController@edit');
+    //  Route::get('/kuesioner/stackholder','stackholderkuesionedetailController@detail')->name('stackholder-kuesioner-show');
+    //  Route::post('/kuesioner/stackholder/create','stackholderkuesionedetailController@create');
+    //  Route::post('/kuesioner/stakeholder/{id}/update','stackholderkuesionedetailController@update');
+    //  Route::delete('/kuesioner/stackholder/{id}/delete','stackholderkuesionedetailController@delete');
+    //  Route::get('/kuesioner/stackholder/showkuesioner/{id}/{status}', 'stackholderkuesionedetailController@status');
+    //  Route::post('/kuesioner/stackholder/showkuesioner/filter','stackholderkuesionedetailController@filter')->name('stackholder-filter');
+
+    //Bank Soal stakeholder
+    Route::get('/banksoal/stakeholder','banksoalstakeholderController@show')->name('show-banksoal-stakeholder');
+    Route::post('/banksoal/stakeholder/create','banksoalstakeholderController@create');
+    Route::get('/banksoal/stakeholder/{id}/edit', 'banksoalstakeholderController@edit');
+    Route::post('/banksoal/stakeholder/{id}/update','banksoalstakeholderController@update');
+    Route::delete('/banksoal/stakeholder/{id}/delete','banksoalstakeholderController@delete');
+    Route::post('/banksoal/stakeholder/filter','banksoalstakeholderController@filter')->name('stackholder-filter');
 
 
     //Report Alumni
