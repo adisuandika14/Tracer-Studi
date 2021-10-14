@@ -171,18 +171,31 @@
                           $("#filter").attr('disabled', true);
                 },
                 success : (res) => {
-                    let yearval = ''
-                    let i
-                    res.map((val, i) => {
-                        yearval += ` ${val.i} `,
+                    let httpval = ''
+                    let i = 0
+                    let z = 1
+                    res.tracers.map(i => {
+                        httpval +=`
+                        <tr class="success" >
+                            <td style="width: 1%;">${z}</td>
+                            <td style="width: 15%;">${i.nama_alumni}</td>
+                            <td style="width: 10%;">${i.relasi_alumnito_prodi.nama_prodi}</td>
+                            <td style="width: 5%;" >${i.relasi_alumnito_angkatan.tahun_angkatan}</td>
+                            <td style="width: 7%;" >${i.tahun_lulus}</td>
+                            <td style="width: 2%; text-align: center;" >
+                                <a style="margin-right:7px" href="/admin/reportalumni/${i.id_alumni}">
+                                    <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye">Lihat Data</i></button></a>
+                            </td>
+                        </tr>`
                         i += 1
+                        z += 1
                     })
-                    alert(yearval)
-                    $("#filter").removeAttr('disabled');
-                    $("#datacell").detach();
+                    alert(httpval)
+                    $("#filter").removeAttr('disabled')
+                    $("#datacell").remove()
                     $("#datacell").html(`
-                        ${yearval} 
-                    `);
+                        ${httpval} 
+                    `)
                 }
             }).done(()=>{})
         })

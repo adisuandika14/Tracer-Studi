@@ -77,43 +77,43 @@ class alumnireportController extends Controller
             // return redirect ('/admin/reportalumni');
         }else if($request->prodi == "" && $request->angkatan != ""){
             $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
-            $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
+            $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
             $prodi = tb_prodi::get();
             $angkatan = tb_angkatan::get();
             $id_angkatan = $request->angkatan;
-            $data['all_jawaban'] = [$all_jawaban];
-            $data['tracers'] = [$tracers];
-            $data['prodi'] = [$prodi];
-            $data['angkatan'] = [$angkatan];
-            $data['id_angkatan'] = [$id_angkatan];
+            $data['all_jawaban'] = $all_jawaban;
+            $data['tracers'] = $tracers;
+            $data['prodi'] = $prodi;
+            $data['angkatan'] = $angkatan;
+            $data['id_angkatan'] = $id_angkatan;
             return response()->json($data, 200);
             // return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_angkatan'));
         }else if($request->prodi != "" && $request->angkatan == ""){
             $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
-            $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
+            $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
             $prodi = tb_prodi::get();
             $angkatan = tb_angkatan::get();
             $id_prodi = $request->prodi;
-            $data['all_jawaban'] = [$all_jawaban];
-            $data['tracers'] = [$tracers];
-            $data['prodi'] = [$prodi];
-            $data['angkatan'] = [$angkatan];
+            $data['all_jawaban'] = $all_jawaban;
+            $data['tracers'] = $tracers;
+            $data['prodi'] = $prodi;
+            $data['angkatan'] = $angkatan;
             // $data['id_angkatan'] = [$id_angkatan];
             return response()->json($data, 200);
             // return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_prodi'));
         }else if($request->prodi != "" && $request->angkatan != ""){
             $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
-            $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
+            $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
             $prodi = tb_prodi::get();
             $angkatan = tb_angkatan::get();
             $id_angkatan = $request->angkatan;
             $id_prodi = $request->prodi;
-            $data['all_jawaban'] = [$all_jawaban];
-            $data['tracers'] = [$tracers];
-            $data['prodi'] = [$prodi];
-            $data['angkatan'] = [$angkatan];
-            $data['id_angkatan'] = [$id_angkatan];
-            $data['id_prodi'] = [$id_prodi];
+            $data['all_jawaban'] = $all_jawaban;
+            $data['tracers'] = $tracers;
+            $data['prodi'] = $prodi;
+            $data['angkatan'] = $angkatan;
+            $data['id_angkatan'] = $id_angkatan;
+            $data['id_prodi'] = $id_prodi;
             return response()->json($data, 200);
             // return response()->json();
             // return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_prodi', 'id_angkatan'));
@@ -122,7 +122,7 @@ class alumnireportController extends Controller
 
 
         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
-        $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->get();
+        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::get();
         return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan'));
