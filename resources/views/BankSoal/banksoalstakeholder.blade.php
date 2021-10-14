@@ -1,13 +1,9 @@
 @extends('layoutadmin.layout')
-@section('title', 'Detail Kuesioner')
+@section('title', 'Bank Soal Stakeholder')
 @section('content')
 @section('active10')
       nav-item active
 @endsection
-@section('collapse3')
-      nav-item active
-@endsection
-
 <!-- Begin Page Content -->
 <div class="container-fluid">
     @if (session()->has('statusInput'))
@@ -43,33 +39,56 @@
     <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Data Bank Soal Stakeholder</h6>
     </div>
-    <div class="card-body">
-      <div class="form-group" style="width: 250px;">
-        <button class="btn btn-success btn-sm mt-3" data-toggle="modal" data-target="#create"><i
-          class="fas fa-plus"></i> Tambah Sub Pertanyaaan
-        </button>
-    </div>
         <div class="card-body">
+          <div class="form-group" style="width: 250px;">
+            <label class=" font-weight-bold text-grey">Program Studi</label>
+            <select name="prodi" class="custom-select " style="width:250px; " id="prodi">
+                <option selected value="">-- Pilih Program Studi --</option>
+                @foreach ($prodis as $prodi)
+                    <option  value="{{$prodi->id_prodi}}" @if($prodi->id_prodi == $id_prodi) selected @endif>{{ $prodi->nama_prodi }}
+                    </option>
+                @endforeach
+            </select>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success btn-sm mt-3" data-toggle="modal" data-target="#create"><i
+              class="fas fa-plus"></i> Tambah Sub Pertanyaaan
+            </button>
+          </div>
+        
+
+        <div id="loading" class="text-center" style="display:none;">
+          <input id="signup-token" name="_token" type="hidden" value="{{csrf_token()}}">
+          {{-- SPINNER --}}
+          <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        {{-- SPINNER --}}
+
         <div class="switch" id="switch">
             <div class="table-responsive">
             <div class="container-fluid mt-4" style="align-content: center;">
                 <div class="form-group" >
                     <div class="form-group">
-                      @if($soal->isEmpty())
+                      @if($detail->isEmpty())
                       <div class="text-center">
                           Tidak ada data
                       </div>
                       @endif
-                        @foreach($soal as $soalss)
+                        @foreach($detail as $detailss)
                         <div class="card shadow mb-4">
                             <div class="card-body" name="card" id="card">
-                              @if($soalss->id_soal_stakeholder == $soalss->id_soal_stakeholder)
-                                <p> {{ $loop->iteration }}. {{$soalss->pertanyaan}}</p>
+                              @if($detailss->id_soal_stakeholder == $detailss->id_soal_stakeholder)
+                                <p> {{ $loop->iteration }}. {{$detailss->pertanyaan}}</p>
                               @endif
                                 <!-- <input type="text" class="form-control"  id="essay" name= "jawaban" value="" placeholder="Text Jawaban Singkat"> -->
                                 @foreach ($opsi as $opsis)
-                                  @if($soalss->id_soal_stakeholder == $opsis->id_soal_stakeholder)
-                                    @if($soalss->id_jenis == 3)
+                                  @if($detailss->id_soal_stakeholder == $opsis->id_soal_stakeholder)
+                                    @if($detailss->id_jenis == 3)
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
@@ -77,7 +96,7 @@
                                         </label>
                                       </div>
                                       @endif
-                                      @if($soalss->id_jenis == 1)
+                                      @if($detailss->id_jenis == 1)
                                       <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
                                         <label class="form-check-label" for="flexRadioDefault1">
@@ -85,7 +104,7 @@
                                         </label>
                                       </div>
                                       @endif
-                                      @if($soalss->id_jenis == 2 || $soalss->id_jenis == 4)
+                                      @if($detailss->id_jenis == 2 || $detailss->id_jenis == 4)
                                       <div class="form-group" style="display: none;">
                                         <input type="text" class="form-control"  placeholder="Text Jawaban Singkat">
                                       </div>
@@ -95,10 +114,10 @@
                             </div>
                             <div class="modal-footer">
                                 <!-- Edit -->
-                                <button class="btn btn-primary btn-sm" onclick="edit({{$soalss->id_soal_stakeholder}})"><i class="fas fa-edit"></i>
+                                <button class="btn btn-primary btn-sm" onclick="edit({{$detailss->id_soal_stakeholder}})"><i class="fas fa-edit"></i>
                                 </button> 
                                 <!--Delete -->
-                                <button class="btn btn-danger btn-sm" onclick="deletebc({{$soalss->id_soal_stakeholder}})"><i class="fas fa-trash"></i>
+                                <button class="btn btn-danger btn-sm" onclick="deletebc({{$detailss->id_soal_stakeholder}})"><i class="fas fa-trash"></i>
                                 </button>
 		                        </div>
                         </div>
@@ -146,7 +165,7 @@
 	          <div class="modal-dialog" role="document">
 	             <div class="modal-content">
 	                <div class="modal-header">
-	                  <h5 class="modal-title" id="exampleModalLabel">Masukkan Kuesioner</h5>
+	                  <h5 class="modal-title" id="exampleModalLabel">Masukkan Pertanyaan</h5>
 	                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	                      <span aria-hidden="true">&times;</span>
 	                    </button>
@@ -156,6 +175,7 @@
 	                <div class="modal-body">
 	      	          <form action="/admin/banksoal/stakeholder/create" method="POST">
                       {{csrf_field()}}
+                      <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}" hidden>
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="id_jenis" id="kuesioner" class="custom-select" required>
@@ -263,8 +283,18 @@
                     </div>
                   </div>
 	                <div class="modal-body" id="bodyEdit">
-	      	          <form action="/admin/banksoal/stakeholder/update" method="POST" id="edit-pertanyaan-form">
+	      	          <form action="/admin/banksoal/stakeholder/update/" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
+                      <div class="form-group">
+                        <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
+                                    <select name="id_jenis" id="kuesioner" class="custom-select" required>
+                                      <option value="">-- Pilih Jenis Kuesioner --</option>
+                                      <option value="1">Pilihan Ganda</option>
+                                      <option value="2">Jawaban Singkat</option>
+                                      <option value="3">Checkbox</option>
+                                      <option value="4">Tanggal</option>
+                                    </select>
+                      </div>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Pertanyaan</label>
                         <input type="text" class="form-control" id="edit_pertanyaan" name="edit_pertanyaan" placeholder="">
@@ -343,11 +373,36 @@
 	              </div>
 	            </div>
     </div>
-</div>
 @endsection
 
 @section('custom_javascript')
 <script>
+  //Default periode
+  $('#id_prodi').val({{$id_prodi}});
+  //DeleteOpsi
+  function deleteOpsi(opsi){
+    $('#'+opsi).hide();
+  }
+  //prodi
+$('#prodi').change(function(){
+  $('#id_prodi').val($(this).val());
+  $('#switch').hide();
+  $('#loading').show();
+  jQuery.ajax({
+    url: "{{url('admin/banksoal/stakeholder/filter/')}}" ,
+    method: 'post',
+    data: {
+        _token: $('#signup-token').val(),
+        id_prodi: $(this).val(),
+    },
+    success: function (result) {
+      console.log(result);
+      $('#loading').hide();
+        $('.switch').html(result.hasil);
+        $('#switch').show();
+    }
+  });
+})
 
     function deletebc(id){
         $("#form-delete-kuesioner").attr("action", "/admin/banksoal/stakeholder/"+id+"/delete");
@@ -359,7 +414,7 @@
     $("#loadingEdit").show();
     $('#update').modal('show');
     jQuery.ajax({
-      url: "/admin/banksoal/stakeholder/"+id+"/edit",
+      url: "/admin/kuesioner/stakeholder/"+id+"/edit",
       method: 'get',
       success: function(result){
         let opsi = 1;

@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class tb_periode extends Model
 {
+    use SoftDeletes;
     protected $table = 'tb_periode';
     protected $primaryKey = 'id_periode';
     protected $fillable = [

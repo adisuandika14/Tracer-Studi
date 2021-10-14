@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class tb_master_kuesioner extends Model
 {
+
+    use SoftDeletes;
     protected $table = 'tb_master_kuesioner';
     protected $primaryKey = 'id_master_kuesioner';
     protected $fillable = [

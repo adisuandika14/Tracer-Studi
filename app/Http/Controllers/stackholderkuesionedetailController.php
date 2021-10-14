@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use App\tb_prodi;
 use App\tb_jenis_kuesioner;
 use App\tb_opsi_stakeholder;
-use App\tb_kuesioner_stackholder;
+use App\tb_kuesioner_stakeholder;
 
-class stackholderkuesionerController extends Controller
+class stackholderkuesionedetailController extends Controller
 {
     public function detail()
     {
@@ -19,7 +19,7 @@ class stackholderkuesionerController extends Controller
         $kuesioner = tb_jenis_kuesioner::get();
         $opsi =tb_opsi_stakeholder::get();
         
-        $detail = tb_kuesioner_stackholder::get(); 
+        $detail = tb_kuesioner_stakeholder::get(); 
         //dd($detail);
         return view('kuesioner.stackholder.showkuesioner', compact('detail','kuesioner','opsi', 'id_prodi','prodis'));
     }
@@ -27,7 +27,7 @@ class stackholderkuesionerController extends Controller
 
     public function filter(Request $request)
     {
-        $detail = tb_kuesioner_stackholder::where('id_prodi', $request->id_prodi)->get();
+        $detail = tb_kuesioner_stakeholder::where('id_prodi', $request->id_prodi)->get();
         $opsi =tb_opsi_stakeholder::get();
         $hasil = view('kuesioner.stackholder.filter', ['detail' => $detail, 'opsi' => $opsi])->render();
         // $hasil = $kategori;
@@ -44,13 +44,12 @@ class stackholderkuesionerController extends Controller
             return back()->withErrors($validator);
         }
 
-        $kuesioner_stackholder = new tb_kuesioner_stackholder();
+        $kuesioner_stackholder = new tb_kuesioner_stakeholder();
 
         if($request->id_jenis ==  2){
             $kuesioner_stackholder->id_prodi = $request->id_prodi;
             $kuesioner_stackholder->id_jenis = 2;
             $kuesioner_stackholder->pertanyaan = $request->pertanyaan;
-            //$kuesioner_stackholder->status = "Menunggu Konfirmasi";
             $kuesioner_stackholder->save();
         }
 
@@ -58,10 +57,9 @@ class stackholderkuesionerController extends Controller
             $kuesioner_stackholder->id_prodi = $request->id_prodi;
             $kuesioner_stackholder->id_jenis = $request->id_jenis;
             $kuesioner_stackholder->pertanyaan = $request->pertanyaan;
-           // $kuesioner_stackholder->status = "Menunggu Konfirmasi";
             $kuesioner_stackholder->save();
 
-            $kuesioner_stackholder = tb_kuesioner_stackholder::find(tb_kuesioner_stackholder::max('id_kuesioner_stackholder'));
+            $kuesioner_stackholder = tb_kuesioner_stakeholder::find(tb_kuesioner_stakeholder::max('id_kuesioner_stackholder'));
             if($request->opsi1 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->opsi1;
@@ -133,7 +131,7 @@ class stackholderkuesionerController extends Controller
 
     public function delete($id)
     {
-        $kuesioner_stackholder = tb_kuesioner_stackholder::find($id);
+        $kuesioner_stackholder = tb_kuesioner_stakeholder::find($id);
         $kuesioner_stackholder->delete();
 
         $opsis = tb_opsi_stakeholder::get();
@@ -148,7 +146,7 @@ class stackholderkuesionerController extends Controller
 
     public function edit($id)
     {
-        $kuesioner_stackholder = tb_kuesioner_stackholder::find($id);
+        $kuesioner_stackholder = tb_kuesioner_stakeholder::find($id);
         $opsis = tb_opsi_stakeholder::where('id_kuesioner_stackholder', $kuesioner_stackholder->id_kuesioner_stackholder)->get();
         return response()->json(['success' => 'Berhasil', 'detail_kuesioner' => $kuesioner_stackholder, 'opsis' => $opsis]);
     }
@@ -165,7 +163,7 @@ class stackholderkuesionerController extends Controller
 
         
 
-        $kuesioner_stackholder = tb_kuesioner_stackholder::find($id);
+        $kuesioner_stackholder = tb_kuesioner_stakeholder::find($id);
 
         $opsis = tb_opsi_stakeholder::get();
         foreach($opsis as $opsi){
