@@ -54,7 +54,7 @@
             <!-- <form  method="POST" action="/admin/reportalumni/filter">
                 @csrf -->
                 <table class="table" style="width: 85%;" id="example" cellspacing="0">
-                    <tr>
+                    <tr id="filter_row">
                         <td style="width: 5%;">
                             <div class="form-group" >
                                 <select name="prodi" class="custom-select" id="prodi">
@@ -190,13 +190,13 @@
                         i += 1;
                         z += 1;
                     })
-                    alert(httpval);
+                    alert('Data Berhasil di Filter');
                     $("#filter").removeAttr('disabled');
                     $("#datacell").empty();
                     $("#datacell").html(`
                         ${httpval} 
                     `);
-                }
+                },
             }).done(()=>{})
         })
     })
