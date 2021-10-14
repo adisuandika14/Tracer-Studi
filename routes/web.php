@@ -163,6 +163,9 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionerController@update');
     Route::delete('/kuesioner/stakeholder/{id}/delete','stakeholderkuesionerController@delete');
     Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'stakeholderkuesionerController@status');
+    Route::get('/kuesioner/stakeholder/detail/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@detail_kuesioner');
+    Route::get('/kuesioner/stakeholder/get-bank-soal/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@bank_soal_data');
+    Route::post('/kuesioner/stakeholder/create/{id_prodi}/{id_periode}','stakeholderkuesionerController@create_from_bank_soal');
     Route::post('/kuesioner/stakeholder/filter','stakeholderkuesionerController@filter')->name('stackholder-filter');
 
     //  //Detail Kuesioner Stackholder

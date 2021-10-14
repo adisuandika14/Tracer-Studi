@@ -82,17 +82,7 @@
                           <td >{{ $prodis->nama_prodi }}</td>
                           <td style="width: 10%; align:center;">
                               <!-- Show -->
-                              <a href="/admin/kuesioner/showkuesioner/{{$prodis->id_prodi}}">
-                                  <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button></a>
-                                
-                              <!-- Edit -->
-                              <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                      data-target="#update{{$prodis->id_prodi}}"><i class="fas fa-edit"></i>
-                              </button>
-                              <!--Delete -->
-                              <button class="btn btn-danger btn-sm" data-toggle="modal"
-                                      data-target="#delete{{$prodis->id_prodi}}"><i class="fas fa-trash"></i>
-                              </button>
+                                <button type="button" id="show_kuesioner_btn" onclick="show_kuesioner({{$prodis->id_prodi}})" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>
                           </td>
                         </tr>
                       @endforeach
@@ -193,25 +183,28 @@
 
 @section('custom_javascript')
 <script>
+  function show_kuesioner(id_prodi){
+    window.location.href = "/admin/kuesioner/stakeholder/detail/"+id_prodi+"/"+$('#periode').val();
+  };
   //Periode
-  $('#periode').change(function(){
-    $('#ganti').hide();
-    $('#loading').show();
-    jQuery.ajax({
-      url: "{{url('admin/kuesioner/stakeholder/filter/')}}" ,
-      method: 'post',
-      data: {
-          _token: $('#signup-token').val(),
-          id_tahun_periode: $(this).val()
-      },
-      success: function (result) {
-        console.log(result);
-        $('#loading').hide();
-          $('.ganti').html(result.hasil);
-          $('#ganti').show();
-      }
-  });
-  })
+  // $('#periode').change(function(){
+  //   $('#ganti').hide();
+  //   $('#loading').show();
+  //   jQuery.ajax({
+  //     url: "{{url('admin/kuesioner/stakeholder/filter/')}}" ,
+  //     method: 'post',
+  //     data: {
+  //         _token: $('#signup-token').val(),
+  //         id_tahun_periode: $(this).val()
+  //     },
+  //     success: function (result) {
+  //       console.log(result);
+  //       $('#loading').hide();
+  //         $('.ganti').html(result.hasil);
+  //         $('#ganti').show();
+  //     }
+  // });
+  // })
 </script>
 @endsection
 

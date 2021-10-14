@@ -54,69 +54,69 @@ class banksoalstakeholderController extends Controller
             $bank_soal->pertanyaan = $request->pertanyaan;
             $bank_soal->save();
 
-            $bank_soal = tb_soal_stakeholder::find(tb_soal_stakeholder::max('id_bank_soal'));
+            $bank_soal = tb_soal_stakeholder::find(tb_soal_stakeholder::max('id_soal_stakeholder'));
             if($request->opsi1 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi1;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
 
             if($request->opsi2 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi2;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
 
             if($request->opsi3 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi3;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
 
             if($request->opsi4 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi4;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
 
             if($request->opsi5 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi5;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
             if($request->opsi6 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi6;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
             if($request->opsi7 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi7;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
             if($request->opsi8 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi8;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
             if($request->opsi9 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi9;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
             if($request->opsi10 != ""){
                 $opsi = new tb_opsi_soal_stakeholder();
                 $opsi->opsi = $request->opsi10;
-                $opsi->id_bank_soal = $bank_soal->id_bank_soal;
+                $opsi->id_soal_stakeholder = $bank_soal->id_soal_stakeholder;
                 $opsi->save();
             }
         }

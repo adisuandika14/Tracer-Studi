@@ -341,7 +341,7 @@ class detailkuesionerController extends Controller
         return response()->json($bank_soal_kuesioner);
     }
 
-    public function create_from_bank_soal($id, Request $request){
+    public function create_from_bank_soal($id_prodi, $id_periode, Request $request){
         $all_bank_soal = tb_detail_soal_alumni::get();
         foreach($all_bank_soal as $bank_soal){
             if($request->{'bank_soal_' .$bank_soal->id_detail_soal_alumni}  != ""){
