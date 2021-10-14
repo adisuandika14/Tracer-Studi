@@ -171,9 +171,9 @@
                           $("#filter").attr('disabled', true);
                 },
                 success : (res) => {
-                    let httpval = ''
-                    let i = 0
-                    let z = 1
+                    let httpval = '';
+                    let i = 0;
+                    let z = 1;
                     res.tracers.map(i => {
                         httpval +=`
                         <tr class="success" >
@@ -186,16 +186,16 @@
                                 <a style="margin-right:7px" href="/admin/reportalumni/${i.id_alumni}">
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye">Lihat Data</i></button></a>
                             </td>
-                        </tr>`
-                        i += 1
-                        z += 1
+                        </tr>`;
+                        i += 1;
+                        z += 1;
                     })
-                    alert(httpval)
-                    $("#filter").removeAttr('disabled')
-                    $("#datacell").remove()
+                    alert(httpval);
+                    $("#filter").removeAttr('disabled');
+                    $("#datacell").empty();
                     $("#datacell").html(`
                         ${httpval} 
-                    `)
+                    `);
                 }
             }).done(()=>{})
         })
