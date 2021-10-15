@@ -1,32 +1,26 @@
 <div class="table-responsive">
-    <div class="container-fluid mt-4" style="align-content: center;">
-        <div class="form-group" >
-            <div class="form-group">
-                @if($detail->isEmpty())
-                <div class="text-center">
-                    Tidak ada data
-                </div>
-                @endif
-                @foreach($detail as $detailss)
-                <div class="card shadow mb-4">
-                    <div class="card-body">
-                      @if($detailss->id_prodi == $detailss->id_prodi)
-                        <p> {{ $loop->iteration }}. {{$detailss->nama_prodi}}</p>
-                      @endif
-                    </div>
-                    <div class="modal-footer">
-                        <!-- Edit -->
-                        <button class="btn btn-primary btn-sm" onclick="edit({{$detailss->id_prodi}})"><i class="fas fa-edit"></i>
-                        </button> 
-                        <!--Delete -->
-                        <button class="btn btn-danger btn-sm" onclick="deletebc({{$detailss->id_prodi}})"><i class="fas fa-trash"></i>
-                        </button>
-                        </div>
-                </div>
-                @endforeach
-            </div>
-
-            </div>
-        </div>
-    </div>
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th style="text-align:center;">Program Studi</th>
+            <th style="text-align:center;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        @foreach ($detail as $detailss)
+        <tr class="success">
+            
+                <td style="width: 5%;">{{ $loop->iteration }}</td>
+                <td >{{ $detailss->nama_prodi }}</td>
+            
+              <td style="width: 10%; align:center;">
+                  <!-- Show -->
+                    <button type="button" id="show_kuesioner_btn" onclick="show_kuesioner({{$detailss->id_prodi}})" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>
+              </td>
+            </tr>
+          @endforeach
+          
+        </tbody>
+      </table>
 </div>

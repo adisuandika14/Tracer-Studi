@@ -187,24 +187,24 @@
     window.location.href = "/admin/kuesioner/stakeholder/detail/"+id_prodi+"/"+$('#periode').val();
   };
   //Periode
-  // $('#periode').change(function(){
-  //   $('#ganti').hide();
-  //   $('#loading').show();
-  //   jQuery.ajax({
-  //     url: "{{url('admin/kuesioner/stakeholder/filter/')}}" ,
-  //     method: 'post',
-  //     data: {
-  //         _token: $('#signup-token').val(),
-  //         id_tahun_periode: $(this).val()
-  //     },
-  //     success: function (result) {
-  //       console.log(result);
-  //       $('#loading').hide();
-  //         $('.ganti').html(result.hasil);
-  //         $('#ganti').show();
-  //     }
-  // });
-  // })
+  $('#periode').change(function(){
+    $('#ganti').hide();
+    $('#loading').show();
+    jQuery.ajax({
+      url: "{{url('admin/kuesioner/stakeholder/filter/')}}" ,
+      method: 'post',
+      data: {
+          _token: $('#signup-token').val(),
+          id_tahun_periode: $(this).val()
+      },
+      success: function (result) {
+        console.log(result);
+        $('#loading').hide();
+          $('.ganti').html(result.hasil);
+          $('#ganti').show();
+      }
+  });
+  })
 </script>
 @endsection
 

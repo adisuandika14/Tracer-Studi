@@ -1,11 +1,13 @@
 @extends('layoutadmin.layout')
-@section('title', 'Detail Kuesioner')
+@section('title', 'Detail Kuesioner Stakeholder')
 @section('content')
 @section('active3')
       nav-item active
 @endsection
 <!-- Begin Page Content -->
 <div class="container-fluid">
+  <h1 class="h4 mb-3 text-gray-800">Periode - {{$tahun}}</h1>
+  <h1 class="h5 mb-4 text-gray-800">Program Studi - {{$prodi}}</h1>
     @if (session()->has('statusInput'))
       <div class="row">
         <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
@@ -37,7 +39,7 @@
 
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Data Pertanyaan Stackholder</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Data Pertanyaan Stakeholder</h6>
     </div>
         <div class="card-body">
           <div class="form-group" style="width: 250px;">
@@ -278,7 +280,7 @@
                     </div>
                   </div>
 	                <div class="modal-body" id="bodyEdit">
-	      	          <form action="/admin/kuesioner/soal/update/" method="POST" id="edit-pertanyaan-form">
+	      	          <form action="/admin/kuesioner/stakeholder/detail/update/" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
@@ -474,7 +476,7 @@ $('#prodi').change(function(){
   $('#switch').hide();
   $('#loading').show();
   jQuery.ajax({
-    url: "{{url('admin/kuesioner/stackholder/showkuesioner/filter/')}}" ,
+    url: "{{url('admin/kuesioner/stakeholder/showkuesioner/filter/')}}" ,
     method: 'post',
     data: {
         _token: $('#signup-token').val(),
@@ -490,7 +492,7 @@ $('#prodi').change(function(){
 })
 
     function deletebc(id){
-        $("#form-delete-kuesioner").attr("action", "/admin/kuesioner/stackholder/"+id+"/delete");
+        $("#form-delete-kuesioner").attr("action", "/admin/kuesioner/stakeholder/"+id+"/delete");
         $('#deleteModal').modal('show');
     }
 
@@ -505,10 +507,10 @@ $('#prodi').change(function(){
         let opsi = 1;
         let count = 1;
         console.log(result);
-            $("#edit_id_jenis").val(result.detail_kuesioner['id_jenis']);
-            $("#edit_pertanyaan").val(result.detail_kuesioner['pertanyaan']);
-            $("#edit-pertanyaan-form").attr("action", "/admin/kuesioner/stakeholder/"+result.detail_kuesioner['id_kuesioner_stackholder']+"/update");
-            if(result.detail_kuesioner['id_jenis'] == 1 || result.detail_kuesioner['id_jenis'] == 3){
+            $("#edit_id_jenis").val(result.kuesioner_stakeholder['id_jenis']);
+            $("#edit_pertanyaan").val(result.kuesioner_stakeholder['pertanyaan']);
+            $("#edit-pertanyaan-form").attr("action", "/admin/kuesioner/stakeholder/detail/"+result.kuesioner_stakeholder['id_kuesioner_stakeholder']+"/update");
+            if(result.kuesioner_stakeholder['id_jenis'] == 1 || result.kuesioner_stakeholder['id_jenis'] == 3){
               $("#edit_opsi1").prop('required',true);
               $("#edit_opsi2").prop('required',true);
               opsi=1

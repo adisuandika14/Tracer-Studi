@@ -48,7 +48,7 @@
             <div class="table-responsive">
             <div class="small mb-1">Filter Data Tracer </div>
             <!-- <a style="margin-bottom: 10px;" class= "btn btn-warning dropdown-toggle text-white" id="toggles" ><i class="fas fa-search"></i> Advanced Search</a> -->
-            <form  method="POST" action="/admin/tracer/filter">
+            {{-- <form  method="POST" action="/admin/tracer/filter">
                 @csrf
                 <table class="table" style="width: 85%;" id="example" cellspacing="0">
                     <tr>
@@ -87,18 +87,12 @@
                             </div> 
                         </td>
                         <td style="width: 5%;">
-                            <!-- <button id="toggles"  class="btn btn-info btn-icon-split">
-                                <span  class="icon text-white-50" type="submit">
-                                    <i  class="fas fa-search"></i>
-                                </span>
-                                <span class="text">Search</span>
-                            </button> -->
                             <button style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" type="submit" > <i class="fas fa-search"></i> Filter</button>
                             <a style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" href="/admin/tracer" > <i class="fas fa-sync"></i> Reset</a>
                         </td>
                     </tr>
                 </table>
-            </form>
+            </form> --}}
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
                 <thead>
                 <tr>
@@ -113,7 +107,7 @@
                 </thead>
 
                 <tbody>
-                @foreach($tracers as $details)
+                @foreach($detail as $details)
                 <tr class="success">
                     <td style="width: 1%;">{{ $loop->iteration }}</td>
                         <td style="width: 15%;">{{ $details->nama_alumni }}</td>

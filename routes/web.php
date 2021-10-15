@@ -143,7 +143,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/kuesioner/get-bank-soal/{id_periode}','kuesionerController@bank_soal_data')->name('get-bank-soal-kuesioner');
     Route::post('/kuesioner/create/{id_periode}','kuesionerController@create_from_bank_soal');
 
-    //Route::get('/tracer','kuesionerController@showtracer');
+    Route::get('/tracer','kuesionerController@showtracer');
 
     //Detail Kuesioner
     Route::get('/kuesioner/showkuesioner/{id}','detailkuesionerController@detail')->name('show-kuesioner');
@@ -156,26 +156,27 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/kuesioner/get-bank-soal/showkuesioner/{id}','detailkuesionerController@bank_soal_data')->name('get-bank-soal-kuesioner-detail');
     Route::post('/kuesioner/post-bank-soal/showkuesioner/{id}','detailkuesionerController@create_from_bank_soal');
 
-    //Kuesioner Stackholder
+    //Kuesioner Stakeholder
     Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionerController@edit');
-    Route::get('/kuesioner/stakeholder','stakeholderkuesionerController@show')->name('stackholder-kuesioner-show');
+    Route::get('/kuesioner/stakeholder','stakeholderkuesionerController@show')->name('stakeholder-kuesioner-show');
     Route::post('/kuesioner/stakeholder/create','stakeholderkuesionerController@create');
     Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionerController@update');
     Route::delete('/kuesioner/stakeholder/{id}/delete','stakeholderkuesionerController@delete');
     Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'stakeholderkuesionerController@status');
+    
     Route::get('/kuesioner/stakeholder/detail/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@detail_kuesioner');
     Route::get('/kuesioner/stakeholder/get-bank-soal/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@bank_soal_data');
     Route::post('/kuesioner/stakeholder/create/{id_prodi}/{id_periode}','stakeholderkuesionerController@create_from_bank_soal');
-    Route::post('/kuesioner/stakeholder/filter','stakeholderkuesionerController@filter')->name('stackholder-filter');
+    Route::post('/kuesioner/stakeholder/filter','stakeholderkuesionerController@filter')->name('stakeholder-filter');
 
-    //  //Detail Kuesioner Stackholder
-    //  Route::get('/kuesioner/stakeholder/{id}/edit', 'stackholderkuesionedetailController@edit');
-    //  Route::get('/kuesioner/stackholder','stackholderkuesionedetailController@detail')->name('stackholder-kuesioner-show');
-    //  Route::post('/kuesioner/stackholder/create','stackholderkuesionedetailController@create');
-    //  Route::post('/kuesioner/stakeholder/{id}/update','stackholderkuesionedetailController@update');
-    //  Route::delete('/kuesioner/stackholder/{id}/delete','stackholderkuesionedetailController@delete');
-    //  Route::get('/kuesioner/stackholder/showkuesioner/{id}/{status}', 'stackholderkuesionedetailController@status');
-    //  Route::post('/kuesioner/stackholder/showkuesioner/filter','stackholderkuesionedetailController@filter')->name('stackholder-filter');
+    //  //Detail Kuesioner stakeholder
+    //  Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionedetailController@edit');
+    //  Route::get('/kuesioner/stakeholder','stakeholderkuesionedetailController@detail')->name('stakeholder-kuesioner-show');
+    //  Route::post('/kuesioner/stakeholder/create','stakeholderkuesionedetailController@create');
+    //  Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionedetailController@update');
+    //  Route::delete('/kuesioner/stakeholder/{id}/delete','stakeholderkuesionedetailController@delete');
+    //  Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'stakeholderkuesionedetailController@status');
+    //  Route::post('/kuesioner/stakeholder/showkuesioner/filter','stakeholderkuesionedetailController@filter')->name('stakeholder-filter');
 
     //Bank Soal stakeholder
     Route::get('/banksoal/stakeholder','banksoalstakeholderController@show')->name('show-banksoal-stakeholder');
@@ -183,7 +184,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/banksoal/stakeholder/{id}/edit', 'banksoalstakeholderController@edit');
     Route::post('/banksoal/stakeholder/{id}/update','banksoalstakeholderController@update');
     Route::delete('/banksoal/stakeholder/{id}/delete','banksoalstakeholderController@delete');
-    Route::post('/banksoal/stakeholder/filter','banksoalstakeholderController@filter')->name('stackholder-filter');
+    Route::post('/banksoal/stakeholder/filter','banksoalstakeholderController@filter')->name('stakeholder-filter');
 
 
     //Report Alumni

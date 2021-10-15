@@ -25,7 +25,9 @@ class stakeholderkuesionerController extends Controller
     public function detail_kuesioner($id_prodi, $id_periode){
         $detail = tb_kuesioner_stakeholder::where('id_prodi', $id_prodi)->where('id_tahun_periode', $id_periode)->get();
         $opsi =tb_opsi_stakeholder::get();
-        return view('kuesioner/stakeholder/showkuesioner', compact('detail', 'id_prodi', 'id_periode', 'opsi'));
+        $tahun = tb_tahun_periode::find($id_periode)->tahun_periode;
+        $prodi = tb_prodi::find($id_prodi)->nama_prodi;
+        return view('kuesioner/stakeholder/showkuesioner', compact('detail', 'id_prodi', 'id_periode', 'opsi','tahun','prodi'));
     }
 
     public function create(Request $request){
@@ -182,19 +184,148 @@ class stakeholderkuesionerController extends Controller
                         $new_opsi->save();
                     }
                 }
-
-
             }
-            
         }
         return redirect('/admin/kuesioner/stakeholder/detail/'.$id_prodi.'/'.$id_periode)->with('statusInput', 'Pertanyaan berhasil ditambahkan');
     }
 
-    // public function filter(Request $request)
-    // {
-    //     $detail = tb_kuesioner_stakeholder::where('id_tahun_periode', $request->id_tahun_periode)->get();
-    //     $hasil = view('kuesioner.stakeholder.filterkuesioner', ['detail' => $detail])->render();
-    //     // $hasil = $kategori;
-    //     return response()->json(['success' => 'Produk difilter', 'hasil' => $hasil]);
-    // }
+    public function edit($id)
+    {
+        $kuesioner_stakeholder = tb_kuesioner_stakeholder::find($id);
+        $opsis = tb_opsi_stakeholder::where('id_kuesioner_stakeholder', $kuesioner_stakeholder->id_kuesioner_stakeholder)->get();
+        return response()->json(['success' => 'Berhasil', 'detail_kuesioner' => $kuesioner_stakeholder, 'opsis' => $opsis]);
+    }
+
+    public function update($id, Request $request){
+        $validator = Validator::make($request->all(), [
+            'edit_id_jenis' => 'required',
+            'edit_pertanyaan' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return back()->withErrors($validator);
+        }
+
+        $kuesioner_stakeholder = tb_kuesioner_stakeholder::find($id);
+
+        $opsis = tb_opsi_stakeholder::get();
+        foreach($opsis as $opsi){
+            if($opsi->id_kuesioner_stakeholder == $id){
+                $opsi->delete();
+            }
+        }
+
+        if($request->edit_id_jenis ==  2){
+            $kuesioner_stakeholder->id_kuesioner_stakeholder = $request->id_kuesioner_stakeholder;
+            $kuesioner_stakeholder->id_jenis = 2;
+            $kuesioner_stakeholder->pertanyaan = $request->edit_pertanyaan;
+            $kuesioner_stakeholder->status = "Menunggu Konfirmasi";
+            $kuesioner_stakeholder->update();
+        }
+        if($request->edit_id_jenis ==  4){
+            $kuesioner_stakeholder->id_kuesioner_stakeholder = $request->id_kuesioner_stakeholder;
+            $kuesioner_stakeholder->id_jenis = 4;
+            $kuesioner_stakeholder->pertanyaan = $request->edit_pertanyaan;
+            $kuesioner_stakeholder->status = "Menunggu Konfirmasi";
+            $kuesioner_stakeholder->update();
+        }
+
+        if($request->edit_id_jenis == 1 || $request->edit_id_jenis == 3){
+            $kuesioner_stakeholder->id_kuesioner_stakeholder = $request->id_kuesioner_stakeholder;
+            $kuesioner_stakeholder->id_jenis = 1;
+            $kuesioner_stakeholder->pertanyaan = $request->edit_pertanyaan;
+            $kuesioner_stakeholder->status = "Menunggu Konfirmasi";
+            $kuesioner_stakeholder->update();
+
+            if($request->edit_opsi1 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi1;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+
+            if($request->edit_opsi2 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi2;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+
+            if($request->edit_opsi3 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi3;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+
+            if($request->edit_opsi4 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi4;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+
+            if($request->edit_opsi5 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi5;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+            if($request->edit_opsi6 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi6;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+            if($request->edit_opsi7 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi7;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+            if($request->edit_opsi8 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi8;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+            if($request->edit_opsi9 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi9;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+            if($request->edit_opsi10 != ""){
+                $opsi = new tb_opsi_stakeholder();
+                $opsi->opsi = $request->edit_opsi10;
+                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->save();
+            }
+        }
+
+        return redirect()->route('stakeholder-kuesioner-show', $request->id_kuesioner)->with('statusInput', 'Pertanyaan berhasil diperbaharui');
+    }
+
+    public function delete($id)
+    {
+        $detail_kuesioner = tb_kuesioner_stakeholder::find($id);
+        $detail_kuesioner->delete();
+
+        $opsis = tb_opsi_stakeholder::get();
+        foreach($opsis as $opsi){
+            if($opsi->id_kuesioner_stakeholder == $id){
+                $opsi->delete();
+            }
+        }
+        return back()->with('statusInput', 'Pertanyaan berhasil dihapus');
+    }
+
+
+    public function filter(Request $request)
+    {
+        $detail = tb_prodi::get();
+        $hasil = view('kuesioner.stakeholder.filterkuesioner', ['detail' => $detail])->render();
+        // $hasil = $kategori;
+        return response()->json(['success' => 'Produk difilter', 'hasil' => $hasil]);
+    }
 }

@@ -84,42 +84,12 @@ class kuesionerController extends Controller
 
 
     public function showtracer(){
-        //$tracer = tb_jawaban::with('relasiJawabantoAlumni','relasijawabantoDetailkuesioner')->get();
+        $tracer = tb_jawaban::with('relasiJawabantoAlumni','relasijawabantoDetail')->get();
 
-        // $alumni = tb_alumni::all();
-        // $angkatan = tb_angkatan::all();
-        // $prodi = tb_prodi::all();
-        // $detail = tb_jawaban::all();
-
+        $id = tb_alumni::get();
+        $detail = tb_jawaban::where('id_jawaban', $id)->get();
+        $id_jawaban = $id;
         
-        // $detail = tb_jawaban::where('id_jawaban', $id)->get();
-
-        // $id_jawaban = $id;
-
-        // $tracer->relasiJawabantoAlumni()->nama_alumni;
-        // $tracer->relasijawabantoDetailkuesioner->pertanyaan;
-        // $tracer->relasijawabantoDetailkuesioner->relasiDetailtoKuesioner->type_kuesioner;
-        $detail = DB::select('SELECT
-        `tb_jawaban`.`jawaban`
-        , `tb_alumni`.`nama_alumni`
-        , `tb_alumni`.`id_angkatan`
-        , `tb_alumni`.`id_prodi`
-        , `tb_alumni`.`tahun_lulus`
-        , `tb_angkatan`.`tahun_angkatan`
-        , `tb_prodi`.`nama_prodi`
-        , `tb_detail_kuesioner`.`pertanyaan`
-    FROM
-        `db_tracer_study`.`tb_alumni`
-        INNER JOIN `db_tracer_study`.`tb_angkatan` 
-            ON (`tb_alumni`.`id_angkatan` = `tb_angkatan`.`id_angkatan`)
-        INNER JOIN `db_tracer_study`.`tb_prodi` 
-            ON (`tb_alumni`.`id_prodi` = `tb_prodi`.`id_prodi`)
-        INNER JOIN `db_tracer_study`.`tb_jawaban` 
-            ON (`tb_jawaban`.`id_alumni` = `tb_alumni`.`id_alumni`)
-        INNER JOIN `db_tracer_study`.`tb_detail_kuesioner` 
-            ON (`tb_jawaban`.`id_detail_kuesioner` = `tb_detail_kuesioner`.`id_detail_kuesioner`);');
-
-
         return view('/kuesioner/tracer',compact('detail'));
     }
 
