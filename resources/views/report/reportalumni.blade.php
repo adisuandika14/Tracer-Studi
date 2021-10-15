@@ -54,7 +54,7 @@
             <!-- <form  method="POST" action="/admin/reportalumni/filter">
                 @csrf -->
                 <table class="table" style="width: 85%;" id="example" cellspacing="0">
-                    <tr>
+                    <tr id="filter_row">
                         <td style="width: 5%;">
                             <div class="form-group" >
                                 <select name="prodi" class="custom-select" id="prodi">
@@ -171,19 +171,32 @@
                           $("#filter").attr('disabled', true);
                 },
                 success : (res) => {
-                    let yearval = ''
-                    let i
-                    res.map((val, i) => {
-                        yearval += ` ${val.i} `,
-                        i += 1
+                    let httpval = '';
+                    let i = 0;
+                    let z = 1;
+                    res.tracers.map(i => {
+                        httpval +=`
+                        <tr class="success" >
+                            <td style="width: 1%;">${z}</td>
+                            <td style="width: 15%;">${i.nama_alumni}</td>
+                            <td style="width: 10%;">${i.relasi_alumnito_prodi.nama_prodi}</td>
+                            <td style="width: 5%;" >${i.relasi_alumnito_angkatan.tahun_angkatan}</td>
+                            <td style="width: 7%;" >${i.tahun_lulus}</td>
+                            <td style="width: 2%; text-align: center;" >
+                                <a style="margin-right:7px" href="/admin/reportalumni/${i.id_alumni}">
+                                    <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye">Lihat Data</i></button></a>
+                            </td>
+                        </tr>`;
+                        i += 1;
+                        z += 1;
                     })
-                    alert(yearval)
+                    alert('Data Berhasil di Filter');
                     $("#filter").removeAttr('disabled');
-                    $("#datacell").detach();
+                    $("#datacell").empty();
                     $("#datacell").html(`
-                        ${yearval} 
+                        ${httpval} 
                     `);
-                }
+                },
             }).done(()=>{})
         })
     })
