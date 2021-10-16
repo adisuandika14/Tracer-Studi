@@ -34,9 +34,9 @@ class dashboardController extends Controller
     }
 
 
-    public function export(){
-        return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
-    }
+    // public function export(){
+    //     return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
+    // }
 
     public function chartjs()
     {
@@ -45,17 +45,7 @@ class dashboardController extends Controller
         $pengumuman = DB::table('tb_pengumuman')->count('id_pengumuman');
         $lowongan = DB::table('tb_lowongan')->count('id_lowongan');
         $angkatan = tb_angkatan::get();
-
-        // $users = tb_angkatan::find('tahun_angkatan');
-        // $chart = tb_alumni::find($users, 'nama_alumni')
-        //     //->title("chart")
-        //     ->elementLabel("Total Luluan Mahasiswa")
-        //     ->dimensions(1000, 500)
-        //     ->responsive(false)
-        //     ->groupByMonth(date('Y'), true);
-        // return view('/admin/dashboard',compact('chart','alumni','jawaban','pengumuman','lowongan'));
-
-        // Get users grouped by age
+        
         $groups = DB::table('tb_alumni')
                         ->select('id_alumni', DB::raw('count(*) as total'))
                         ->groupBy('id_angkatan->tahun_angkatan')

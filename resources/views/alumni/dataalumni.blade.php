@@ -46,8 +46,6 @@
                 <i
                   class="fas fa-upload fa-sm text-white-50"></i>Import Excel
                 </button>
-                  <!-- <a href="{{action('dashboardController@export')}}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                  class="fas fa-download fa-sm text-white-50"></i> Export Data Alumni</a> -->
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>

@@ -27,18 +27,18 @@
                     -->
 
                 <td style="width: 10%">
-                    <!-- Show -->
-                    <a style="margin-right:7px" href="/admin/kuesioner/showkuesioner/{{$quiz->id_kuesioner}}">
-                        <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button></a>
-                        
-                    <!-- Edit -->
-                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                            data-target="#update{{$quiz->id_kuesioner}}"><i class="fas fa-edit"></i>
-                    </button>
-                    <!--Delete -->
-                    <button class="btn btn-danger btn-sm" data-toggle="modal"
-                            data-target="#delete{{$quiz->id_kuesioner}}"><i class="fas fa-trash"></i>
-                    </button>
+                  <!-- Show -->
+                  <a href="/admin/kuesioner/showkuesioner/{{$quiz->id_kuesioner}}">
+                    <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button></a>
+                    
+                  <!-- Edit -->
+                  <button class="btn btn-primary btn-sm" data-toggle="modal"
+                          data-target="#update{{$quiz->id_kuesioner}}"><i class="fas fa-edit"></i>
+                  </button>
+                  <!--Delete -->
+                  <button class="btn btn-danger btn-sm" data-toggle="modal"
+                          data-target="#delete{{$quiz->id_kuesioner}}"><i class="fas fa-trash"></i>
+                  </button>
                 </td>
         </tr>
         @endforeach

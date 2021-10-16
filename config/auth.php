@@ -50,6 +50,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'pimpinan' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
         'alumni' => [
             'driver' => 'session',
             'provider' => 'alumni',

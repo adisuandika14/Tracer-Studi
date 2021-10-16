@@ -212,7 +212,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
 
 
     // //Export Excel
-    // Route::get('/export', 'dashboardController@export');
+    Route::get('/export', 'dashboardController@export');
     Route::get('/export', 'alumniController@export_mapping')->name('tracer.export') ;
 
     //Import Excel
@@ -227,7 +227,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
 //<input type="text" class="form-control" id="edit_id_kuesioner" name="id_kuesioner" value="{{$id_kuesioner}}" hidden>
 
 
-Route::prefix('pimpinan')->group(function(){
+Route::group(['prefix' => 'pimpinan',  'middleware' => 'AdminMiddleware'],function(){
 
     //Auth
     Route::get('/profile', 'AuthPimpinanController@profile')->name('admin-profile-edit');

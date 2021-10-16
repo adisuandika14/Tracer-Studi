@@ -181,7 +181,7 @@
                           <option value="4">Tanggal</option>
                         </select>
                       </div>
-                      <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}" hidden>
+                      {{-- <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}" hidden> --}}
                       <input type="text" class="form-control" id="id_tahun_periode" name="id_tahun_periode" value="{{$id_periode}}" hidden>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Pertanyaan</label>
