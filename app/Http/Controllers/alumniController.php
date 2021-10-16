@@ -15,6 +15,9 @@ use App\tb_provinsi;
 use App\tb_prodi;
 use App\tb_gender;
 use App\tb_notifikasi;
+use App\tb_jawaban;
+use App\tb_soal_alumni;
+use App\tb_periode;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\District;
@@ -222,5 +225,17 @@ class alumniController extends Controller
 
         return redirect('/admin/alumni');
     }
+
+    public function tracer(){
+        $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+        $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->get();
+        $kategori_1 = tb_soal_alumni::all();
+        // $kategori_2 = tb_soal_alumni::all();
+        $prodi = tb_prodi::get();
+        $angkatan = tb_angkatan::get();
+        $periode = tb_periode::get();
+        return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1'));
+    }
+
 
 }

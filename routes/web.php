@@ -53,6 +53,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/alumni/{id}/delete','alumniController@delete');
     Route::post('/alumni/status', 'alumniController@status');
     Route::get('/baca-notif/{id}', 'alumniController@bacaNotif');
+    Route::get('/tracer','alumniController@tracer');
+
 
     //Pengumuman
     Route::get('/pengumuman','pengumumanController@show');
@@ -143,7 +145,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/kuesioner/get-bank-soal/{id_periode}','kuesionerController@bank_soal_data')->name('get-bank-soal-kuesioner');
     Route::post('/kuesioner/create/{id_periode}','kuesionerController@create_from_bank_soal');
 
-    Route::get('/tracer','kuesionerController@showtracer');
+    
 
     //Detail Kuesioner
     Route::get('/kuesioner/showkuesioner/{id}','detailkuesionerController@detail')->name('show-kuesioner');
@@ -255,7 +257,7 @@ Route::prefix('pimpinan')->group(function(){
     //Kuesioner Stakeholder
     Route::get('/kuesioner/stakeholder','pimpinanstakeholderController@show')->name('stakeholder-kuesioner-show');
     Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'pimpinanstakeholderController@status');
-    Route::get('/kuesioner/stakeholder/detail/{id_prodi}/{id_periode}', 'pimpinanstakeholderController@detailkuesioner');
+    Route::get('/kuesioner/stakeholder/detail/{id_prodi}/{id_periode}', 'pimpinanstakeholderController@detail_kuesioner');
     Route::post('/kuesioner/stakeholder/filter','pimpinanstakeholderController@filter')->name('stakeholder-filter');
 
 

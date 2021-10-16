@@ -107,7 +107,7 @@
                 </thead>
 
                 <tbody>
-                @foreach($detail as $details)
+                @foreach($tracers as $details)
                 <tr class="success">
                     <td style="width: 1%;">{{ $loop->iteration }}</td>
                         <td style="width: 15%;">{{ $details->nama_alumni }}</td>
