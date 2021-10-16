@@ -132,9 +132,13 @@ class alumniController extends Controller
     }
 
 
-    public function export(){
-        return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
+    public function export_mapping() {
+        return Excel::download( new AlumniExport(), 'Data Tracer Lulusan Alumni Dakulltas Teknik.xlsx') ;
     }
+
+    // public function export(){
+    //     return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
+    // }
 
 
     public function import_excel(Request $request) 

@@ -38,19 +38,45 @@
     </li>
 </div>
 
+<!-- Nav Item - Pages Collapse Menu -->
 <div class="nav-item">
     <li class="@yield('active3')">
-        <a class="nav-link" href="/pimpinan/kuesioner">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKuesioner"
+            aria-expanded="true" aria-controls="collapseKuesioner">
             <i class="fas fa-fw fa-tasks"></i>
-            <span>Kuesioner</span></a>
+            <span>Kuesioner</span>
+        </a>
+        <div id="collapseKuesioner" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <div class="collapse-item">
+                    <a class="@yield('collapse1')" href="/pimpinan/kuesioner">Kuesioner Alumni</a>
+                </div>
+                <div class="collapse-item">
+                    <a class="@yield('collapse2')" href="/pimpinan/kuesioner/stakeholder">Kuesioner Stakeholder</a>
+                </div>
+            </div>
+        </div>
     </li>
 </div>
 
 <div class="nav-item">
-    <li class="@yield('active8')">
-        <a class="nav-link" href="/pimpinan/tracer">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Data Tracer</span></a>
+    <li class="@yield('active11')">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsereport"
+            aria-expanded="true" aria-controls="collapsereport">
+            <i class="fas fa-fw fa-tasks"></i>
+            <span>Report</span>
+        </a>
+        <div id="collapsereport" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <!-- //<h6 class="collapse-header">Login Screens:</h6> -->
+                <div class="collapse-item">
+                    <a class="@yield('collapse5')" href="/pimpinan/reportalumni">Report Alumni</a>
+                </div>
+                <div class="collapse-item">
+                    <a class="@yield('collapse6')" href="/pimpinan/reportstakeholder">Report Stakeholder</a>
+                </div>
+            </div>
+        </div>
     </li>
 </div>
 
@@ -91,10 +117,10 @@
             <div class="bg-white py-2 collapse-inner rounded">
                  //<h6 class="collapse-header">Login Screens:</h6>
                 <div class="collapse-item">
-                    <a class="@yield('collapse1')" href="/admin/angkatan">Angkatan</a>
+                    <a class="@yield('collapse1')" href="/pimpinan/angkatan">Angkatan</a>
                 </div>
                 <div class="collapse-item">
-                    <a class="@yield('collapse2')" href="/admin/prodi">Program Studi</a>
+                    <a class="@yield('collapse2')" href="/pimpinan/prodi">Program Studi</a>
                 </div>
 
 

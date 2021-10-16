@@ -197,9 +197,6 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/reportstakeholder/{id}', 'stakeholderreportController@detailreport');
     Route::post('/reportstakeholder/filter', 'stakeholderreportController@filterreport');
 
-
-
-
     //Master Pertanyaan
     Route::get('/pertanyaan','masterkuesionerController@show')->name('show-pertanyaan');
     Route::post('/pertanyaan/soal/create','masterkuesionerController@create');
@@ -212,8 +209,9 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     //Route::get('/dashboard', 'dashboardController@chartjs');
 
 
-    //Export Excel
-    Route::get('/export', 'dashboardController@export');
+    // //Export Excel
+    // Route::get('/export', 'dashboardController@export');
+    Route::get('/export', 'alumniController@export_mapping')->name('tracer.export') ;
 
     //Import Excel
     Route::post('/alumni/import_excel', 'alumniController@import_excel');
@@ -236,26 +234,29 @@ Route::prefix('pimpinan')->group(function(){
     Route::post('/editpassword', 'AuthPimpinanController@editpassword')->name('admin-password-update');
 
 
-
-
     //Alumni
     Route::get('/alumni','pimpinanalumniController@show');
     Route::post('/alumni/create','pimpinanalumniController@create');
-    //Route::get('/alumni/{id}/edit','pimpinanalumniController@edit');
     Route::post('/alumni/update','pimpinanalumniController@update');
     Route::get('/alumni/{id}/delete','pimpinanalumniController@delete');
 
-
-
-    //Kuesioner
+    //Kuesioner Stakeholder
     Route::get('/kuesioner','pimpinankuesionerController@show');
-    Route::post('/kuesioner/create','pimpinankuesionerController@create');
-    Route::post('/kuesioner/update','pimpinankuesionerController@update');
     Route::get('/kuesioner/{id}/delete','pimpinankuesionerController@delete');
     Route::get('/kuesioner/showkuesioner/{id}','pimpinankuesionerController@detail')->name('detail-kuesioner');
     Route::get('/tracer', 'pimpinankuesionerController@detailjawaban');
+    Route::post('/kuesioner/filter','pimpinankuesionerController@filter')->name('filter-kuesioner');
+
+    //Detail Kuesioner ALumni
     Route::get('/kuesioner/showkuesioner/{id}/{status}', 'pimpinankuesionerController@status');
-    Route::post('/kuesioner/showkuesioner/filter','pimpinankuesionerController@filter')->name('filter-kuesioner');
+    Route::get('/kuesioner/showkuesioner/{id}','pimpinankuesionerController@detail')->name('detail-kuesioner');
+
+
+    //Kuesioner Stakeholder
+    Route::get('/kuesioner/stakeholder','pimpinanstakeholderController@show')->name('stakeholder-kuesioner-show');
+    Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'pimpinanstakeholderController@status');
+    Route::get('/kuesioner/stakeholder/detail/{id_prodi}/{id_periode}', 'pimpinanstakeholderController@detailkuesioner');
+    Route::post('/kuesioner/stakeholder/filter','pimpinanstakeholderController@filter')->name('stakeholder-filter');
 
 
     //Pengumuman
