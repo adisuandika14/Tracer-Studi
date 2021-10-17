@@ -18,6 +18,7 @@ class AdminMiddleware
         if(!session('admin')){
             return redirect('/');
         };
+        
         return $next($request);
     }
 }
