@@ -240,5 +240,39 @@ class alumniController extends Controller
         return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1'));
     }
 
+        public function filtertracer(Request $request){
+        if($request->prodi == "" && $request->angkatan == ""){
+            return redirect ('/kuesioner/tracer');
+        }else if($request->prodi == "" && $request->angkatan != ""){
+            $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+            $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
+            $prodi = tb_prodi::get();
+            $angkatan = tb_angkatan::get();
+            $id_angkatan = $request->angkatan;
+            return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan', 'id_angkatan'));
+        }else if($request->prodi != "" && $request->angkatan == ""){
+            $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+            $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
+            $prodi = tb_prodi::get();
+            $angkatan = tb_angkatan::get();
+            $id_prodi = $request->prodi;
+            return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan', 'id_prodi'));
+        }else if($request->prodi != "" && $request->angkatan != ""){
+            $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+            $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
+            $prodi = tb_prodi::get();
+            $angkatan = tb_angkatan::get();
+            $id_angkatan = $request->angkatan;
+            $id_prodi = $request->prodi;
+            return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan', 'id_prodi', 'id_angkatan'));
+        }
+    }
 
+    public function detailtracer($id){
+        $alumni = tb_alumni::where('id_alumni', $id)->first();
+        $jawaban = tb_jawaban::with('relasiJawabantoDetail')->where('id_alumni', $alumni->id_alumni)->get();
+
+        //dd($detailjawaban);
+        return view ('/kuesioner/detailtracer', compact('alumni', 'jawaban'));
+    }
 }

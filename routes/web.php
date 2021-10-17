@@ -54,6 +54,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/alumni/status', 'alumniController@status');
     Route::get('/baca-notif/{id}', 'alumniController@bacaNotif');
     Route::get('/tracer','alumniController@tracer');
+    Route::get('/tracer/{id}','alumniController@detailtracer');
+    Route::post('/tracer/filter','alumniController@filtertracer');
 
 
     //Pengumuman
