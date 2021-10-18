@@ -10,6 +10,7 @@ use App\tb_soal_alumni;
 use App\tb_prodi;
 use App\tb_periode;
 use App\tb_angkatan;
+use App\tb_tahun_periode;
 
 class pimpinanreportalumniController extends Controller
 {
@@ -20,7 +21,24 @@ class pimpinanreportalumniController extends Controller
         // $kategori_2 = tb_soal_alumni::all();
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::get();
-        $periode = tb_periode::get();
+        $periode = tb_tahun_periode::get();
+
+        // $periodes = tb_jawaban::join('relasiJawabantoPeriode')
+        // ->join('relasiDetailtoKuesioner')
+        // ->join('relasikuesionertoPeriode')
+        // ->join('relasiPeriodekuesionertoPeriode')->get();
+        
+
+        // $periodecount = [];
+        // $jawabtot = [] ;
+
+        // foreach($periode as $ang){
+        //     $alumni = tb_jawaban::where('id_tahun_periode', $periodes)
+        //     ->count('id_jawaban', 'periodecount');
+
+        //     $jawabtot[] = $alumni;
+        //     $periodecount[] = $ang->tahun_periode;
+        // }
         return view ('/pimpinan/alumni/reportalumni', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1'));
     }
 

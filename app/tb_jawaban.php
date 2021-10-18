@@ -37,7 +37,9 @@ class tb_jawaban extends Model
 
     public function relasiJawabantoPeriode()
     {
-        return $this->belongsTo('App\tb_periode','id_periode','id_periode');
+        return $this->hasMany('App\tb_periode','id_periode','id_periode');
     }
+
+
 
 }

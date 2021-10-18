@@ -102,6 +102,14 @@ class pimpinankuesionerController extends Controller
         return response()->json(['statusInput' => 'berhasil terganti']);
     }
 
+    public function statusall( $status)
+    {
+        $detailall = tb_detail_kuesioner::first();
+        $detailall->status = $status;
+        $detailall->update();
+        return response()->json(['statusInput' => 'berhasil terganti']);
+    }
+
     public function detailjawaban(){
         $detailjawaban = tb_jawaban::get();
         $prodi = tb_prodi::get();

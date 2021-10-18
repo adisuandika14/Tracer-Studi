@@ -18,6 +18,10 @@ class AdminMiddleware
         if(!session('admin')){
             return redirect('/');
         };
+
+        if(!session('pimpinan')){
+            return redirect('/');
+        };
         
         return $next($request);
     }

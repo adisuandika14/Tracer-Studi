@@ -30,4 +30,5 @@ class tb_periode extends Model
     {
         return $this->belongsTo('App\tb_jawaban','id_jawaban','id_jawaban');
     }
+    
 }

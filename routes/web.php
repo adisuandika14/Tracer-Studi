@@ -229,7 +229,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
 //<input type="text" class="form-control" id="edit_id_kuesioner" name="id_kuesioner" value="{{$id_kuesioner}}" hidden>
 
 
-Route::prefix('pimpinan')->group(function(){
+// Route::prefix('pimpinan')->group(function(){
+Route::group(['prefix' => 'pimpinan',  'middleware' => 'AdminMiddleware'],function(){
     //Auth
     Route::get('/profile', 'AuthPimpinanController@profile')->name('admin-profile-edit');
     Route::post('/profile-update', 'AuthPimpinanController@updateProfile')->name('admin-profile-update');
@@ -254,6 +255,8 @@ Route::prefix('pimpinan')->group(function(){
     Route::get('/kuesioner/showkuesioner/{id}/{status}', 'pimpinankuesionerController@status');
     Route::get('/kuesioner/showkuesioner/{id}','pimpinankuesionerController@detail')->name('detail-kuesioner');
 
+    Route::get('/kuesioner/showkuesioner/{id}/{status}', 'pimpinankuesionerController@statusall');
+
 
     //Kuesioner Stakeholder
     Route::get('/kuesioner/stakeholder','pimpinanstakeholderController@show')->name('stakeholder-kuesioner-show');
@@ -265,7 +268,12 @@ Route::prefix('pimpinan')->group(function(){
     //Report alumni
     Route::get('/reportalumni','pimpinanreportalumniController@tracer')->name('pimpinan-alumni-report');
     Route::get('/reportalumni/{id}','pimpinanreportalumniController@detailtracer');
-    Route::post('/reportalumni/filter','pimppipnanreportalumniController@filtertracer');
+    Route::post('/reportalumni/filteralumni','pimpinanreportalumniController@filtertracer');
+
+    //Report Stakeholder
+    Route::get('/reportstakeholder','pimpinanreportstakeholderController@report')->name('pimpinan-alumni-report');
+    Route::get('/reportstakeholder/{id}','pimpinanreportstakeholderController@detailreport');
+    Route::post('/reportstakeholder/filterreport','pimpinanreportstakeholderController@filterreport');
 
 
 

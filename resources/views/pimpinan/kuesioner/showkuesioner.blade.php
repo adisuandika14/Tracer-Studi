@@ -107,6 +107,7 @@ input:checked + .slider:before {
         </div>
             <div class="card-body">
                 <div class="table-responsive">
+                  {{-- <input type="checkbox" name="all" id="checkall" />Check All</br> --}}
                 
                     <div class="ganti" id="ganti">
                       <div class="table-responsive">
@@ -137,7 +138,8 @@ input:checked + .slider:before {
                                             @endforeach
                                         </div>
                                         <div class="modal-footer">
-                                            <label class="switch">
+                                            <label class="switch"  >
+                                              
                                                 @if($status->status == "Konfirmasi")
                                                   <input type="checkbox" id="status_{{$status->id_detail_kuesioner}}" onclick="statusBtn({{$status->id_detail_kuesioner}})" checked>
                                                 @else
@@ -164,10 +166,41 @@ input:checked + .slider:before {
 
 @section('custom_javascript')
 <script>
+function statusBtn(id) {
+    var checkBox = document.getElementById("statusa_all");
+    // If the checkbox is checked, display the output text
+    $('#checkall').change(function () {
+    $('.cb-element').prop('checked',this.checked);
+    });
+
+    if (checkBox.checked == true){
+      swal({
+          title: 'Anda yakin ingin menerima semua kuesioner ini?',
+          icon: 'warning',
+          buttons: ["Tidak", "Ya"],
+      }).then(function(value) { 
+          if (value) {
+            jQuery.ajax({  
+              url: "/pimpinan/kuesioner/showkuesioner/"+id+"/Konfirmasi",
+              type: "GET",
+              success: function(result){
+              }
+          });
+        }else{
+          document.getElementById("status_"+id).checked = false;
+        }
+      });
+    }
+
+  }
+  $('#sidebarPengumuman').addClass("active");
+
+  
 //Switch Status Pengumuman
   function statusBtn(id) {
     var checkBox = document.getElementById("status_"+id);
     // If the checkbox is checked, display the output text
+
     if (checkBox.checked == true){
       swal({
           title: 'Anda yakin ingin menerima kuesioner ini?',
@@ -203,6 +236,7 @@ input:checked + .slider:before {
         }
       });
     }
+
   }
   $('#sidebarPengumuman').addClass("active");
 </script>

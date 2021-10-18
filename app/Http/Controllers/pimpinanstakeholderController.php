@@ -28,7 +28,7 @@ class pimpinanstakeholderController extends Controller
         return response()->json(['success' => 'Produk difilter', 'hasil' => $hasil]);
     }
 
-    public function detailkuesioner($id_prodi, $id_periode){
+    public function detail_kuesioner($id_prodi, $id_periode){
         $detail = tb_kuesioner_stakeholder::where('id_prodi', $id_prodi)->where('id_tahun_periode', $id_periode)->get();
         $opsi =tb_opsi_stakeholder::get();
         $tahun = tb_tahun_periode::find($id_periode)->tahun_periode;
