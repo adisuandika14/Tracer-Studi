@@ -10,7 +10,7 @@ use App\tb_jenis_kuesioner;
 use App\tb_opsi_stakeholder;
 use App\tb_kuesioner_stakeholder;
 
-class stackholderkuesionedetailController extends Controller
+class stackholderkuesionerdetailController extends Controller
 {
     public function detail()
     {

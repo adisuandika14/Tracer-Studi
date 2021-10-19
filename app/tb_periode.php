@@ -26,9 +26,14 @@ class tb_periode extends Model
         return $this->belongsTo('App\tb_detail_kuesioner','id_periode','id_periode');
     }
 
+    // public function relasiPeriodetoJawaban()
+    // {
+    //     return $this->belongsTo('App\tb_jawaban','id_jawaban','id_jawaban');
+    // }
+
     public function relasiPeriodetoJawaban()
     {
-        return $this->belongsTo('App\tb_jawaban','id_jawaban','id_jawaban');
+        return $this->hasMany('App\tb_jawaban','id_jawaban','id_jawaban');
     }
     
 }

@@ -23,23 +23,22 @@ class pimpinanreportalumniController extends Controller
         $angkatan = tb_angkatan::get();
         $periode = tb_tahun_periode::get();
 
-        // $periodes = tb_jawaban::join('relasiJawabantoPeriode')
-        // ->join('relasiDetailtoKuesioner')
-        // ->join('relasikuesionertoPeriode')
-        // ->join('relasiPeriodekuesionertoPeriode')->get();
+        $periodes = tb_jawaban::with('relasiJawabantoPeriode')
+        ->with('relasiDetailtoKuesioner')
+        ->with('relasikuesionertoPeriode')
+        ->with('relasiPeriodekuesionertoPeriode')->get()->tahun_periode;
         
 
-        // $periodecount = [];
-        // $jawabtot = [] ;
+        $periodecount = [];
+        $jawabtot = [] ;
 
-        // foreach($periode as $ang){
-        //     $alumni = tb_jawaban::where('id_tahun_periode', $periodes)
-        //     ->count('id_jawaban', 'periodecount');
+        foreach($periode as $ang){
+            $alumni = tb_jawaban::count('id_jawaban', 'periodecount');
 
-        //     $jawabtot[] = $alumni;
-        //     $periodecount[] = $ang->tahun_periode;
-        // }
-        return view ('/pimpinan/alumni/reportalumni', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1'));
+            $jawabtot[] = $alumni;
+            $periodecount[] = $ang->tahun_periode;
+        }
+        return view ('/pimpinan/alumni/reportalumni', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1','periodecount','jawabtot'));
     }
 
     public function detailtracer($id){

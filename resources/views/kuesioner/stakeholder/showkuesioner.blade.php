@@ -280,7 +280,7 @@
                     </div>
                   </div>
 	                <div class="modal-body" id="bodyEdit">
-	      	          <form action="/admin/kuesioner/stakeholder/detail/update/" method="POST" id="edit-pertanyaan-form">
+	      	          <form action="/admin/kuesioner/stakeholder/update" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
@@ -509,7 +509,7 @@ $('#prodi').change(function(){
         console.log(result);
             $("#edit_id_jenis").val(result.kuesioner_stakeholder['id_jenis']);
             $("#edit_pertanyaan").val(result.kuesioner_stakeholder['pertanyaan']);
-            $("#edit-pertanyaan-form").attr("action", "/admin/kuesioner/stakeholder/detail/"+result.kuesioner_stakeholder['id_kuesioner_stakeholder']+"/update");
+            $("#edit-pertanyaan-form").attr("action", "/admin/kuesioner/stakeholder/"+result.kuesioner_stakeholder['id_kuesioner_stakeholder']+"/update");
             if(result.kuesioner_stakeholder['id_jenis'] == 1 || result.kuesioner_stakeholder['id_jenis'] == 3){
               $("#edit_opsi1").prop('required',true);
               $("#edit_opsi2").prop('required',true);
@@ -545,7 +545,7 @@ $('#prodi').change(function(){
                   $('#edit_btnTambahOpsi').fadeOut();
                 }
               });
-            }else if(result.detail_kuesioner['id_jenis'] == 2){
+            }else if(result.kuesioner_stakeholder['id_jenis'] == 2){
               $('#edit_id_jenis').change(function() {
               if($('#edit_id_jenis').val() == 1){
                 $("#edit_opsi1").prop('required',true);

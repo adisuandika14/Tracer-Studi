@@ -277,13 +277,13 @@
     var myBarChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ,
+        labels:{{json_encode($periodecount)}} ,
         datasets: [{
           label: "Total : ",
           backgroundColor: "#4e73df",
           hoverBackgroundColor: "#2e59d9",
           borderColor: "#4e73df",
-          data: ,
+          data: {{json_encode($jawabtot)}} ,
         }],
       },
       options: {
@@ -313,7 +313,7 @@
           yAxes: [{
             ticks: {
               min: 0,
-              max: ,
+              max: {{max($jawabtot)}},
               maxTicksLimit: 5,
               padding: 10,
               // Include a dollar sign in the ticks

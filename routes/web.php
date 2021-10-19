@@ -161,14 +161,17 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/kuesioner/post-bank-soal/showkuesioner/{id}','detailkuesionerController@create_from_bank_soal');
 
     //Kuesioner Stakeholder
-    Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionerController@edit');
+    //Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionerController@edit');
     Route::get('/kuesioner/stakeholder','stakeholderkuesionerController@show')->name('stakeholder-kuesioner-show');
     Route::post('/kuesioner/stakeholder/create','stakeholderkuesionerController@create');
-    Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionerController@update');
     Route::delete('/kuesioner/stakeholder/{id}/delete','stakeholderkuesionerController@delete');
     Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'stakeholderkuesionerController@status');
     
     Route::get('/kuesioner/stakeholder/detail/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@detail_kuesioner');
+    Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionerController@edit');
+    Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionerController@update');
+
+
     Route::get('/kuesioner/stakeholder/get-bank-soal/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@bank_soal_data');
     Route::post('/kuesioner/stakeholder/create/{id_prodi}/{id_periode}','stakeholderkuesionerController@create_from_bank_soal');
     Route::post('/kuesioner/stakeholder/filter','stakeholderkuesionerController@filter')->name('stakeholder-filter');
@@ -229,8 +232,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
 //<input type="text" class="form-control" id="edit_id_kuesioner" name="id_kuesioner" value="{{$id_kuesioner}}" hidden>
 
 
-// Route::prefix('pimpinan')->group(function(){
-Route::group(['prefix' => 'pimpinan',  'middleware' => 'AdminMiddleware'],function(){
+Route::prefix('pimpinan')->group(function(){
     //Auth
     Route::get('/profile', 'AuthPimpinanController@profile')->name('admin-profile-edit');
     Route::post('/profile-update', 'AuthPimpinanController@updateProfile')->name('admin-profile-update');
