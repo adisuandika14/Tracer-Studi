@@ -12,8 +12,6 @@ use App\tb_periode_kuesioner;
 class stakeholderreportController extends Controller
 {
     public function report(){
-        
-       
         $all_jawaban = tb_jawaban_stakeholder::get(['id_stakeholder'])->toArray();
         $tracers = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->whereIn('id_stakeholder', $all_jawaban)->get();
         $prodi = tb_prodi::get();
@@ -55,8 +53,6 @@ class stakeholderreportController extends Controller
             $id_prodi = $request->prodi;
             return view ('/report/reportstakeholder', compact('stakeholder', 'prodi', 'periode', 'id_prodi', 'id_periode'));
         }
-
-
 
         $all_jawaban = tb_jawaban_stakeholder::get(['id_stakeholder'])->toArray();
         $stakeholder = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->whereIn('id_stakeholder', $all_jawaban)->get();

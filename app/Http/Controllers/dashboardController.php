@@ -23,13 +23,14 @@ class dashboardController extends Controller
         $tahun = [];
         $alumnitot = [] ;
 
+        $angkatan = tb_angkatan::all();
         foreach($angkatan as $ang){
             $alumni = tb_alumni::where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
             // dd($ang->tahun_angkatan." ".$alumni);
             $alumnitot[] = $alumni;
             $tahun[] = $ang->tahun_angkatan;
         }
-        
+
         return view('admin/dashboard ', compact('alumni','jawaban','pengumuman','lowongan', 'alumnitot', 'tahun') );
     }
 
@@ -54,7 +55,7 @@ class dashboardController extends Controller
         for ($i=0; $i<=count($groups); $i++) {
                     $colours[] = '#' . substr(str_shuffle('ABCDEF0123456789'), 0, 6);
                 }
-        
+
         // Prepare the data for returning with the view
         $chart = new Chart;
                 $chart->labels = (array_keys($groups));
