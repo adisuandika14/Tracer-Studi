@@ -17,7 +17,13 @@ class stakeholderreportController extends Controller
         $prodi = tb_prodi::get();
         $stakeholder = tb_stakeholder::get();
         $periode = tb_periode_kuesioner::get();
-        return view ('report/reportstakeholder', compact('tracers', 'prodi','periode','stakeholder'));
+        foreach($periode as $ang){
+            $data = $stakeholder->where('id_periode', $ang->id_periode_kuesioner)->count('id_stakeholder');
+            // dd($ang->tahun_angkatan." ".$alumni);
+            $dataStakeholder[] = $data;
+            $dataPeriode[] = $ang->relasiPeriodekuesionertoPeriode->periode.' - '.$ang->relasiPeriodekuesionertoTahun->tahun_periode;
+        }
+        return view ('report/reportstakeholder', compact('tracers', 'prodi','periode','stakeholder','dataStakeholder','dataPeriode'));
     }
 
     public function detailreport($id){
@@ -30,34 +36,58 @@ class stakeholderreportController extends Controller
     public function filterreport(Request $request){
         if($request->prodi == "" && $request->periode == ""){
             return redirect ('/admin/reportstakeholder');
-        }else if($request->prodi == "" && $request->angkatan != ""){
+        }else if($request->prodi == "" && $request->periode != ""){
             $all_jawaban = tb_jawaban_stakeholder::get(['id_stakeholder'])->toArray();
-            $stakeholder = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->whereIn('id_stakeholder', $all_jawaban)->where('id_periode_kuesioner', $request->periode_kuesioner)->get();
+            $stakeholder = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->where('id_periode', $request->periode)->get();
             $prodi = tb_prodi::get();
             $periode = tb_periode_kuesioner::get();
             $id_periode = $request->periode_kuesioner;
-            return view ('/report/reportstakeholder', compact('stakeholder', 'prodi', 'periode', 'id_periode'));
+            foreach($periode as $ang){
+                $data = $stakeholder->where('id_periode', $ang->id_periode_kuesioner)->count('id_stakeholder');
+                // dd($ang->tahun_angkatan." ".$alumni);
+                $dataStakeholder[] = $data;
+                $dataPeriode[] = $ang->relasiPeriodekuesionertoPeriode->periode.' - '.$ang->relasiPeriodekuesionertoTahun->tahun_periode;
+            }
+            return view ('/report/reportstakeholder', compact('stakeholder', 'prodi', 'periode', 'id_periode','dataStakeholder','dataPeriode'));
         }else if($request->prodi != "" && $request->periode_kuesioner == ""){
             $all_jawaban = tb_jawaban_stakeholder::get(['id_stakeholder'])->toArray();
-            $stakeholder = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->whereIn('id_stakeholder', $all_jawaban)->where('id_prodi', $request->prodi)->get();
+            $stakeholder = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->where('id_prodi', $request->prodi)->get();
             $prodi = tb_prodi::get();
             $periode = tb_periode_kuesioner::get();
             $id_prodi = $request->prodi;
-            return view ('/report/reportstakeholder', compact('stakeholder', 'prodi', 'periode', 'id_prodi'));
+            foreach($periode as $ang){
+                $data = $stakeholder->where('id_periode', $ang->id_periode_kuesioner)->count('id_stakeholder');
+                // dd($ang->tahun_angkatan." ".$alumni);
+                $dataStakeholder[] = $data;
+                $dataPeriode[] = $ang->relasiPeriodekuesionertoPeriode->periode.' - '.$ang->relasiPeriodekuesionertoTahun->tahun_periode;
+            }
+            return view ('/report/reportstakeholder', compact('stakeholder', 'prodi', 'periode', 'id_prodi','dataStakeholder','dataPeriode'));
         }else if($request->prodi != "" && $request->periode_kuesioner != ""){
             $all_jawaban = tb_jawaban_stakeholder::get(['id_stakeholder'])->toArray();
-            $stakeholder = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->whereIn('id_stakeholder', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_periode', $request->periode_kuesioner)->get();
+            $stakeholder = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->where('id_prodi', $request->prodi)->where('id_periode', $request->periode)->get();
             $prodi = tb_prodi::get();
             $periode = tb_periode_kuesioner::get();
             $id_periode = $request->periode_kuesioner;
             $id_prodi = $request->prodi;
-            return view ('/report/reportstakeholder', compact('stakeholder', 'prodi', 'periode', 'id_prodi', 'id_periode'));
+            foreach($periode as $ang){
+                $data = $stakeholder->where('id_periode', $ang->id_periode_kuesioner)->count('id_stakeholder');
+                // dd($ang->tahun_angkatan." ".$alumni);
+                $dataStakeholder[] = $data;
+                $dataPeriode[] = $ang->relasiPeriodekuesionertoPeriode->periode.' - '.$ang->relasiPeriodekuesionertoTahun->tahun_periode;
+            }
+            return view ('/report/reportstakeholder', compact('stakeholder', 'prodi', 'periode', 'id_prodi', 'id_periode','dataStakeholder','dataPeriode'));
         }
 
         $all_jawaban = tb_jawaban_stakeholder::get(['id_stakeholder'])->toArray();
-        $stakeholder = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->whereIn('id_stakeholder', $all_jawaban)->get();
+        $stakeholder = tb_stakeholder::with('relasiStackholderKuesionertoProdi')->get();
         $prodi = tb_prodi::get();
         $periode = tb_periode_kuesioner::get();
-        return view ('report/reportstakeholder', compact('stakeholder', 'prodi', 'periode'));
+        foreach($periode as $ang){
+            $data = $stakeholder->where('id_periode', $ang->id_periode_kuesioner)->count('id_stakeholder');
+            // dd($ang->tahun_angkatan." ".$alumni);
+            $dataStakeholder[] = $data;
+            $dataPeriode[] = $ang->relasiPeriodekuesionertoPeriode->periode.' - '.$ang->relasiPeriodekuesionertoTahun->tahun_periode;
+        }
+        return view ('report/reportstakeholder', compact('stakeholder', 'prodi', 'periode','dataStakeholder','dataPeriode'));
     }
 }
