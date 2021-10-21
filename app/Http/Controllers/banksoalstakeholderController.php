@@ -173,6 +173,12 @@ class banksoalstakeholderController extends Controller
             $bank_soal->pertanyaan = $request->edit_pertanyaan;
             $bank_soal->update();
         }
+        if($request->edit_id_jenis ==  4){
+            $bank_soal->id_jenis = 4;
+            $bank_soal->id_prodi = $request->id_prodi;
+            $bank_soal->pertanyaan = $request->edit_pertanyaan;
+            $bank_soal->update();
+        }
 
         if($request->edit_id_jenis == 1 || $request->edit_id_jenis == 3){
             $bank_soal->id_jenis = 1;
