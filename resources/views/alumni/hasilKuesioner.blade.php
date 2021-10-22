@@ -167,13 +167,13 @@
             $('#edit_jawaban_ganda').empty();
             opsi.forEach(element => {
                 if(element.id_detail_kuesioner ==  id_detail_kuesioner){
-                    $('#edit_jawaban_checkbox').append('<div class="form-check">' +
-                        '<input class="form-check-input" name="'+ id_detail_kuesioner +
-                        '" type="checkbox" value="'+ element['id_opsi'] +
-                        '" onchange="jawabRadio('+id_detail_kuesioner+','+element['id_opsi']+')" ' +
-                        'id="flexRadioDefault'+id_detail_kuesioner+'">' +
-                        '<label class="form-check-label" for="flexRadioDefault'+id_detail_kuesioner+'">' +
-                        element['opsi'] + '</label>'+'</div>');
+                    $('#edit_jawaban_ganda').append('<div class="form-check">'
+                        + '<input class="form-check-input" name="'+ id_detail_kuesioner
+                        +'" type="radio" value="'+ element['id_opsi']
+                        +'" onchange="jawabRadio('+id_detail_kuesioner+','
+                        +element['id_opsi']+')" id="flexRadioDefault'+id_detail_kuesioner+'">'
+                        + '<label class="form-check-label" for="flexRadioDefault'+id_detail_kuesioner+'">'
+                        + element['opsi'] + '</label>'+'</div>');
                 }
             })
             $('#updateJawabanGanda').modal('show');

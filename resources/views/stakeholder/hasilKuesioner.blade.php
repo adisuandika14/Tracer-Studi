@@ -63,14 +63,14 @@
                 </div>
                 <div class="modal-body">
                     <form action="" id="form_jawaban_ganda" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="id_kuesioner" value="">
+                        <input type="hidden" name="id_kuesioner_stakeholder" value="">
                         {{ csrf_field() }}
 
                         <div class="form-group">
                             <label class="font-weight-bold text-dark">Kuesioner</label>
                             <input type="text" class="form-control" id="edit_pertanyaan_ganda" name="edit_pertanyaan_ganda" value="" placeholder="" disabled>
                         </div>
-                        <input type="text" class="form-control"  id="save_jawaban_ganda" name="save_jawaban_ganda"  hidden required>
+                        <input type="text" class="form-control"  id="save_jawaban_ganda" name="save_jawaban_ganda"   required>
                         <div id="edit_jawaban_ganda">
 
                         </div>
@@ -97,7 +97,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="" id="form_jawaban_checkbox" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="id_kuesioner" value="">
+                        <input type="hidden" name="id_kuesioner_stakeholder" value="">
                         {{ csrf_field() }}
 
                         <div class="form-group">
@@ -131,7 +131,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="/admin/kuesioner/update" id="form_jawaban_singkat" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="id_kuesioner" value="">
+                        <input type="hidden" name="id_kuesioner_stakeholder" value="">
                         {{ csrf_field() }}
 
                         <div class="form-group">
@@ -156,24 +156,23 @@
 @section('custom_javascript')
     <script>
 
-        function jawabRadio(id_kuesioner_stakeholder, id_opsi_stakeholder){
+        function jawabRadio(id_soal_pengguna, id_opsi_stakeholder){
             document.getElementById("save_jawaban_ganda").value=id_opsi_stakeholder;
         }
-        function update(id, id_jenis, pertanyaan, jawaban, id_kuesioner_stakeholder){
+        function update(id, id_jenis, pertanyaan, jawaban, id_soal_pengguna){
             if(id_jenis == 1){
                 $('#form_jawaban_ganda').attr("action", "/stakeholder/hasilKuesioner/update/"+id);
                 $('#edit_pertanyaan_ganda').val(pertanyaan);
                 var opsi = {!! json_encode($opsis->toArray()) !!}
                 $('#edit_jawaban_ganda').empty();
                 opsi.forEach(element => {
-                    if(element.id_kuesioner_stakeholder ==  id_kuesioner_stakeholder){
-                        $('#edit_jawaban_checkbox').append('<div class="form-check">' +
-                            '<input class="form-check-input" name="'+ id_kuesioner_stakeholder +
-                            '" type="checkbox" value="'+ element['id_opsi_stakeholder'] +
-                            '" onchange="jawabRadio('+id_kuesioner_stakeholder+','+element['id_opsi_stakeholder']+')" ' +
-                            'id="flexRadioDefault'+id_kuesioner_stakeholder+'">' +
-                            '<label class="form-check-label" for="flexRadioDefault'+id_kuesioner_stakeholder+'">' +
-                            element['opsi'] + '</label>'+'</div>');
+                    if(element.id_soal_pengguna ==  id_soal_pengguna){
+                        $('#edit_jawaban_ganda').append('<div class="form-check">' +
+                            '<input class="form-check-input" name="'+ id_soal_pengguna +'" type="radio" value="'
+                            + element['id_opsi_stakeholder'] +'" onchange="jawabRadio('+id_soal_pengguna+','
+                            +element['id_opsi_stakeholder']+')" id="flexRadioDefault'+id_soal_pengguna+'">'
+                            + '<label class="form-check-label" for="flexRadioDefault'+id_soal_pengguna+'">'
+                            + element['opsi'] + '</label>'+'</div>');
                     }
                 })
                 $('#updateJawabanGanda').modal('show');
