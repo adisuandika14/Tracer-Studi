@@ -1,5 +1,5 @@
-@extends('layoutalumni.layout')
-@section('title', 'Detail Kuesioner')
+@extends('layoutstakeholder.layout')
+@section('title', 'Kuesioner')
 @section('content')
 @section('active3')
       nav-item active
@@ -31,7 +31,7 @@
         <div class="card-body">
             <div class="table-responsive">
             <div class="container-fluid" style="align-content: center;">
-            <form method="POST" action="{{ route('simpan-kuesioner') }}">
+            <form method="POST" action="{{ route('simpan-kuesioner-stakeholder') }}">
               {{ csrf_field() }}
 
                         @foreach($kuesioners as $kuesioner)
@@ -39,13 +39,13 @@
 
                             <div class="card-body">
                                 <p> {{ $loop->iteration }}. {{$kuesioner->pertanyaan}}</p>
-                                <input type="text" class="form-control"  id="{{$kuesioner->id_detail_kuesioner}}" name= "{{$kuesioner->id_detail_kuesioner}}" value="" placeholder="Text Jawaban Singkat" @if($kuesioner->id_jenis == 1 || $kuesioner->id_jenis == 3) hidden @endif>
+                                <input type="text" class="form-control"  id="{{$kuesioner->id_kuesioner_stakeholder}}" name= "{{$kuesioner->id_kuesioner_stakeholder}}" value="" placeholder="Text Jawaban Singkat" @if($kuesioner->id_jenis == 1 || $kuesioner->id_jenis == 3)  @endif>
                                 @if($kuesioner->id_jenis == 1)
                                     @foreach ($opsi as $opsis)
-                                    @if($kuesioner->id_detail_kuesioner == $opsis->id_detail_kuesioner)
+                                    @if($kuesioner->id_kuesioner_stakeholder == $opsis->id_soal_pengguna)
                                         <div class="form-check">
-                                            <input class="form-check-input" name="{{$kuesioner->id_detail_kuesioner}}" type="radio" value="{{$opsis->opsi}}" onchange="jawabRadio({{$kuesioner->id_detail_kuesioner}},{{$opsis->id_opsi}})" id="flexRadioDefault{{$kuesioner->id_detail_kuesioner}}">
-                                            <label class="form-check-label" for="flexRadioDefault{{$kuesioner->id_detail_kuesioner}}">
+                                            <input class="form-check-input" name="{{$kuesioner->id_kuesioner_stakeholder}}" type="radio" value="{{$opsis->opsi}}" onchange="jawabRadio({{$kuesioner->id_kuesioner_stakeholder}},{{$opsis->id_opsi_stakeholder}})" id="flexRadioDefault{{$kuesioner->id_kuesioner_stakeholder}}">
+                                            <label class="form-check-label" for="flexRadioDefault{{$kuesioner->id_kuesioner_stakeholder}}">
                                                 {{$opsis->opsi}}
                                             </label>
                                         </div>
@@ -54,9 +54,9 @@
                                 @endif
                                 @if($kuesioner->id_jenis == 3)
                                     @foreach ($opsi as $opsis)
-                                        @if($kuesioner->id_detail_kuesioner == $opsis->id_detail_kuesioner)
+                                        @if($kuesioner->id_kuesioner_stakeholder == $opsis->id_kuesioner_stakeholder)
                                             <div class="form-check">
-                                                <input class="form-check-input" name="{{$kuesioner->id_detail_kuesioner}}[]" value="{{$opsis->id_opsi}}" type="checkbox" id="flexCheckDefault">
+                                                <input class="form-check-input" name="{{$kuesioner->id_kuesioner_stakeholder}}[]" value="{{$opsis->id_opsi_stakeholder}}" type="checkbox" id="flexCheckDefault">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     {{$opsis->opsi}}
                                                 </label>
@@ -99,9 +99,9 @@
     //     alert($('[name="87[]"]').val());
     // })
 
-    function jawabRadio(id_detail_kuesioner, id_opsi){
+    function jawabRadio(id_kuesioner_stakeholder, id_opsi_stakeholder){
 
-        document.getElementById(id_detail_kuesioner).value=id_opsi;
+        document.getElementById(id_kuesioner_stakeholder).value=id_opsi_stakeholder;
     }
 
 </script>
@@ -220,10 +220,10 @@
   }
 
 //Jenis Kuesioner Onclick Listener
-    let id_opsi;
+    let id_opsi_stakeholder_stakeholder;
     $('#kuesioner').change(function() {
         if($('#kuesioner').val() == 1){
-          id_opsi = 3;
+          id_opsi_stakeholder_stakeholder = 3;
           $('#opsi1').fadeIn();
           $('#opsi2').fadeIn();
           $("#oopsi1").prop('required',true);
@@ -240,9 +240,9 @@
     });
 
     $('#btnTambahOpsi').click(function(){
-      $('#opsi'+id_opsi).fadeIn();
-      id_opsi = id_opsi + 1;
-      if(id_opsi == 6){
+      $('#opsi'+id_opsi_stakeholder_stakeholder).fadeIn();
+      id_opsi_stakeholder_stakeholder = id_opsi_stakeholder_stakeholder + 1;
+      if(id_opsi_stakeholder_stakeholder == 6){
         $('#btnTambahOpsi').fadeOut();
       }
     });

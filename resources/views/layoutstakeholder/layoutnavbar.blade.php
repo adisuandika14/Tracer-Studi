@@ -97,12 +97,9 @@
                   <!-- Nav Item - User Information -->
                   <li class="nav-item dropdown no-arrow">
                   <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nim_alumni }}</span>
-                      <img class="img-profile rounded-circle"
-                          @if(auth()->guard()->user()->foto == NULL) src="{{asset('assets/admin/img/guest.png')}}"
-                          @else src="{{auth()->guard()->user()->foto}}"
-                          @endif>
-                    </a>
+                      <span class="mr-2 d-none d-lg-inline text-gray-600 small"><strong>Stakeholder</strong></span>
+                      <img class="img-profile rounded-circle" NULL) src="{{asset('assets/admin/img/guest.png')}}">
+                  </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 {{--                      <a class="dropdown-item" href="/alumni/profile">--}}

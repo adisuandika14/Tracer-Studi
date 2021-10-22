@@ -15,6 +15,10 @@ class tb_jawaban_stakeholder extends Model
         'id_jawaban_stakeholder','id_prodi','pertanyaan','id_jawaban',
     ];
 
+    public function relasiJawabantoKuesioner()
+    {
+        return $this->belongsTo('App\tb_kuesioner_stakeholder','id_kuesioner_stakeholder','id_kuesioner_stakeholder');
+    }
 
     public function relasiTackholderKuesionertoProdi()
     {

@@ -15,7 +15,9 @@ class AlumniKuesionerController extends Controller
     public function show(){
         //$angkatan = tb_angkatan::all()->groupBy('tahun_angkatan');
 
-        $kuesioners = tb_kuesioner::get();
+        $kuesioners = tb_kuesioner::whereRaw('id_periode = (select max(`id_periode`) from tb_kuesioner)')
+//            ->where('status', 'disetujui')
+            ->get();
 
         // dd($alumni);
         return view('/alumni/prekuesioner', compact ('kuesioners'));
