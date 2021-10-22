@@ -189,11 +189,18 @@ class stakeholderkuesionerController extends Controller
         return redirect('/admin/kuesioner/stakeholder/detail/'.$id_prodi.'/'.$id_periode)->with('statusInput', 'Pertanyaan berhasil ditambahkan');
     }
 
+    // public function edit($id)
+    // {
+    //     $kuesioner_stakeholder = tb_kuesioner_stakeholder::find($id);
+    //     $opsis = tb_opsi_stakeholder::where('id_soal_pengguna', $kuesioner_stakeholder->id_kuesioner_stakeholder)->get();
+    //     return response()->json(['success' => 'Berhasil', 'detail_kuesioner' => $kuesioner_stakeholder, 'opsis' => $opsis]);
+    // }
+
     public function edit($id)
     {
         $kuesioner_stakeholder = tb_kuesioner_stakeholder::find($id);
-        $opsis = tb_opsi_stakeholder::where('id_kuesioner_stakeholder', $kuesioner_stakeholder->id_kuesioner_stakeholder)->get();
-        return response()->json(['success' => 'Berhasil', 'detail_kuesioner' => $kuesioner_stakeholder, 'opsis' => $opsis]);
+        $opsis = tb_opsi_stakeholder::where('id_soal_pengguna', $kuesioner_stakeholder->id_kuesioner_stakeholder)->get();
+        return response()->json(['success' => 'Berhasil', 'kuesioner_stakeholder' => $kuesioner_stakeholder, 'opsis' => $opsis]);
     }
 
     public function update($id, Request $request){
@@ -240,65 +247,65 @@ class stakeholderkuesionerController extends Controller
             if($request->edit_opsi1 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi1;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi2 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi2;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi3 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi3;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi4 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi4;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi5 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi5;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi6 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi6;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi7 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi7;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi8 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi8;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi9 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi9;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi10 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi10;
-                $opsi->id_kueisoner_stakeholder = $kuesioner_stakeholder->id_kueisoner_stakeholder;
+                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
         }

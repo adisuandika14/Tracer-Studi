@@ -5,41 +5,40 @@ namespace App\Exports;
 use App\tb_alumni;
 use App\tb_prodi;
 use App\Invoice;
+use App\tb_jawaban;
 use Illuminate\Contracts\View\View;
 //use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
-class AlumniExport implements FromCollection, WithHeadings
+class AlumniExport implements FromCollection, WithMapping, WithHeadings
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    // public function collection()
-    // {
-    //     return tb_alumni::with('tb_prodi','tb_angkatan')->get();
-
-    // }
-
-    // public function relasiAlumnitoProdi ($fromalumni) : array {
-    //     return [
-    //         $fromalumni->id,
-    //         $fromalumni->alumni->nama_alumni,
-    //         $fromalumni->alumni->nama_prodi,
-    //     ] ;
- 
- 
-    // }
 
 
     public function collection(){
+        return tb_jawaban::get();
 
-            $type = DB::table('tb_alumni')->select('nama_alumni','alamat_alumni','tahun_lulus','tahun_wisuda')->get(); 
+    }
 
-            return $type ;
+    public function map($alumni) : array{
+
+        $alumni = tb_jawaban::with('relasiJawabantoAlumni','relasiJawabantoDetail')->get();
+        return[
+            $alumni->relasiJawabantoAlumni->nama_alumni,
+            $alumni->relasiJawabantoAlumni->alamat,
+            $alumni->relasiJawabantoAlumni->alamat,
+            $alumni->relasiJawabantoAlumni->tahun_lulus,
+            $alumni->relasiJawabantoAlumni->tahun_wisuda,
+            $alumni->relasiJawabantoAlumni->relasiAlumnitoProdi->nama_prodi,
+            $alumni->relasiJawabantoAlumni->relasiAlumnitoAngkatan->tahun_angkatan,
+            $alumni->relasiJawabantoDetail->relasiDetailtoKuesioner->type_kuesioner,
+        ];
+
+
 
     }
 
@@ -51,16 +50,11 @@ class AlumniExport implements FromCollection, WithHeadings
             'Alamat',
             'Tahun Lulus',
             'Tahun Wisuda',
+            'Program Studi',
+            'Angkatan',
+            'Status',
         ];
     }
 
-    // public function alumni()
-    // {
-    //     return $this->relasiAlumnitoProdi(App\tb_alumni::class, 'id', 'nama_prodi');
-    // }
 
-    // public function relasiAlumnitoProdi()
-    // {
-    //     return $this->belongsTo('App\tb_prodi','id_prodi','id_prodi');
-    // }
 }

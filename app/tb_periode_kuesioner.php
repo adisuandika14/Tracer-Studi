@@ -26,5 +26,8 @@ class tb_periode_kuesioner extends Model
         return $this->belongsTo('App\tb_periode','id_periode','id_periode');
     }
 
-
+    public function relasiPeriodetoKuesioner()
+    {
+        return $this->belongsTo('App\tb_kuesioner','id_kuesioner','id_kuesioner');
+    }
 }

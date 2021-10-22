@@ -46,8 +46,6 @@
                 <i
                   class="fas fa-upload fa-sm text-white-50"></i>Import Excel
                 </button>
-                  <!-- <a href="{{action('dashboardController@export')}}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                  class="fas fa-download fa-sm text-white-50"></i> Export Data Alumni</a> -->
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
@@ -536,14 +534,14 @@
                 </td>
               </table>
                 <div class="form-group">
-                  <label for="status" class="font-weight-bold text-dark">Status</label>
+                  <label class="font-weight-bold text-dark">Status</label>
                     <select name="status" id="status" class="custom-select" required>
                       <option  value="Menunggu Konfirmasi" <?php if($datass->status == "Menunggu Konfirmasi") { echo "SELECTED"; } ?>>Menunggu Konfirmasi</option>
                       <option value="Konfirmasi" <?php if($datass->status == "Konfirmasi") { echo "SELECTED"; } ?>>Konfirmasi</option>
-                      <option value="Ditolak" id="#tolak" name="status" <?php if($datass->status == "Ditolak") { echo "SELECTED"; } ?>>Tolak</option>
+                      <option value="Ditolak"  name="status" <?php if($datass->status == "Ditolak") { echo "SELECTED"; } ?>>Tolak</option>
                     </select>
                 </div>
-                <div name="tolak" id="tolak">
+                <div name="status" id="tolak">
                     <label class="font-weight-bold text-dark">Masukkan Pesan Untuk Alumni</label>
                     <input type="text" class="form-control" class="form-control" name="notifikasi" id="notifikasi" >
                 </div>

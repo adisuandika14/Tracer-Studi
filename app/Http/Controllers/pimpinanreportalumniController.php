@@ -6,24 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\tb_jawaban;
 use App\tb_alumni;
-use App\tb_prodi;
-use App\tb_angkatan;
-use App\tb_periode;
-use App\tb_kuesioner;
 use App\tb_soal_alumni;
-use App\tb_detail_kuesioner;
+use App\tb_prodi;
+use App\tb_periode;
+use App\tb_angkatan;
+use App\tb_tahun_periode;
 
-
-class alumnireportController extends Controller
+class pimpinanreportalumniController extends Controller
 {
-    public function tracer(){
+    public function traceralumni(){
         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
         $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->get();
         $kategori_1 = tb_soal_alumni::all();
         // $kategori_2 = tb_soal_alumni::all();
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::get();
-        $periode = tb_periode::get();
+        $periode = tb_tahun_periode::get();
+
         foreach($angkatan as $ang){
             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
             // dd($ang->tahun_angkatan." ".$alumni);
@@ -35,7 +34,7 @@ class alumnireportController extends Controller
             $dataProdi[] = $ps;
             $namaProdi[] = $p->nama_prodi;
         }
-        return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1', 'dataAngkatan', 'dataProdi', 'tahunAngkatan','namaProdi'));
+        return view ('/pimpinan/alumni/reportalumni', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1','dataAngkatan','dataProdi','tahunAngkatan','namaProdi'));
     }
 
     public function detailtracer($id){
@@ -43,10 +42,10 @@ class alumnireportController extends Controller
         $jawaban = tb_jawaban::with('relasiJawabantoDetail')->where('id_alumni', $alumni->id_alumni)->get();
 
         //dd($detailjawaban);
-        return view ('/report/detail-tracer', compact('alumni', 'jawaban'));
+        return view ('/pimpinan/alumni/detailtracer', compact('alumni', 'jawaban'));
     }
 
-    public function filtertracer(Request $request){
+    public function filteralumni(Request $request){
         $data = [];
         if($request->prodi == "" && $request->angkatan == "" && $request->kategori_1 == ""){
             $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();

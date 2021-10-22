@@ -40,4 +40,21 @@ class tb_jawaban extends Model
         return $this->belongsTo('App\tb_periode','id_periode','id_periode');
     }
 
+    public function relasiDetailtoKuesioner()
+    {
+        return $this->belongsTo('App\tb_kuesioner','id_kuesioner','id_kuesioner');
+    }
+
+    public function relasikuesionertoPeriode()
+    {
+        return $this->belongsTo('App\tb_periode','id_periode','id_periode');
+    }
+
+    public function relasiPeriodekuesionertoPeriode()
+    {
+        return $this->belongsTo('App\tb_tahun_periode','id_tahun_periode','id_tahun_periode');
+    }
+
+
+
 }

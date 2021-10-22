@@ -1,4 +1,4 @@
-@extends('layoutadmin.layout')
+@extends('layoutpimpinan.layout')
 @section('title', 'Report Alumni')
 @section('active11')
       nav-item active
@@ -51,7 +51,7 @@
             <div class="table-responsive">
             <div class="small mb-1">Filter Data Tracer </div>
             <!-- <a style="margin-bottom: 10px;" class= "btn btn-warning dropdown-toggle text-white" id="toggles" ><i class="fas fa-search"></i> Advanced Search</a> -->
-            <!-- <form  method="POST" action="/admin/reportalumni/filter">
+            <!-- <form  method="POST" action="/pimpinan/reportalumni/filter">
                 @csrf -->
                 <table class="table" style="width: 85%;" id="example" cellspacing="0">
                     <tr id="filter_row">
@@ -109,7 +109,7 @@
                         <td style="width: 5%;">
                             <a  style="margin-bottom: 10px;" class= "btn btn-info text-white" id="filter"> <i class="fas fa-search"></i> Filter </a>
                             <!-- <button style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" type="" id="filter" > <i class="fas fa-search"></i> Filter</button> -->
-                            <a style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" href="/admin/reportalumni" > <i class="fas fa-sync"></i> Reset</a>
+                            <a style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" href="/pimpinan/reportalumni" > <i class="fas fa-sync"></i> Reset</a>
                         </td>
                     </tr>
                 </table>
@@ -136,7 +136,7 @@
                         <td style="width: 7%;" >{{ $details->tahun_lulus }}</td>
                         {{-- <td style="width: 7%;" >{{ $details->relasiDetailkuesionertoPeriode->id_periode }}</td> --}}
                         <td style="width: 2%; text-align: center;" >
-                            <a style="margin-right:7px" href="/admin/reportalumni/{{ $details->id_alumni }}">
+                            <a style="margin-right:7px" href="/pimpinan/reportalumni/{{ $details->id_alumni }}">
                                 <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye">Lihat Data</i></button></a>
                         </td>
                 </tr>
@@ -185,7 +185,7 @@
 
             $.ajax({
                 method : 'POST',
-                url : '/admin/reportalumni/filter',
+                url : '/pimpinan/reportalumni/filteralumni',
                 data : {
                 "_token" : "{{ csrf_token() }}",
                 prodi : prodi,
@@ -209,7 +209,7 @@
                             <td style="width: 5%;" >${i.relasi_alumnito_angkatan.tahun_angkatan}</td>
                             <td style="width: 7%;" >${i.tahun_lulus}</td>
                             <td style="width: 2%; text-align: center;" >
-                                <a style="margin-right:7px" href="/admin/reportalumni/${i.id_alumni}">
+                                <a style="margin-right:7px" href="/pimpinan/reportalumni/${i.id_alumni}">
                                     <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye">Lihat Data</i></button></a>
                             </td>
                         </tr>`;

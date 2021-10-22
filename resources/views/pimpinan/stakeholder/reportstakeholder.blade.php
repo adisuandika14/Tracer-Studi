@@ -1,4 +1,4 @@
-@extends('layoutadmin.layout')
+@extends('layoutpimpinan.layout')
 @section('title', 'Report Stakeholder')
 @section('active11')
       nav-item active
@@ -18,7 +18,7 @@
         <div class="card-body">
         @if (Session::has('error'))
                   <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  <i class="fa fa-times"></i>
+                  <i class="fa fa-times"></i> 
                     {{ Session::get('error') }}
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
@@ -51,7 +51,7 @@
             <div class="table-responsive">
             <div class="small mb-1">Filter Data Tracer </div>
             <!-- <a style="margin-bottom: 10px;" class= "btn btn-warning dropdown-toggle text-white" id="toggles" ><i class="fas fa-search"></i> Advanced Search</a> -->
-            <form  method="POST" action="/admin/reportstakeholder/filter">
+            <form  method="POST" action="/pimpinan/reportstakeholder/filterreport">
                 @csrf
                 <table class="table" style="width: 85%;" id="example" cellspacing="0">
                     <tr>
@@ -73,25 +73,25 @@
                             </div>
                         </td>
                         <td style="width: 5%;">
-                            <div class="form-group">
+                            <div class="form-group">  
                                 <select name="periode" class="custom-select" id="periode" >
                                     <option selected value="">-- Pilih Periode Kuesioner --</option>
                                     @foreach ($periode as $periodes)
-                                    <option  value="{{$periodes->id_periode_kuesioner}}"
-                                        @isset($id_periode_kuesioner)
-                                            @if($periodes->id_periode_kuesioner == $id_periode_kuesioner)
+                                    <option  value="{{$periodes->id_tahun_periode}}"
+                                        @isset($id_tahun_periode)
+                                            @if($periodes->id_tahun_periode == $id_tahun_periode)
                                                 selected
                                             @endif
                                         @endisset
-                                        >{{ $periodes->relasiPeriodekuesionertoTahun->tahun_periode }} - {{ $periodes->relasiPeriodekuesionertoPeriode->periode }}
+                                        >{{ $periodes->tahun_periode }}
                                     </option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> 
                         </td>
                         <td style="width: 5%;">
                             <button style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" type="submit" > <i class="fas fa-search"></i> Filter</button>
-                            <a style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" href="/admin/tracer" > <i class="fas fa-sync"></i> Reset</a>
+                            <a style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" href="/pimpinan/reportstakeholder" > <i class="fas fa-sync"></i> Reset</a>
                         </td>
                     </tr>
                 </table>
@@ -116,12 +116,12 @@
                         <td style="width: 10%;">{{ $report->nama_instansi }}</td>
                         <td style="width: 5%;" >{{ $report->jabatan }}</td>
                         <td style="width: 7%;" >{{ $report->email }}</td>
-                        <td style="width: 5%; text-align: center;" >
-                            <a style="margin-right:7px" href="/admin/reportstakeholder/{{ $report->id_stakeholder }}">
-                                <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> Lihat Data</button></a>
+                        <td style="width: 2%; text-align: center;" >
+                            <a style="margin-right:7px" href="/pimpinan/reportstakeholder/{{ $report->id_stakeholder }}">
+                                <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye">Lihat Data</i></button></a>
                         </td>
                 </tr>
-                @endforeach
+                @endforeach 
                 </tbody>
             </table>
             </div>
@@ -140,9 +140,12 @@
         </div>
     </div>
 </div>
+@endsection
 
+
+@section('custom_javascript')
 <script>
-    $(document).ready(function () {
+$(document).ready(function () {
         var ctx = document.getElementById("myBarChart");
         const config = {
             type: 'bar',
@@ -229,8 +232,4 @@
         var myBarChart = new Chart(ctx, config);
     });
 </script>
-@endsection
-
-
-@section('custom_javascript')
 @endsection

@@ -74,10 +74,10 @@ input:checked + .slider:before {
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <h1 class="h3 mb-4 text-gray-800">{{$judul_kuesioner}}</h1>
-        @if (session()->has('statusInput'))
+        @if (session()->has('success'))
           <div class="row">
             <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
-                {{session()->get('statusInput')}}
+                {{session()->get('success')}}
                 <button type="button" class="close" data-dismiss="alert"
                     aria-label="Close">
                     <span aria-hidden="true">&times;</span> 
@@ -107,27 +107,8 @@ input:checked + .slider:before {
         </div>
             <div class="card-body">
                 <div class="table-responsive">
-                <label class=" font-weight-bold text-grey">Periode Kuesioner</label>
-                    <div class="form-group" style="width: 150px;">
-                        <select name="prodi" class="custom-select text-center" id="periode">
-                            <option selected value="">-- Pilih Periode Kuesioner --</option>
-                            @foreach ($periodes as $periode)
-                                <option  value="{{$periode->id_periode}}" @if($periode->id_periode == $id_periode) selected @endif>{{ $periode->periode }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div id="loading" class="text-center" style="display:none;">
-                      <input id="signup-token" name="_token" type="hidden" value="{{csrf_token()}}">
-                      {{-- SPINNER --}}
-                      <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                      <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                    </div>
-                    {{-- SPINNER --}}
+                  {{-- <input type="checkbox" name="all" id="checkall" />Check All</br> --}}
+                
                     <div class="ganti" id="ganti">
                       <div class="table-responsive">
                         <div class="container-fluid mt-4" style="align-content: center;">
@@ -157,7 +138,7 @@ input:checked + .slider:before {
                                             @endforeach
                                         </div>
                                         <div class="modal-footer">
-                                            <label class="switch">
+                                            <label class="switch"  >
                                               
                                                 @if($status->status == "Konfirmasi")
                                                   <input type="checkbox" id="status_{{$status->id_detail_kuesioner}}" onclick="statusBtn({{$status->id_detail_kuesioner}})" checked>
@@ -185,33 +166,41 @@ input:checked + .slider:before {
 
 @section('custom_javascript')
 <script>
-  //Periode
-$('#periode').change(function(){
-  $('#id_periode').val($(this).val());
-  $('#ganti').hide();
-  $('#loading').show();
-  jQuery.ajax({
-    url: "{{url('pimpinan/kuesioner/showkuesioner/filter/')}}" ,
-    method: 'post',
-    data: {
-        _token: $('#signup-token').val(),
-        id_periode: $(this).val(),
-        id_kuesioner: {{ $id_kuesioner }}
-    },
-    success: function (result) {
-      console.log(result);
-      $('#loading').hide();
-        $('.ganti').html(result.hasil);
-        $('#ganti').show();
+function statusBtn(id) {
+    var checkBox = document.getElementById("statusa_all");
+    // If the checkbox is checked, display the output text
+    $('#checkall').change(function () {
+    $('.cb-element').prop('checked',this.checked);
+    });
+
+    if (checkBox.checked == true){
+      swal({
+          title: 'Anda yakin ingin menerima semua kuesioner ini?',
+          icon: 'warning',
+          buttons: ["Tidak", "Ya"],
+      }).then(function(value) { 
+          if (value) {
+            jQuery.ajax({  
+              url: "/pimpinan/kuesioner/showkuesioner/"+id+"/Konfirmasi",
+              type: "GET",
+              success: function(result){
+              }
+          });
+        }else{
+          document.getElementById("status_"+id).checked = false;
+        }
+      });
     }
-});
-})
 
+  }
+  $('#sidebarPengumuman').addClass("active");
 
+  
 //Switch Status Pengumuman
   function statusBtn(id) {
     var checkBox = document.getElementById("status_"+id);
     // If the checkbox is checked, display the output text
+
     if (checkBox.checked == true){
       swal({
           title: 'Anda yakin ingin menerima kuesioner ini?',
@@ -247,6 +236,7 @@ $('#periode').change(function(){
         }
       });
     }
+
   }
   $('#sidebarPengumuman').addClass("active");
 </script>

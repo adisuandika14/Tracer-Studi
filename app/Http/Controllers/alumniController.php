@@ -15,6 +15,9 @@ use App\tb_provinsi;
 use App\tb_prodi;
 use App\tb_gender;
 use App\tb_notifikasi;
+use App\tb_jawaban;
+use App\tb_soal_alumni;
+use App\tb_periode;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\District;
@@ -132,9 +135,13 @@ class alumniController extends Controller
     }
 
 
-    public function export(){
-        return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
+    public function export_mapping() {
+        return Excel::download( new AlumniExport(), 'Data Tracer Lulusan Alumni Dakulltas Teknik.xlsx') ;
     }
+
+    // public function export(){
+    //     return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
+    // }
 
 
     public function import_excel(Request $request) 
@@ -163,6 +170,9 @@ class alumniController extends Controller
                         $id_angkatan = $angkatan->id_angkatan;
                     }
                 }
+
+                $alumni = New tb_angkatan();
+                $alumni->tahun_angkatan = $rows[$count][$hitung]['tahun_angkatan']; 
 
                 $alumni = New tb_alumni();
                 $alumni->nama_alumni = $rows[$count][$hitung]['nama_alumni'];
@@ -219,4 +229,50 @@ class alumniController extends Controller
         return redirect('/admin/alumni');
     }
 
+    public function tracer(){
+        $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+        $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->get();
+        $kategori_1 = tb_soal_alumni::all();
+        // $kategori_2 = tb_soal_alumni::all();
+        $prodi = tb_prodi::get();
+        $angkatan = tb_angkatan::get();
+        $periode = tb_periode::get();
+        return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1'));
+    }
+
+        public function filtertracer(Request $request){
+        if($request->prodi == "" && $request->angkatan == ""){
+            return redirect ('/kuesioner/tracer');
+        }else if($request->prodi == "" && $request->angkatan != ""){
+            $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+            $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
+            $prodi = tb_prodi::get();
+            $angkatan = tb_angkatan::get();
+            $id_angkatan = $request->angkatan;
+            return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan', 'id_angkatan'));
+        }else if($request->prodi != "" && $request->angkatan == ""){
+            $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+            $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
+            $prodi = tb_prodi::get();
+            $angkatan = tb_angkatan::get();
+            $id_prodi = $request->prodi;
+            return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan', 'id_prodi'));
+        }else if($request->prodi != "" && $request->angkatan != ""){
+            $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+            $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
+            $prodi = tb_prodi::get();
+            $angkatan = tb_angkatan::get();
+            $id_angkatan = $request->angkatan;
+            $id_prodi = $request->prodi;
+            return view ('/kuesioner/tracer', compact('tracers', 'prodi', 'angkatan', 'id_prodi', 'id_angkatan'));
+        }
+    }
+
+    public function detailtracer($id){
+        $alumni = tb_alumni::where('id_alumni', $id)->first();
+        $jawaban = tb_jawaban::with('relasiJawabantoDetail')->where('id_alumni', $alumni->id_alumni)->get();
+
+        //dd($detailjawaban);
+        return view ('/kuesioner/detailtracer', compact('alumni', 'jawaban'));
+    }
 }

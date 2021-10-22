@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class AdminMiddleware
+class PimpinanMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!session('admin')){
+        if(!session('pimpinan')){
             return redirect('/');
         };
         

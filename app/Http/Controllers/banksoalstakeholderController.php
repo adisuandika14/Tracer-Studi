@@ -39,18 +39,21 @@ class banksoalstakeholderController extends Controller
 
         if($request->id_jenis ==  2){
             $bank_soal->id_jenis = 2;
+            $bank_soal->id_prodi = $request->id_prodi;
             $bank_soal->pertanyaan = $request->pertanyaan;
             $bank_soal->save();
         }
 
         if($request->id_jenis ==  4){
             $bank_soal->id_jenis = 4;
+            $bank_soal->id_prodi = $request->id_prodi;
             $bank_soal->pertanyaan = $request->pertanyaan;
             $bank_soal->save();
         }
 
         if($request->id_jenis == 1 || $request->id_jenis == 3){
             $bank_soal->id_jenis = $request->id_jenis;
+            $bank_soal->id_prodi = $request->id_prodi;
             $bank_soal->pertanyaan = $request->pertanyaan;
             $bank_soal->save();
 
@@ -166,12 +169,20 @@ class banksoalstakeholderController extends Controller
 
         if($request->edit_id_jenis ==  2){
             $bank_soal->id_jenis = 2;
+            $bank_soal->id_prodi = $request->id_prodi;
+            $bank_soal->pertanyaan = $request->edit_pertanyaan;
+            $bank_soal->update();
+        }
+        if($request->edit_id_jenis ==  4){
+            $bank_soal->id_jenis = 4;
+            $bank_soal->id_prodi = $request->id_prodi;
             $bank_soal->pertanyaan = $request->edit_pertanyaan;
             $bank_soal->update();
         }
 
         if($request->edit_id_jenis == 1 || $request->edit_id_jenis == 3){
             $bank_soal->id_jenis = 1;
+            $bank_soal->id_prodi = $request->id_prodi;
             $bank_soal->pertanyaan = $request->edit_pertanyaan;
             $bank_soal->update();
 

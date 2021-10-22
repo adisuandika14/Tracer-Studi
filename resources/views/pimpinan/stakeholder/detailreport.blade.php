@@ -1,4 +1,4 @@
-@extends('layoutadmin.layout')
+@extends('layoutpimpinan.layout')
 @section('title', 'Kuesioner')
 @section('active11')
       nav-item active

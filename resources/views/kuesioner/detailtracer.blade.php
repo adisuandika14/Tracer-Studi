@@ -1,6 +1,6 @@
 @extends('layoutadmin.layout')
 @section('title', 'Kuesioner')
-@section('active11')
+@section('active8')
       nav-item active
 @endsection
 
@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Report Pengguna Lulusan - {{ $stakeholder->nama }}
+            <h6 class="m-0 font-weight-bold text-primary">Data Jawaban Alumni - {{ $alumni->nama_alumni }}</h6>
         </div>
         <div class="card-body">
         @if (Session::has('error'))
@@ -59,7 +59,7 @@
                 @foreach($jawaban as $details)
                 <tr class="success">
                     <td style="width: 1%;">{{ $loop->iteration }}</td>
-                        <td style="width: 15%;">{{ $details->relasiJawabanstakeholdertoStakeholder->pertanyaan }}</td>
+                        <td style="width: 15%;">{{ $details->relasiJawabantoDetail->pertanyaan }}</td>
                         <td style="width: 10%;">{{ $details->jawaban }}</td>
                 </tr>
                 @endforeach 
