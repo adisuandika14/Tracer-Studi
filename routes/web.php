@@ -176,15 +176,6 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/kuesioner/stakeholder/create/{id_prodi}/{id_periode}','stakeholderkuesionerController@create_from_bank_soal');
     Route::post('/kuesioner/stakeholder/filter','stakeholderkuesionerController@filter')->name('stakeholder-filter');
 
-    //  //Detail Kuesioner stakeholder
-    //  Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionedetailController@edit');
-    //  Route::get('/kuesioner/stakeholder','stakeholderkuesionedetailController@detail')->name('stakeholder-kuesioner-show');
-    //  Route::post('/kuesioner/stakeholder/create','stakeholderkuesionedetailController@create');
-    //  Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionedetailController@update');
-    //  Route::delete('/kuesioner/stakeholder/{id}/delete','stakeholderkuesionedetailController@delete');
-    //  Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'stakeholderkuesionedetailController@status');
-    //  Route::post('/kuesioner/stakeholder/showkuesioner/filter','stakeholderkuesionedetailController@filter')->name('stakeholder-filter');
-
     //Bank Soal stakeholder
     Route::get('/banksoal/stakeholder','banksoalstakeholderController@show')->name('show-banksoal-stakeholder');
     Route::post('/banksoal/stakeholder/create','banksoalstakeholderController@create');
@@ -265,18 +256,14 @@ Route::group(['prefix' => 'pimpinan',  'middleware' => 'PimpinanMiddleware'],fun
 
 
     //Report alumni
-    Route::get('/reportalumni','pimpinanreportalumniController@tracer')->name('pimpinan-alumni-report');
+    Route::get('/reportalumni','pimpinanreportalumniController@traceralumni')->name('pimpinan-alumni-report');
     Route::get('/reportalumni/{id}','pimpinanreportalumniController@detailtracer');
-    Route::post('/reportalumni/filteralumni','pimpinanreportalumniController@filtertracer');
+    Route::post('/reportalumni/filteralumni','pimpinanreportalumniController@filteralumni');
 
     //Report Stakeholder
     Route::get('/reportstakeholder','pimpinanreportstakeholderController@report')->name('pimpinan-alumni-report');
     Route::get('/reportstakeholder/{id}','pimpinanreportstakeholderController@detailreport');
     Route::post('/reportstakeholder/filterreport','pimpinanreportstakeholderController@filterreport');
-
-
-
-
 
     //Pengumuman
     Route::get('/pengumuman','pimpinanpengumumanController@show');

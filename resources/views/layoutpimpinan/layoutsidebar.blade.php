@@ -100,39 +100,6 @@
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-<!-- Heading -->
-<!-- <div class="sidebar-heading">
-    Master Data
-</div> -->
-
-<!-- Nav Item - Pages Collapse Menu -->
-<!-- <div class="nav-item">
-    <li class="@yield('active6')">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-            aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Master Data</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                 //<h6 class="collapse-header">Login Screens:</h6>
-                <div class="collapse-item">
-                    <a class="@yield('collapse1')" href="/pimpinan/angkatan">Angkatan</a>
-                </div>
-                <div class="collapse-item">
-                    <a class="@yield('collapse2')" href="/pimpinan/prodi">Program Studi</a>
-                </div>
-
-
-            </div>
-        </div>
-    </li>
-</div>  -->
-
-
-<!-- Divider -->
-<!-- <hr class="sidebar-divider d-none d-md-block"> -->
-
 <!-- Sidebar Toggler (Sidebar) -->
 <div class="text-center d-none d-md-inline">
     <button class="rounded-circle border-0" id="sidebarToggle"></button>

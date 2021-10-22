@@ -185,7 +185,7 @@
 
             $.ajax({
                 method : 'POST',
-                url : '/pimpinan/reportalumni/filter',
+                url : '/pimpinan/reportalumni/filteralumni',
                 data : {
                 "_token" : "{{ csrf_token() }}",
                 prodi : prodi,

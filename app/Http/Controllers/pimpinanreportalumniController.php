@@ -14,7 +14,7 @@ use App\tb_tahun_periode;
 
 class pimpinanreportalumniController extends Controller
 {
-    public function tracer(){
+    public function traceralumni(){
         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
         $tracers = tb_alumni::with('relasiAlumnitoProdi')->whereIn('id_alumni', $all_jawaban)->get();
         $kategori_1 = tb_soal_alumni::all();
@@ -45,7 +45,7 @@ class pimpinanreportalumniController extends Controller
         return view ('/pimpinan/alumni/detailtracer', compact('alumni', 'jawaban'));
     }
 
-    public function filtertracer(Request $request){
+    public function filteralumni(Request $request){
         $data = [];
         if($request->prodi == "" && $request->angkatan == "" && $request->kategori_1 == ""){
             $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
@@ -132,6 +132,7 @@ class pimpinanreportalumniController extends Controller
             $data['prodi'] = $prodi;
             $data['angkatan'] = $angkatan;
             $data['id_angkatan'] = $id_angkatan;
+            return response()->json($data, 200);
             // return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_angkatan'));
         }else if($request->prodi == "" && $request->angkatan == "" && $request->kategori_1 != ""){
             $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->get(['id_kuesioner'])->toArray();
@@ -204,6 +205,8 @@ class pimpinanreportalumniController extends Controller
             $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
             $prodi = tb_prodi::get();
             $angkatan = tb_angkatan::get();
+            $id_angkatan = $request->angkatan;
+            $id_prodi = $request->prodi;
             $angkatan = tb_angkatan::all();
             foreach($angkatan as $ang){
                 $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
@@ -294,12 +297,10 @@ class pimpinanreportalumniController extends Controller
             // return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan', 'id_angkatan'));
         }
 
-
-
         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::get();
-        return view ('/pimpinan/alumni/reportalumni', compact('tracers', 'prodi', 'angkatan'));
+        return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan'));
     }
 }
