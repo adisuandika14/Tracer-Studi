@@ -126,7 +126,7 @@
                         <td >
                             <div class="form-group">
                                 <select name="periode" class="custom-select" id="periode" >
-                                    <option selected value="">-- Pilih Periode --</option>
+                                    <option selected value="">-- Pilih Periode Kuisioner --</option>
                                     @foreach ($periode as $p)
                                         <option value="{{ $p->id_periode }}"
                                             @isset($pertanyaan)
