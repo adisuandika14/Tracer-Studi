@@ -94,13 +94,13 @@
                                 <select name="tahun_wisuda" class="custom-select" id="tahun_wisuda" >
                                     <option selected value="">-- Pilih Tahun Wisuda --</option>
                                     @foreach ($tahun_wisuda as $tw)
-                                        <option value="{{ $tw->tahun_wisuda }}"
+                                        <option value="{{ $tw->tahun }}"
                                             @isset($pertanyaan)
-                                                @if($tw->tahun_wisuda == $tahun_wisuda)
+                                                @if($tw->tahun == $tahun)
                                                     selected
                                                 @endif
                                             @endisset
-                                            >{{$tw->tahun_wisuda}}
+                                            >{{$tw->tahun}}
                                         </option>
                                     @endforeach
                                 </select>
@@ -111,7 +111,7 @@
                                 <select name="tahun_periode" class="custom-select" id="tahun_periode" >
                                     <option selected value="">-- Pilih Tahun Periode Kuisioner --</option>
                                     @foreach ($tahun_periode as $tp)
-                                        <option value="{{ $tp->tahun_periode }}"
+                                        <option value="{{ $tp->id_tahun_periode }}"
                                             @isset($pertanyaan)
                                                 @if($tp->tahun_periode == $tahun_periode)
                                                     selected
@@ -229,9 +229,13 @@
         chart_2({!! json_encode($namaProdi) !!}, {!! json_encode($dataProdi) !!});
         $('#filter').on('click',function(e){
             e.preventDefault();
+            $("#filter").attr('disabled', true);
             const prodi = $('#prodi').val()
             const angkatan = $('#angkatan').val()
             const kategori_1 = $('#kategori_1').val()
+            const tahun_wisuda = $('#tahun_wisuda').val()
+            const tahun_periode = $('#tahun_periode').val()
+            const periode = $('#periode').val()
             // var ctx3 = document.getElementById('pertambahanAnggota');
 
             $.ajax({
@@ -242,9 +246,12 @@
                 prodi : prodi,
                 angkatan : angkatan,
                 kategori_1 : kategori_1,
+                tahun_wisuda : tahun_wisuda,
+                tahun_periode : tahun_periode,
+                periode : periode,
                 },
                 beforeSend : function() {
-                          $("#filter").attr('disabled', true);
+                          
                 },
                 success : (res) => {
                     let httpval = '';
