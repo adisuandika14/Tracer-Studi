@@ -172,7 +172,7 @@
                     <th style="text-align:center;">Nama Alumni</th>
                     <th style="text-align:center;">Program Studi</th>
                     <th style="text-align:center;">Angkatan</th>
-                    <th style="text-align:center;">Tahun Lulus</th>
+                    <th style="text-align:center;">Tahun Wisuda</th>
                     {{-- <th style="text-align:center;">Periode Kuesioner</th> --}}
                     <th style="text-align:center;">Action</th>
                 </tr>
@@ -184,7 +184,7 @@
                         <td style="width: 15%;">{{ $details->nama_alumni }}</td>
                         <td style="width: 10%;">{{ $details->relasiAlumnitoProdi->nama_prodi }}</td>
                         <td style="width: 5%;" >{{ $details->relasiAlumnitoAngkatan->tahun_angkatan }}</td>
-                        <td style="width: 7%;" >{{ $details->tahun_lulus }}</td>
+                        <td style="width: 7%;" >{{ $details->tahun_wisuda }}</td>
                         {{-- <td style="width: 7%;" >{{ $details->relasiDetailkuesionertoPeriode->id_periode }}</td> --}}
                         <td style="width: 2%; text-align: center;" >
                             <a style="margin-right:7px" href="/admin/reportalumni/{{ $details->id_alumni }}">

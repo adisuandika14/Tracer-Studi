@@ -9,7 +9,7 @@ use App\tb_angkatan;
 class angkatanController extends Controller
 {
     public function show(){
-        $angkatan = tb_angkatan::get();
+        $angkatan = tb_angkatan::orderBy('tahun_angkatan','asc')->get();
             return view('/admin/masterangkatan', compact ('angkatan'));
         }
     

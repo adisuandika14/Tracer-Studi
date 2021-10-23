@@ -24,7 +24,7 @@ class alumnireportController extends Controller
         $kategori_1 = tb_soal_alumni::all();
         // $kategori_2 = tb_soal_alumni::all();
         $prodi = tb_prodi::get();
-        $angkatan = tb_angkatan::get();
+        $angkatan = tb_angkatan::orderBy('tahun_angkatan','asc')->get();
         $tahun_wisuda = tb_alumni::select(DB::raw('YEAR(tahun_wisuda) as tahun_wisuda'))->distinct()->get();
         $tahun_periode = tb_tahun_periode::all();
         // dd($tahunWisuda);

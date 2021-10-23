@@ -80,13 +80,20 @@
                                       <button class="btn btn-warning btn-sm" data-toggle="modal"
                                             data-target="#validasi{{$status->id_alumni}}"> Menunggu Konfirmasi
                                       </button>
-                                      @elseif($status->status == "Konfirmasi")
+                                      @endif
+                                      @if($status->status == "Konfirmasi")
                                       <button class="btn btn-success btn-sm" data-toggle="modal"
                                             data-target="#validasi{{$status->id_alumni}}"> Dikonfirmasi
                                       </button>
-                                      @else
+                                      @endif
+                                      @if($status->status == "Ditolak")
                                       <button class="btn btn-danger btn-sm" data-toggle="modal"
                                             data-target="#validasi{{$status->id_alumni}}"> Ditolak
+                                      </button>
+                                      @endif
+                                      @if($status->status == "Mengajukan Perbaikan")
+                                      <button class="btn btn-secondary btn-sm" data-toggle="modal"
+                                            data-target="#validasi{{$status->id_alumni}}"> Mengajukan Perbaikan
                                       </button>
                                       @endif
                                 </td>
@@ -456,26 +463,36 @@
                           value="{{$status->nama_alumni}}" readonly>
                   </div>
                   <div class="form-group">
+                    <label class="font-weight-bold text-dark">Angkatan</label>
+                    <input type="text" class="form-control" id="angkatan" name="angkatan"
+                        value=" @if($status->id_angkatan==$angkatans->id_angkatan) selected @endif {{$angkatans->tahun_angkatan}}" readonly>
+                </div>
+                  {{-- <div class="form-group">
                     <label for="id_angkatan" class="font-weight-bold text-dark">Angkatan</label>
                     <select name="id_angkatan" id="angkatan" class="custom-select" required readonly>
                         @foreach($angkatan as $angktans)
                         <option value="{{$angktans->id_angkatan}}" readonly @if($status->id_angkatan==$angktans->id_angkatan) selected @endif>{{$angktans->tahun_angkatan}}</option>
                         @endforeach
                     </select>
-                  </div>
+                  </div> --}}
                   <div class="form-group">
                       <label class="font-weight-bold text-dark">Alamat Alumni</label>
-                      <input type="text" class="form-control" id="alamat_alumni" name="alamat_alumni"
+                      <input type="text" class="form-control" id="prodi" name="prodi"
                           value="{{$status->alamat_alumni}}" readonly>
                   </div>
                   <div class="form-group">
+                    <label class="font-weight-bold text-dark">Program Studi</label>
+                    <input type="text" class="form-control" id="prodi" name="prodi"
+                        value="@if($status->id_prodi==$prodis->id_prodi) selected @endif {{$prodis->nama_prodi}}" readonly>
+                </div>
+                  {{-- <div class="form-group">
                     <label for="id_prodi" class="font-weight-bold text-dark">Program Studi</label>
                     <select name="id_prodi" id="prodi" class="custom-select" required readonly>
                         @foreach($prodi as $prodis)
                         <option value="{{$prodis->id_prodi}}"  @if($status->id_prodi==$prodis->id_prodi) selected @endif>{{$prodis->nama_prodi}}</option>
                         @endforeach
                     </select>
-                  </div>
+                  </div> --}}
                   <div class="form-group">
                       <label class="font-weight-bold text-dark">Tahun Lulus</label>
                       <input type="text" class="form-control" id="tahun_lulus" name="tahun_lulus"
@@ -536,12 +553,12 @@
                 <div class="form-group">
                   <label class="font-weight-bold text-dark">Status</label>
                     <select name="status" id="status" class="custom-select" required>
-                      <option  value="Menunggu Konfirmasi" <?php if($datass->status == "Menunggu Konfirmasi") { echo "SELECTED"; } ?>>Menunggu Konfirmasi</option>
-                      <option value="Konfirmasi" <?php if($datass->status == "Konfirmasi") { echo "SELECTED"; } ?>>Konfirmasi</option>
-                      <option value="Ditolak"  name="status" <?php if($datass->status == "Ditolak") { echo "SELECTED"; } ?>>Tolak</option>
+                      <option  value="Menunggu Konfirmasi" <?php if($status->status == "Menunggu Konfirmasi") { echo "SELECTED"; } ?>>Menunggu Konfirmasi</option>
+                      <option value="Konfirmasi" <?php if($status->status == "Konfirmasi") { echo "SELECTED"; } ?>>Konfirmasi</option>
+                      <option value="Ditolak"  <?php if($status->status == "Ditolak") { echo "SELECTED"; } ?>>Tolak</option>
                     </select>
                 </div>
-                <div name="status" id="tolak">
+                <div class="tolak" id="tolak">
                     <label class="font-weight-bold text-dark">Masukkan Pesan Untuk Alumni</label>
                     <input type="text" class="form-control" class="form-control" name="notifikasi" id="notifikasi" >
                 </div>
@@ -559,51 +576,10 @@
 
 @endsection
 
+
 @section('custom_javascript')
 <script>
-    //Provinsi AJAX
-    $(document).ready(function(){
-        $('#provinsi').on('change', function(){
-          let id = $(this).val();
-          $('#kabupaten').empty();
-          //$('#kabupaten').append(`<option value = "0" disabled selected>--Silahkan Tunggu--</option>`);
-          $.ajax({
-            type: 'POST',
-            url: 'Regency' + province_id, 
-            success: function (response){
-              var response = JSON.parse(response);
-              console.log(response);
-              $('#kabupaten').empty();
-              $('#kabupaten').append(`<option value = "0" disabled selected>--Plih Kabupaten--</option>`);
-              response.foreach(element => {
-                $('#kabupaten').append(`<option value="${element['name']}"> ${element['name']}</option>`);
-              });
-            }
-          });
-        });
-
-        //Kabupaten AJAX
-        $('#kabupaten').on('change', function(){
-          let id = $(this).val();
-          $('#kecamatan').empty();
-          $('#kecamatan').append(`<option value="0" disabled selected> Silahkan Tunggu....</option>`);
-          $.ajax({
-            type: 'GET',
-            url: '/kecamatan/' + id,
-            success: function (response){
-              var response = JSON.parse(response);
-              console.log(response);
-              $('#kecamatan').empty();
-              $('#kecamatan').append(`<option value = "0" disabled selected> Plih Kecamatan</option>`);
-              response.forEach(element => {
-                $('#kecamatan').append(`<option value="${element['id']}"> ${element['name']}</option>`);
-              });
-            }
-          });
-        });
-      })
-
-  $(document).ready(function()
+    $(document).ready(function()
 {
     $("#status").change(function() {
         if($(this).val() == "Ditolak") {
@@ -614,22 +590,5 @@
         }
     });
 });
-
-// <!-- FIle SHow & Hide -->
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
-
-$('#myFile').each(function(){
-  if ($(this).attr("href") == "") 
-       $(this).hide();
-  else
-      $(this).show();
-});
-<style>
-.hide {display:none !important;}
-.show {display:block !important;}
-</style>
-
-
-</script>
-
+  </script>
 @endsection

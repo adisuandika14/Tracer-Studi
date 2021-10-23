@@ -171,8 +171,8 @@ class alumniController extends Controller
                     }
                 }
 
-                $alumni = New tb_angkatan();
-                $alumni->tahun_angkatan = $rows[$count][$hitung]['tahun_angkatan']; 
+                // $alumni = New tb_angkatan();
+                // $alumni->tahun_angkatan = $rows[$count][$hitung]['tahun_angkatan']; 
 
                 $alumni = New tb_alumni();
                 $alumni->nama_alumni = $rows[$count][$hitung]['nama_alumni'];
