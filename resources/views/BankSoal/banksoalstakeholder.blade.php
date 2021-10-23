@@ -414,7 +414,7 @@ $('#prodi').change(function(){
     $("#loadingEdit").show();
     $('#update').modal('show');
     jQuery.ajax({
-      url: "/admin/kuesioner/stakeholder/"+id+"/edit",
+      url: "/admin/banksoal/stakeholder/"+id+"/edit",
       method: 'get',
       success: function(result){
         let opsi = 1;

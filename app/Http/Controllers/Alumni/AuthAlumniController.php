@@ -50,17 +50,17 @@ class AuthAlumniController extends Controller
          $user->id_line=$request->id_line;
          $user->no_hp=$request->no_hp;
 
-//         if($request->foto!=''){
-//             $image_parts = explode(';base64', $request->foto);
-//             $image_type_aux = explode('image/', $image_parts[0]);
-//             $image_type = $image_type_aux[1];
-//             $image_base64 = base64_decode($image_parts[1]);
-//             $filename = uniqid().'.png';
-//             $fileLocation = '/image/alumni/profile';
-//             $path = $fileLocation."/".$filename;
-//             $admin->foto = '/storage'.$path;
-//             Storage::disk('public')->put($path, $image_base64);
-//         }
+         if($request->foto!=''){
+             $image_parts = explode(';base64', $request->foto);
+             $image_type_aux = explode('image/', $image_parts[0]);
+             $image_type = $image_type_aux[1];
+             $image_base64 = base64_decode($image_parts[1]);
+             $filename = uniqid().'.png';
+             $fileLocation = '/image/alumni/profile';
+             $path = $fileLocation."/".$filename;
+             $user->foto = '/storage'.$path;
+             Storage::disk('public')->put($path, $image_base64);
+         }
 
          $user->update();
 

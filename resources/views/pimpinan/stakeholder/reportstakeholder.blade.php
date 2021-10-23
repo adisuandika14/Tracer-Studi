@@ -127,61 +127,109 @@
             </div>
         </div>
     </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chart Data Angkatan Alumni Fakultas Teknik</h6>
+        </div>
+        <div class="card-body">
+            <div class="card card-body">
+                <div class="chart-bar pt-4 pb-2" id="graph_container_1">
+                    <canvas id="myBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 
 
 @section('custom_javascript')
 <script>
-    $(document).ready(function(){
-        $('#filter').on('click',function(e){
-            e.preventDefault();
-            const prodi = $('#prodi').val()
-            const angkatan = $('#angkatan').val()
-            const kategori_1 = $('#kategori_1').val()
-            // var ctx3 = document.getElementById('pertambahanAnggota');
-
-            $.ajax({
-                method : 'POST',
-                url : '/pimpinan/reportstakeholder/filterreport',
-                data : {
-                "_token" : "{{ csrf_token() }}",
-                prodi : prodi,
-                angkatan : angkatan,
-                kategori_1 : kategori_1,
+$(document).ready(function () {
+        var ctx = document.getElementById("myBarChart");
+        const config = {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($dataPeriode) !!},
+                datasets: [{
+                    label: "Total : ",
+                    backgroundColor: "#4e73df",
+                    hoverBackgroundColor: "#2e59d9",
+                    borderColor: "#4e73df",
+                    data: {!! json_encode($dataStakeholder) !!},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
                 },
-                beforeSend : function() {
-                          $("#filter").attr('disabled', true);
+                dataset:{
+                    maxBarThickness: 150,
                 },
-                success : (res) => {
-                    let httpval = '';
-                    let i = 0;
-                    let z = 1;
-                    res.tracers.map(i => {
-                        httpval +=`
-                        <tr class="success" >
-                            <td style="width: 1%;">${z}</td>
-                            <td style="width: 15%;">${i.nama_alumni}</td>
-                            <td style="width: 10%;">${i.relasi_alumnito_prodi.nama_prodi}</td>
-                            <td style="width: 5%;" >${i.relasi_alumnito_angkatan.tahun_angkatan}</td>
-                            <td style="width: 7%;" >${i.tahun_lulus}</td>
-                            <td style="width: 2%; text-align: center;" >
-                                <a style="margin-right:7px" href="/admin/reportalumni/${i.id_alumni}">
-                                    <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye">Lihat Data</i></button></a>
-                            </td>
-                        </tr>`;
-                        i += 1;
-                        z += 1;
-                    })
-                    alert('Data Berhasil di Filter');
-                    $("#filter").removeAttr('disabled');
-                    $("#datacell").empty();
-                    $("#datacell").html(`
-                        ${httpval} 
-                    `);
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'year'
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 6
+                        },
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: {{max($dataStakeholder)}},
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return number_format(value);
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
                 },
-            }).done(()=>{})
-        })
-    })
+                legend: {
+                    display: false
+                },
+            }
+        };
+        var myBarChart = new Chart(ctx, config);
+    });
 </script>
 @endsection

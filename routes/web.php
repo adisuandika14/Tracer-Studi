@@ -100,13 +100,13 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/masterperiode/create','periodeController@create');
     Route::post('/masterperiode/update','periodeController@update');
     Route::get('/masterperiode/{id}/delete','periodeController@delete');
-    
+
    //Master Periode
    Route::get('/periode','periodeController@show');
    Route::post('/masterperiode/create','periodeController@create');
    Route::post('/masterperiode/update','periodeController@update');
    Route::get('/masterperiode/{id}/delete','periodeController@delete');
-   
+
    Route::get('/mastertahun','tahunperiodeController@show');
    Route::post('/mastertahun/create','tahunperiodeController@create');
    Route::post('/mastertahun/update','tahunperiodeController@update');
@@ -116,10 +116,10 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
    Route::post('/periodekuesioner/create','kuesionerperiodeController@create');
    Route::post('/periodekuesioner/update','kuesionerperiodeController@update');
    Route::get('/periodekuesioner/{id}/delete','kuesionerperiodeController@delete');
-  
 
 
-   
+
+
 
    //Bank Soal Alumni
    Route::get('/banksoal/alumni','banksoalalumniController@show')->name('show-banksoal');
@@ -166,7 +166,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/kuesioner/stakeholder/create','stakeholderkuesionerController@create');
     Route::delete('/kuesioner/stakeholder/{id}/delete','stakeholderkuesionerController@delete');
     Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'stakeholderkuesionerController@status');
-    
+
     Route::get('/kuesioner/stakeholder/detail/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@detail_kuesioner');
     Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionerController@edit');
     Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionerController@update');
@@ -175,15 +175,6 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/kuesioner/stakeholder/get-bank-soal/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@bank_soal_data');
     Route::post('/kuesioner/stakeholder/create/{id_prodi}/{id_periode}','stakeholderkuesionerController@create_from_bank_soal');
     Route::post('/kuesioner/stakeholder/filter','stakeholderkuesionerController@filter')->name('stakeholder-filter');
-
-    //  //Detail Kuesioner stakeholder
-    //  Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionedetailController@edit');
-    //  Route::get('/kuesioner/stakeholder','stakeholderkuesionedetailController@detail')->name('stakeholder-kuesioner-show');
-    //  Route::post('/kuesioner/stakeholder/create','stakeholderkuesionedetailController@create');
-    //  Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionedetailController@update');
-    //  Route::delete('/kuesioner/stakeholder/{id}/delete','stakeholderkuesionedetailController@delete');
-    //  Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'stakeholderkuesionedetailController@status');
-    //  Route::post('/kuesioner/stakeholder/showkuesioner/filter','stakeholderkuesionedetailController@filter')->name('stakeholder-filter');
 
     //Bank Soal stakeholder
     Route::get('/banksoal/stakeholder','banksoalstakeholderController@show')->name('show-banksoal-stakeholder');
@@ -199,7 +190,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/reportalumni/{id}', 'alumnireportController@detailtracer');
     Route::post('/reportalumni/filter', 'alumnireportController@filtertracer');
 
-    //Report 
+    //Report
     Route::get('/reportstakeholder', 'stakeholderreportController@report');
     Route::get('/reportstakeholder/{id}', 'stakeholderreportController@detailreport');
     Route::post('/reportstakeholder/filter', 'stakeholderreportController@filterreport');
@@ -229,10 +220,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
 
 
 
-//<input type="text" class="form-control" id="edit_id_kuesioner" name="id_kuesioner" value="{{$id_kuesioner}}" hidden>
-
-
-Route::prefix('pimpinan')->group(function(){
+Route::group(['prefix' => 'pimpinan',  'middleware' => 'PimpinanMiddleware'],function(){
     //Auth
     Route::get('/profile', 'AuthPimpinanController@profile')->name('admin-profile-edit');
     Route::post('/profile-update', 'AuthPimpinanController@updateProfile')->name('admin-profile-update');
@@ -268,18 +256,14 @@ Route::prefix('pimpinan')->group(function(){
 
 
     //Report alumni
-    Route::get('/reportalumni','pimpinanreportalumniController@tracer')->name('pimpinan-alumni-report');
+    Route::get('/reportalumni','pimpinanreportalumniController@traceralumni')->name('pimpinan-alumni-report');
     Route::get('/reportalumni/{id}','pimpinanreportalumniController@detailtracer');
-    Route::post('/reportalumni/filteralumni','pimpinanreportalumniController@filtertracer');
+    Route::post('/reportalumni/filteralumni','pimpinanreportalumniController@filteralumni');
 
     //Report Stakeholder
     Route::get('/reportstakeholder','pimpinanreportstakeholderController@report')->name('pimpinan-alumni-report');
     Route::get('/reportstakeholder/{id}','pimpinanreportstakeholderController@detailreport');
     Route::post('/reportstakeholder/filterreport','pimpinanreportstakeholderController@filterreport');
-
-
-
-
 
     //Pengumuman
     Route::get('/pengumuman','pimpinanpengumumanController@show');
@@ -319,9 +303,22 @@ Route::group(['prefix' => 'alumni',  'middleware' => 'VerifiedAlumniMiddleware']
     Route::post('/profile-update', 'Alumni\AuthAlumniController@updateProfile')->name('alumni-profile-update');
     Route::post('/kuesioner', 'Alumni\Kuesioner\AlumniDetailKuesionerController@show');
     Route::get('/prekuesioner', 'Alumni\Kuesioner\AlumniKuesionerController@show');
-    Route::post('/kuesioner/simpan', 'Alumni\Kuesioner\AlumniDetailKuesionerController@jawabKuesioner');
+    Route::post('/kuesioner/simpan', 'Alumni\Kuesioner\AlumniDetailKuesionerController@jawabKuesioner')
+        ->name('simpan-kuesioner');
     Route::get('/hasilKuesioner', 'Alumni\Kuesioner\AlumniDetailKuesionerController@hasilKuesioner');
     Route::post('/hasilKuesioner/update/{id}', 'Alumni\Kuesioner\AlumniDetailKuesionerController@updateHasilKuesioner');
+
+});
+
+Route::group(['prefix' => 'stakeholder'],function(){
+    route::get('/','Stakeholder\Auth\StakeholderRegisterController@index')->name('register');
+    route::post('/', [ 'as' => 'login', 'Stakeholder\Auth\StakeholderRegisterController@index']);
+    route::post('/kuesioner','Stakeholder\Auth\StakeholderRegisterController@regisStakeholder')->name('regisStakeholder');
+    Route::post('/kuesioner/simpan', 'Stakeholder\Kuesioner\StakeholderDetailKuesionerController@jawabKuesioner')
+        ->name('simpan-kuesioner-stakeholder');
+    Route::get('/hasilKuesioner', 'Stakeholder\Kuesioner\StakeholderDetailKuesionerController@hasilKuesioner');
+    Route::post('/hasilKuesioner/update/{id}', 'Stakeholder\Kuesioner\StakeholderDetailKuesionerController@updateHasilKuesioner');
+    route::get('/logouts','Stakeholder\Auth\StakeholderRegisterController@logout');
 
 });
 

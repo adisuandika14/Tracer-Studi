@@ -50,13 +50,26 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'pimpinan' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
         'alumni' => [
             'driver' => 'session',
             'provider' => 'alumni',
         ],
+        'stakeholder' => [
+            'driver' => 'session',
+            'provider' => 'stakeholder',
+        ],
         'api-alumni' => [
             'driver' => 'token',
             'provider' => 'alumni',
+            'hash' => false,
+        ],
+        'api-stakeholder' => [
+            'driver' => 'token',
+            'provider' => 'stakeholder',
             'hash' => false,
         ],
     ],
@@ -86,6 +99,11 @@ return [
         'alumni' => [
             'driver' => 'eloquent',
             'model' => App\Alumni::class,
+        ],
+
+        'stakeholder' => [
+            'driver' => 'eloquent',
+            'model' => App\Stakeholder::class,
         ],
 
         // 'users' => [
@@ -123,6 +141,14 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        'stakeholder' => [
+            'provider' => 'stakeholder',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
     ],
 
     /*

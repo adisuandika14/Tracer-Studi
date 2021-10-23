@@ -199,7 +199,7 @@
             <div class="row" style="margin: 20px">
                 <img  src="{{asset('assets/admin/img/Profile.png')}}" id="image-preview"  width="100%" height="100%" alt="">
                 <div class="custom-file" style="margin-top: 20px">
-                    <input type="file" class="custom-file-input" id="profile-image" name="thumbnail" accept="images/*" required>
+                    <input type="file" class="custom-file-input" id="profile-image" name="thumbnail" accept="image/*" required>
                     <label for="thumbnail_label" id="thumbnail_labell" class="custom-file-label">Pilih Foto</label>
                 </div>
             </div>

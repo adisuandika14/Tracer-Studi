@@ -534,14 +534,14 @@
                 </td>
               </table>
                 <div class="form-group">
-                  <label for="status" class="font-weight-bold text-dark">Status</label>
+                  <label class="font-weight-bold text-dark">Status</label>
                     <select name="status" id="status" class="custom-select" required>
                       <option  value="Menunggu Konfirmasi" <?php if($datass->status == "Menunggu Konfirmasi") { echo "SELECTED"; } ?>>Menunggu Konfirmasi</option>
                       <option value="Konfirmasi" <?php if($datass->status == "Konfirmasi") { echo "SELECTED"; } ?>>Konfirmasi</option>
-                      <option value="Ditolak" id="#tolak" name="status" <?php if($datass->status == "Ditolak") { echo "SELECTED"; } ?>>Tolak</option>
+                      <option value="Ditolak"  name="status" <?php if($datass->status == "Ditolak") { echo "SELECTED"; } ?>>Tolak</option>
                     </select>
                 </div>
-                <div name="tolak" id="tolak">
+                <div name="status" id="tolak">
                     <label class="font-weight-bold text-dark">Masukkan Pesan Untuk Alumni</label>
                     <input type="text" class="form-control" class="form-control" name="notifikasi" id="notifikasi" >
                 </div>
