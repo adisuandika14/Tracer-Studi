@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Alumni\Kuesioner;
 
 use App\Http\Controllers\Controller;
+use App\tb_detail_jawaban;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\tb_detail_kuesioner;
@@ -19,8 +20,10 @@ class AlumniDetailKuesionerController extends Controller
 
 
     public function show(Request $request){
+//        dd($request);
         $kuesioners = tb_detail_kuesioner::where('id_kuesioner', $request->jawabanRadio)
             ->where('status', 'Konfirmasi')->get();
+//        dd($kuesioners);
         $opsi = tb_opsi::get();
         return view('/alumni/kuesioner', compact ('kuesioners','opsi'));
     }
@@ -31,11 +34,26 @@ class AlumniDetailKuesionerController extends Controller
         foreach($request->all() as $key => $value) {
             if($key != "_token"){
                 if($key !="null"){
-                    $jawaban = new tb_jawaban;
-                    $jawaban->id_alumni = $user->id_alumni;
-                    $jawaban->id_detail_kuesioner = $key;
-                    $jawaban->jawaban = $value;
-                    $jawaban->save();
+                    if(is_array($value)){
+                        $jawaban = new tb_jawaban;
+                        $jawaban->id_alumni = $user->id_alumni;
+                        $jawaban->id_detail_kuesioner = $key;
+                        $jawaban->jawaban = "";
+                        $jawaban->save();
+                        $jawaban = tb_jawaban::where('id_alumni', $user->id_alumni)->where('id_detail_kuesioner', $key)->first(['id_jawaban']);
+                        foreach($value as $jawab){
+                            $detail_jawaban = new tb_detail_jawaban();
+                            $detail_jawaban->id_jawaban=$jawaban->id_jawaban;
+                            $detail_jawaban->jawaban = $jawab;
+                            $detail_jawaban->save();
+                        }
+                    }else{
+                        $jawaban = new tb_jawaban;
+                        $jawaban->id_alumni = $user->id_alumni;
+                        $jawaban->id_detail_kuesioner = $key;
+                        $jawaban->jawaban = $value;
+                        $jawaban->save();
+                    }
                 }
             }
             // dump($key, $value);
@@ -48,8 +66,9 @@ class AlumniDetailKuesionerController extends Controller
 //        dd($user);
         $detail = tb_jawaban::with('relasijawabantoDetail')->where('id_alumni', $user)->get();
         $opsis = tb_opsi::get();
+        $detail_jawaban = tb_detail_jawaban::with('relasiJawabantoOpsi')->get();
 
-        return view('/alumni/hasilKuesioner',compact('detail', 'opsis'));
+        return view('/alumni/hasilKuesioner',compact('detail', 'opsis', 'detail_jawaban'));
     }
 
     public function updateHasilKuesioner($id, Request $request){

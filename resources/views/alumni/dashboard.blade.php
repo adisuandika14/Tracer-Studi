@@ -35,6 +35,11 @@
                                     <a href="{{ url('/alumni/perbaikan') }}">disini</a>
                                 </div>
                             @endif
+                            @if($notif->status == NULL)
+                                <div class="alert alert-secondary alert-block">
+                                    <strong>Tidak ada notifikasi</strong>
+                                </div>
+                            @endif
                         @empty
                                 <div class="alert alert-secondary alert-block">
                                     <strong>Tidak ada notifikasi</strong>

@@ -23,7 +23,9 @@ class loginController extends Controller
             return redirect('/admin/dashboard');
         } elseif (session('pimpinan')){
             return redirect('/pimpinan/dashboard');
-        } else {
+        } elseif (session('alumni')) {
+            return redirect('/alumni/dashboard');
+        }else {
             return view('auth/login');
         }
     }
