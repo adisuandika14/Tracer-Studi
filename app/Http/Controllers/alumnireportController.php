@@ -12,6 +12,8 @@ use App\tb_periode;
 use App\tb_kuesioner;
 use App\tb_soal_alumni;
 use App\tb_detail_kuesioner;
+use App\tb_tahun_periode;
+use DB;
 
 
 class alumnireportController extends Controller
@@ -23,6 +25,9 @@ class alumnireportController extends Controller
         // $kategori_2 = tb_soal_alumni::all();
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::get();
+        $tahun_wisuda = tb_alumni::select(DB::raw('YEAR(tahun_wisuda) as tahun_wisuda'))->distinct()->get();
+        $tahun_periode = tb_tahun_periode::all();
+        // dd($tahunWisuda);
         $periode = tb_periode::get();
         foreach($angkatan as $ang){
             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
@@ -35,7 +40,7 @@ class alumnireportController extends Controller
             $dataProdi[] = $ps;
             $namaProdi[] = $p->nama_prodi;
         }
-        return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1', 'dataAngkatan', 'dataProdi', 'tahunAngkatan','namaProdi'));
+        return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan','periode', 'kategori_1', 'dataAngkatan', 'dataProdi', 'tahunAngkatan','namaProdi', 'tahun_wisuda', 'tahun_periode'));
     }
 
     public function detailtracer($id){

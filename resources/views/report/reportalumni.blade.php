@@ -53,9 +53,9 @@
             <!-- <a style="margin-bottom: 10px;" class= "btn btn-warning dropdown-toggle text-white" id="toggles" ><i class="fas fa-search"></i> Advanced Search</a> -->
             <!-- <form  method="POST" action="/admin/reportalumni/filter">
                 @csrf -->
-                <table class="table" style="width: 85%;" id="example" cellspacing="0">
+                <table class="table"  id="example" cellspacing="0">
                     <tr id="filter_row">
-                        <td style="width: 5%;">
+                        <td>
                             <div class="form-group" >
                                 <select name="prodi" class="custom-select" id="prodi">
                                     <option selected value="">-- Pilih Program Studi --</option>
@@ -72,7 +72,7 @@
                                 </select>
                             </div>
                         </td>
-                        <td style="width: 5%;">
+                        <td >
                             <div class="form-group">
                                 <select name="angkatan" class="custom-select" id="angkatan" >
                                     <option selected value="">-- Pilih Tahun Angkatan --</option>
@@ -89,7 +89,58 @@
                                 </select>
                             </div>
                         </td>
-                        <td style="width: 5%;">
+                        <td >
+                            <div class="form-group">
+                                <select name="tahun_wisuda" class="custom-select" id="tahun_wisuda" >
+                                    <option selected value="">-- Pilih Tahun Wisuda --</option>
+                                    @foreach ($tahun_wisuda as $tw)
+                                        <option value="{{ $tw->tahun_wisuda }}"
+                                            @isset($pertanyaan)
+                                                @if($tw->tahun_wisuda == $tahun_wisuda)
+                                                    selected
+                                                @endif
+                                            @endisset
+                                            >{{$tw->tahun_wisuda}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </td>
+                        <td >
+                            <div class="form-group">
+                                <select name="tahun_periode" class="custom-select" id="tahun_periode" >
+                                    <option selected value="">-- Pilih Tahun Periode Kuisioner --</option>
+                                    @foreach ($tahun_periode as $tp)
+                                        <option value="{{ $tp->tahun_periode }}"
+                                            @isset($pertanyaan)
+                                                @if($tp->tahun_periode == $tahun_periode)
+                                                    selected
+                                                @endif
+                                            @endisset
+                                            >{{$tp->tahun_periode}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </td>
+                        <td >
+                            <div class="form-group">
+                                <select name="periode" class="custom-select" id="periode" >
+                                    <option selected value="">-- Pilih Periode --</option>
+                                    @foreach ($periode as $p)
+                                        <option value="{{ $p->id_periode }}"
+                                            @isset($pertanyaan)
+                                                @if($p->periode == $periode)
+                                                    selected
+                                                @endif
+                                            @endisset
+                                            >{{$p->periode}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </td>
+                        <td >
                             <div class="form-group">
                                 <select name="kategori_1" class="custom-select" id="kategori_1" >
                                     <option selected value="">-- Pilih Kategori Lulusan --</option>
