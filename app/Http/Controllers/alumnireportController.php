@@ -75,7 +75,7 @@ class alumnireportController extends Controller
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
                         // dd($periode_kuisioner);
-                        $kuisperiod = tb_kuesioner::where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
@@ -107,7 +107,7 @@ class alumnireportController extends Controller
                         // return redirect ('/admin/reportalumni');
                     }else{
                         $periode_kuisioner = tb_periode_kuesioner::where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuisperiod = tb_kuesioner::where('id_tahun_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
@@ -141,7 +141,7 @@ class alumnireportController extends Controller
                 }else{
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuisioner = tb_kuesioner::where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuisioner = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisioner)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
@@ -222,7 +222,7 @@ class alumnireportController extends Controller
                 if($request->tahun_periode != ""){
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuisperiod = tb_kuesioner::where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
@@ -283,7 +283,7 @@ class alumnireportController extends Controller
                 }else{
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuisperiod = tb_kuesioner::where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
@@ -362,14 +362,72 @@ class alumnireportController extends Controller
             }else{
                 if($request->tahun_periode != ""){
                     if($request->periode != ""){
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        return response()->json($data, 200);
                     }else{
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        return response()->json($data, 200);
                     }
                 }else{
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuisperiod = tb_kuesioner::where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
@@ -448,14 +506,72 @@ class alumnireportController extends Controller
             }else{
                 if($request->tahun_periode != ""){
                     if($request->periode != ""){
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $periode = tb_periode::get();
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        // $data['id_angkatan'] = $id_angkatan;
+                        return response()->json($data, 200);
                     }else{
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $periode = tb_periode::get();
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        // $data['id_angkatan'] = $id_angkatan;
+                        return response()->json($data, 200);
                     }
                 }else{
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
@@ -536,14 +652,77 @@ class alumnireportController extends Controller
             }else{
                 if($request->tahun_periode != ""){
                     if($request->periode != ""){
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $id_prodi = $request->prodi;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        $data['id_prodi'] = $id_prodi;
+                        return response()->json($data, 200);
                     }else{
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $id_prodi = $request->prodi;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        $data['id_prodi'] = $id_prodi;
+                        return response()->json($data, 200);
                     }
                 }else{
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuisperiod = tb_kuesioner::where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuisperiod)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
@@ -627,14 +806,78 @@ class alumnireportController extends Controller
             }else{
                 if($request->tahun_periode != ""){
                     if($request->periode != ""){
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $id_prodi = $request->prodi;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        $data['id_prodi'] = $id_prodi;
+                        return response()->json($data, 200);
                     }else{
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $id_prodi = $request->prodi;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        $data['id_prodi'] = $id_prodi;
+                        return response()->json($data, 200);
                     }
                 }else{
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
@@ -722,14 +965,72 @@ class alumnireportController extends Controller
             }else{
                 if($request->tahun_periode != ""){
                     if($request->periode != ""){
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        return response()->json($data, 200);
                     }else{
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        return response()->json($data, 200);
                     }
                 }else{
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
@@ -810,14 +1111,74 @@ class alumnireportController extends Controller
             }else{
                 if($request->tahun_periode != ""){
                     if($request->periode != ""){
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        return response()->json($data, 200);
                     }else{
-
+                        $periode_kuisioner = tb_periode_kuesioner::where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
+                        $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
+                        // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
+                        $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
+                        $prodi = tb_prodi::get();
+                        $angkatan = tb_angkatan::get();
+                        $id_angkatan = $request->angkatan;
+                        $angkatan = tb_angkatan::all();
+                        foreach($angkatan as $ang){
+                            $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
+                            // dd($ang->tahun_angkatan." ".$alumni);
+                            $dataAlumni[] = $alumni;
+                            $tahun[] = $ang->tahun_angkatan;
+                        }
+                        foreach ($prodi as $p){
+                            $ps = $tracers->where('id_prodi',$p->id_prodi)->count('id_alumni','tahun');
+                            $dataProdi[] = $ps;
+                            $namaProdi[] = $p->nama_prodi;
+                        }
+                        $data['label_data_angkatan'] = $dataAlumni;
+                        $data['label_angkatan'] = $tahun;
+                        $data['label_data_prodi'] = $dataProdi;
+                        $data['label_prodi'] = $namaProdi;
+                        $data['all_jawaban'] = $all_jawaban;
+                        $data['tracers'] = $tracers;
+                        $data['prodi'] = $prodi;
+                        $data['angkatan'] = $angkatan;
+                        $data['id_angkatan'] = $id_angkatan;
+                        return response()->json($data, 200);
                     }
                 }else{
                     if($request->periode != ""){
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->get(['id_periode_kuesioner'])->toArray();
-                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->where('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
+                        $kuesioner = tb_kuesioner::where('id_bank_soal', $request->kategori_1)->whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
                         $detailkues = tb_detail_kuesioner::whereIn('id_kuesioner', $kuesioner)->get(['id_detail_kuesioner'])->toArray();
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
