@@ -54,6 +54,7 @@
                       <th style="text-align:center;">Nama Dengan Gelar</th>
                       <th style="text-align:center;">Nik</th>
                       <th style="text-align:center;">Nim</th>
+                      <th style="text-align:center;">Jenis Kelamin</th>
                       <th style="text-align:center;">Alamat</th>
                       <th style="text-align:center;">Program Studi</th>
                       <th style="text-align:center;">Angkatan</th>
@@ -71,6 +72,7 @@
                                 <td>{{ $status->nama_alumni }}</td>
                                 <td>{{ $status->nik }}</td>
                                 <td>{{ $status->nim_alumni}}</td>
+                                <td>{{ $status->jenis_kelamin}}</td>
                                 <td>{{ $status->alamat_alumni}}</td>
                                 <td>{{ $status->relasiAlumnitoProdi->nama_prodi}}</td>
                                 <td>{{ $status->relasiAlumnitoAngkatan->tahun_angkatan}}</td>
@@ -131,9 +133,8 @@
 							<h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
 						</div>
 						<div class="modal-body">
-
 							{{ csrf_field() }}
-
+              <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
 							<label>Pilih file excel</label>
 							<div class="form-group">
 								<input type="file" name="file" required="required">
@@ -174,15 +175,15 @@
                                                 value="{{$datass->nama_alumni}}" readonly>
                                         </div>
                                         <div class="form-group">
+                                          <label class="font-weight-bold text-dark">NIK</label>
+                                          <input type="text" class="form-control" id="nik" name="nik"
+                                              value="{{$datass->nik}}" readonly>
+                                      </div>
+                                        <div class="form-group">
                                             <label class="font-weight-bold text-dark">Alamat Alumni</label>
                                             <input type="text" class="form-control" id="alamat_alumni" name="alamat_alumni"
                                                 value="{{$datass->alamat_alumni}}" readonly>
                                         </div>
-                                        <!-- <div class="form-group">
-                                            <label class="font-weight-bold text-dark">Kota</label>
-                                            <input type="text" class="form-control" id="nama_kota" name="nama_kota"
-                                                value="{{$datass->nama_kota}}" readonly>
-                                        </div> -->
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Program Studi</label>
                                             <input type="text" class="form-control" id="nama_prodi" name="nama_prodi"
@@ -202,21 +203,22 @@
                                     </td> 
 
                                     <td>
+                                      <div class="form-group">
+                                        <label class="font-weight-bold text-dark">Nim Alumni</label>
+                                        <input type="text" class="form-control" id="nim_alumni" name="nim_alumni"
+                                            value="{{$datass->nim_alumni}}" readonly>
+                                      </div>
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Email</label>
                                             <input type="email" class="form-control" id="email_alumni" name="email_alumni"
                                                 value="{{$datass->email}}" readonly>
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Jenis Kelamin</label>
                                             <input type="text" class="form-control" id="jenis_kelamin" name="jenis_kelamin"
                                                 value="{{$datass->jenis_kelamin}}" readonly>
                                         </div>
-                                        <!-- <div class="form-group">
-                                            <label class="font-weight-bold text-dark">Provinsi</label>
-                                            <input type="text" class="form-control" id="nama_provinsi" name="nama_provinsi"
-                                                value="{{$datass->nama_provinsi}}" readonly>
-                                        </div> -->
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Handphone</label>
                                             <input type="text" class="form-control" id="no_hp" name="no_hp"
@@ -289,6 +291,10 @@
                         <input type="text" class="form-control" id="nik" name= "nik" value="{{$datass->nik}}" placeholder="">
                       </div>
                       <div class="form-group">
+                        <label class="font-weight-bold text-dark">Nim Alumni</label>
+                        <input type="text" class="form-control" id="nim_alumni" name= "nim_alumni" value="{{$datass->nik}}" placeholder="">
+                      </div>
+                      <div class="form-group">
                         <label for="jenis_kelamin" class="font-weight-bold text-dark">Jenis Kelamin</label>
                           <select name="jenis_kelamin" class="custom-select" id="jenis_kelamin" required>
                             <option value="Unspecified" <?php if($datass->jenis_kelamin == "Unspecified") { echo "SELECTED"; } ?>>Jenis Kelamin Tidak Dipilih</option>
@@ -323,7 +329,7 @@
 
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Email</label>
-                        <input type="email" class="form-control" id="email_alumni" name= "email_alumni" value="{{$datass->email_alumni}}" placeholder="">
+                        <input type="email" class="form-control" id="email" name= "email" value="{{$datass->email}}" placeholder="">
                       </div>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Handphone</label>
@@ -367,12 +373,23 @@
 	                    </button>
 	                </div>
 	                <div class="modal-body">
+                      
+                      <form action="/admin/alumni/create" method="POST" enctype="multipart/form-data">
+                      {{ csrf_field() }}
+                      
+                      <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Nama Dengan Gelar</label>
                         <input type="text" class="form-control" id="nama_alumni" name="nama_alumni" placeholder="">
                       </div>
-                      <form action="/admin/alumni/create" method="POST" enctype="multipart/form-data">
-                      {{ csrf_field() }}
+                      <div class="form-group">
+                        <label class="font-weight-bold text-dark">NIK</label>
+                        <input type="text" class="form-control" id="nik" name="nik" placeholder="">
+                      </div>
+                      <div class="form-group">
+                        <label class="font-weight-bold text-dark">Nim Alumni</label>
+                        <input type="text" class="form-control" id="nim_alumni" name="nim_alumni" placeholder="">
+                      </div>
                       <div class="form-group">
                         <label for="province_id" class="font-weight-bold text-dark">Jenis Kelamin</label>
                             <select name="jenis_kelamin" class="custom-select" id="jenis_kelamin" required>
@@ -388,27 +405,27 @@
 
                       <div class="form-group">
                         <label for="id_prodi" class="font-weight-bold text-dark">Program Studi</label>
-                                    <select name="id_prodi" id="prodi" class="custom-select" required>
-                                        <option>-- Pilih Prodi --</option>
-                                        @foreach($prodi as $prodis)
-                                        <option value="{{$prodis->id_prodi}}">{{$prodis->nama_prodi}}</option>
-                                        @endforeach
-                                    </select>
+                            <select name="id_prodi" id="prodi" class="custom-select" required>
+                                <option>-- Pilih Prodi --</option>
+                                @foreach($prodi as $prodis)
+                                <option value="{{$prodis->id_prodi}}">{{$prodis->nama_prodi}}</option>
+                                @endforeach
+                            </select>
                       </div> 
 
                       <div class="form-group">
                         <label for="id_angkatan" class="font-weight-bold text-dark">Angkatan</label>
-                                    <select name="id_angkatan" id="angkatan" class="custom-select" required>
-                                        <option>-- Pilih Angkatan --</option>
-                                        @foreach($angkatan as $angkatans)
-                                        <option value="{{$angkatans->id_angkatan}}">{{$angkatans->tahun_angkatan}}</option>
-                                        @endforeach
-                                    </select>
+                            <select name="id_angkatan" id="angkatan" class="custom-select" required>
+                                <option>-- Pilih Angkatan --</option>
+                                @foreach($angkatan as $angkatans)
+                                <option value="{{$angkatans->id_angkatan}}">{{$angkatans->tahun_angkatan}}</option>
+                                @endforeach
+                            </select>
                       </div>
 
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Email</label>
-                        <input type="email" class="form-control" id="email_alumni" name= "email_alumni" placeholder="">
+                        <input type="email" class="form-control" id="email" name= "email" placeholder="">
                       </div>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Handphone</label>

@@ -73,9 +73,14 @@ class alumniController extends Controller
 
 
     public function show($id){
-        $periodes = tb_periodealumni::where('id_periode_alumni', tb_alumni::find($id)->id_periode)->first();
+        // $periodes = tb_periodealumni::where('id_periode_alumni', tb_alumni::find($id)->id_periode)->first();
+        // $tahun_lulus = tb_tahun_periode::where('id_tahun_periode', $periodes->id_tahun_periode)->first()->tahun_periode;
+        // $periode_lulus = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
+        $periodes = tb_periodealumni::where('id_periode_alumni', $id)->first();
         $tahun_lulus = tb_tahun_periode::where('id_tahun_periode', $periodes->id_tahun_periode)->first()->tahun_periode;
         $periode_lulus = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
+
+
 
 
         $periode = tb_periodealumni::find($id);
@@ -83,10 +88,10 @@ class alumniController extends Controller
         $id_periode = $id;
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::get();
-        
+        $id_periode_kuesioner = $id;
         $status = ['Tolak','Konfirmasi','Menunggu Konfirmasi'];
 
-        return view('/alumni/dataalumni', compact ('alumni','prodi','angkatan','tahun_lulus','periode_lulus'), ['alumni'=>$alumni]);
+        return view('/alumni/dataalumni', compact ('id_periode_kuesioner','alumni','prodi','angkatan','tahun_lulus','periode_lulus'), ['alumni'=>$alumni]);
     }
 
     // public function getMenu($id){
@@ -100,41 +105,47 @@ class alumniController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nama_alumni' => 'required',
+            'nik' => 'required',
             'jenis_kelamin' => 'required',
             'alamat_alumni' => 'required',
             'id_prodi' => 'required',
-            'id-angkatan' => 'required',
+            'id_angkatan' => 'required',
             'email' => 'required',
             'no_hp' => 'required',
-            'id_line' => 'required',
-            'id_telegram' => 'required',
-            'tahun_lulus' => 'required',
-            'tahun_wisuda' => 'required',
         ],[
              'nama_alumni.required' => "Nama wajib diisi",
-             'username.required' => "Username wajib diisi",
-             'username.unique' => "Username telah terdaftar",
+             'nik.required' => "Nik wajib diisi",
+             'jenis_kelamin.required' => "Jenis Kelamin wajib diisi",
+             'alamat_alumni.required' => "Alamat wajib diisi",
+             'id_prodi.required' => "Program Studi wajib diisi",
+             'id_angkatan.required' => "Angkatan wajib diisi",
+             'email.required' => "Email wajib diisi",
+             'no_hp.required' => "No Hp wajib diisi",
          ]);
 
         if($validator->fails()){
             return back()->withErrors($validator);
         }
 
-            tb_alumni::create([
-                'nama_alumni'=>$request->nama_alumni,
-                'jenis_kelamin'=>$request->jenis_kelamin,
-                'alamat_alumni'=>$request->alamat_alumni,
-                'id_prodi'=>$request->id_prodi,
-                'id_angkatan'=>$request->id_angkatan,
-                'email'=>$request->email,
-                'no_hp'=>$request->no_hp,
-                'id_line'=>$request->id_line,
-                'id_telegram'=>$request->id_telegram,
-                'tahun_lulus'=>$request->tahun_lulus,
-                'tahun_wisuda'=>$request->tahun_wisuda,
-                'status' =>$request->status = "Menunggu Konfirmasi",
-                ]);
-            return redirect('/admin/alumni')->with('sukses','Data berhasil disimpan!');
+        $createalumni = new tb_alumni();
+        $createalumni->id_periode = $request->id_periode;
+        $createalumni->nama_alumni = $request->nama_alumni;
+        $createalumni->nik = $request->nik;
+        $createalumni->nim_alumni = $request->nim_alumni;
+        $createalumni->jenis_kelamin = $request->jenis_kelamin;
+        $createalumni->alamat_alumni = $request->alamat_alumni;
+        $createalumni->id_prodi = $request->id_prodi;
+        $createalumni->id_angkatan = $request->id_angkatan;
+        $createalumni->email = $request->email;
+        $createalumni->no_hp = $request->no_hp;
+        $createalumni->id_line = $request->id_line;
+        $createalumni->id_telegram = $request->id_telegram;
+        $createalumni->tahun_lulus = $request->tahun_lulus;
+        $createalumni->tahun_wisuda = $request->tahun_wisuda;
+        $createalumni->status = "Menunggu Konfirmasi";
+        $createalumni->save();
+
+        return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil disimpan!');
 
     }
 
@@ -154,12 +165,14 @@ class alumniController extends Controller
     public function update(Request $request){
         $res = NULL;
         $updatedata = tb_alumni::find($request->id_alumni);
+        $updatedata->id_periode = $request->id_periode;
         $updatedata->nama_alumni = $request->nama_alumni;
         $updatedata->nik = $request->nik;
+        $updatedata->nim_alumni = $request->nim_alumni;
         $updatedata->jenis_kelamin = $request->jenis_kelamin;
+        $updatedata->alamat_alumni = $request->alamat_alumni;
         $updatedata->id_prodi = $request->id_prodi;
         $updatedata->id_angkatan = $request->id_angkatan;
-        $updatedata->alamat_alumni = $request->alamat_alumni;
         $updatedata->email = $request->email;
         $updatedata->no_hp = $request->no_hp;
         $updatedata->id_line = $request->id_line;
@@ -169,7 +182,7 @@ class alumniController extends Controller
         $updatedata->status = $request->status;
         $updatedata->update();
         //dd($updatedata);
-       return redirect('/admin/alumni')->with('sukses','Data berhasil diupdate!');
+       return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil diupdate!');
     }
 
 
@@ -184,6 +197,7 @@ class alumniController extends Controller
 
     public function import_excel(Request $request) 
 	{
+        $res = NULL;
         $file = $request->file('file');
         $rows = Excel::ToCollection(new AlumniImport, $file);
         $prodis = tb_prodi::get();
@@ -198,13 +212,13 @@ class alumniController extends Controller
             for ($hitung = 0; $hitung < $hitungs; $hitung++){
                 
                 foreach($prodis as $prodi){
-                    if($prodi->nama_prodi == $rows[$count][$hitung]['nama_prodi']){
+                    if($prodi->nama_prodi == $rows['nama_prodi']){
                         $id_prodi = $prodi->id_prodi;
                     }
                 }
 
                 foreach($angkatans as $angkatan){
-                    if($angkatan->tahun_angkatan == $rows[$count][$hitung]['tahun_angkatan']){
+                    if($angkatan->tahun_angkatan == $rows['tahun_angkatan']){
                         $id_angkatan = $angkatan->id_angkatan;
                     }
                 }
@@ -213,6 +227,7 @@ class alumniController extends Controller
                 // $alumni->tahun_angkatan = $rows[$count][$hitung]['tahun_angkatan']; 
 
                 $alumni = New tb_alumni();
+                $alumni->id_periode = $request->id_periode;
                 $alumni->nama_alumni = $rows[$count][$hitung]['nama_alumni'];
                 $alumni->nik = $rows[$count][$hitung]['nik'];
                 $alumni->jenis_kelamin = $rows[$count][$hitung]['jenis_kelamin'];
@@ -230,7 +245,7 @@ class alumniController extends Controller
                 $alumni->save();
             }
         }
-	    return redirect('/admin/alumni')->with('statusInput', 'Data Berhasil Diimport');
+	    return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil ditambahkan!');
 	}
 
     public function status(Request $request)
@@ -255,7 +270,7 @@ class alumniController extends Controller
             $status->flag = '0';
             $status->save();
         }
-        return  redirect('/admin/alumni')->with('statusInput','Data berhasil diupdate!');
+        return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil diperbaharui!');
     }
 
     public function bacaNotif($id)
