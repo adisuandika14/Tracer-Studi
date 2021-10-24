@@ -46,7 +46,10 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
 
 
     //Alumni
-    Route::get('/alumni','alumniController@show');
+    Route::get('/periodealumni','alumniController@periode');
+    Route::post('/periodealumni/createperiode','alumniController@createperiode');
+    Route::post('/periodealumni/updateperiode','alumniController@updateperiode');
+    Route::get('/alumni/{id}','alumniController@show');
     Route::post('/alumni/create','alumniController@create');
     //Route::get('/alumni/{id}/edit','alumniController@edit');
     Route::post('/alumni/update','alumniController@update');

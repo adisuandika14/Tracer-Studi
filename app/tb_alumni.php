@@ -77,6 +77,10 @@ class tb_alumni extends Model
     {
         return $this->belongsTo('App\tb_jawaban','id_jawaban','id_jawaban');
     }
+    public function relasiAlumnitoperiodealumni()
+    {
+        return $this->belongsTo('App\tb_periodealumni','id_periode_alumni','id_periode_alumni');
+    }
 
     public function routeNotificationForTelegram()
     {

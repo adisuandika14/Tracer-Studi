@@ -18,6 +18,8 @@ use App\tb_notifikasi;
 use App\tb_jawaban;
 use App\tb_soal_alumni;
 use App\tb_periode;
+use App\tb_periodealumni;
+use App\tb_tahun_periode;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\District;
@@ -32,23 +34,59 @@ use Illuminate\Http\JsonResponse;
 class alumniController extends Controller
 {
 
-    public function show(){
+    public function periode(){
+        $periodealumni = tb_periodealumni::get();
+        $tahun = tb_tahun_periode::get();
+        $periode = tb_periode::get();
 
-    $alumni = tb_alumni::with('relasiAlumnitoAngkatan','relasiAlumnitoProdi','relasiAlumnitoGender')->get();
-    //$alumni = tb_alumni::all();
-    $prodi = tb_prodi::get();
-    //$gender = tb_gender::get();
-    $angkatan = tb_angkatan::get();
-    //$kota = tb_kota::get();
-    //$provinsi = tb_provinsi::get();
-    $status = ['Tolak','Konfirmasi','Menunggu Konfirmasi'];
+        return view ('/alumni/periodealumni',compact('periodealumni','tahun','periode'));
+    }
 
-    $province = Province::get();
-    $regencies = Regency::get();
-    $districts = District::get();
-    $villages = Village::get();
+    public function createperiode(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id_tahun_periode' => 'required',
+            'id_periode' => 'required',
+        ],[
+             'id_tahun_periode.required' => "Anda Belum Menambahkan Tahun Periode",
+             'id_periode.required' => "Anda Belum Menambahkan Periode",
+         ]);
 
-        return view('/alumni/dataalumni', compact ('alumni','prodi','angkatan','province','regencies','districts','villages'), ['alumni'=>$alumni]);
+        if($validator->fails()){
+            return back()->withErrors($validator);
+        }
+        $periodealumni = new tb_periodealumni;
+        $periodealumni->id_tahun_periode = $request->id_tahun_periode;
+        $periodealumni->id_periode = $request->id_periode;
+        $periodealumni->save();
+
+        return redirect('/admin/periodealumni')->with('sukses','Data Berhasil ditambahkan');
+    }
+
+    public function updateperiode(Request $request){
+        $updateperiode = tb_periodealumni::find($request->id_periode_alumni);
+        $updateperiode->id_tahun_periode = $request->id_tahun_periode;
+        $updateperiode->id_periode = $request->id_periode;
+        $updateperiode->update();
+
+        return redirect ('/admin/periodealumni')->with('sukses','Data Berhasil Diperbaharui');
+    }
+
+
+    public function show($id){
+        $periodes = tb_periodealumni::where('id_periode_alumni', tb_alumni::find($id)->id_periode)->first();
+        $tahun_lulus = tb_tahun_periode::where('id_tahun_periode', $periodes->id_tahun_periode)->first()->tahun_periode;
+        $periode_lulus = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
+
+
+        $periode = tb_periodealumni::find($id);
+        $alumni = tb_alumni::where('id_periode',$id)->with('relasiAlumnitoAngkatan','relasiAlumnitoProdi')->get();
+        $id_periode = $id;
+        $prodi = tb_prodi::get();
+        $angkatan = tb_angkatan::get();
+        
+        $status = ['Tolak','Konfirmasi','Menunggu Konfirmasi'];
+
+        return view('/alumni/dataalumni', compact ('alumni','prodi','angkatan','tahun_lulus','periode_lulus'), ['alumni'=>$alumni]);
     }
 
     // public function getMenu($id){

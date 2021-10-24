@@ -33,10 +33,11 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
           <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Daftar Alumni</h6>
-            </div>
             
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Daftar Alumni Periode - {{$tahun_lulus}}</h6>
+            </div>
+         
             <div class="card-body">
               <div class="table-responsive">
                 <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#create"><i

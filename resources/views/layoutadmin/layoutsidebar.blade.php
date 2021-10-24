@@ -24,15 +24,15 @@
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-<!-- Heading -->
+{{-- <!-- Heading -->
 <div class="sidebar-heading">
     Data Tracer
-</div>
+</div> --}}
 
 <!-- Nav Item - Pages Collapse Menu -->
 <div class="nav-item ">
     <li  class="@yield('active2')">
-        <a class="nav-link" href="/admin/alumni">
+        <a class="nav-link" href="/admin/periodealumni">
             <i class="fas fa-fw fa-users"></i>
             <span>Alumni</span></a>
     </li>
