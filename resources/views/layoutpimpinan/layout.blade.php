@@ -136,6 +136,10 @@
 <!-- Custom Javascript -->
 @yield('custom_javascript')
 
+
+    <!--sweetalert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </body>
 
 </html>

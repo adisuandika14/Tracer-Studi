@@ -50,7 +50,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <!-- //<h6 class="collapse-header">Login Screens:</h6> -->
                 <div class="collapse-item">
-                    <a class="@yield('collapse1')" href="/admin/kuesioner">Kuesioner Alumni</a>
+                    <a class="@yield('collapse1')" href="/admin/periodekuesioner">Kuesioner Alumni</a>
                 </div>
                 <div class="collapse-item">
                     <a class="@yield('collapse2')" href="/admin/kuesioner/stakeholder">Kuesioner Stakeholder</a>
@@ -83,21 +83,21 @@
     </li>
 </div>
 
-<div class="nav-item">
+{{-- <div class="nav-item">
     <li class="@yield('active9')">
         <a class="nav-link" href="/admin/periodekuesioner">
             <i class="fas fa-fw fa-users"></i>
             <span>Periode Kuesioner</span></a>
     </li>
-</div>
+</div> --}}
 
-<div class="nav-item">
+{{-- <div class="nav-item">
     <li class="@yield('active8')">
         <a class="nav-link" href="/admin/tracer">
             <i class="fas fa-fw fa-users"></i>
             <span>Data Tracer</span></a>
     </li>
-</div>
+</div> --}}
 
 <!-- Nav Item - Pages Collapse Menu -->
 <div class="nav-item">

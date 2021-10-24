@@ -44,7 +44,7 @@
                 <label class=" font-weight-bold text-grey">Periode Kuesioner</label>
                   <select name="periode" class="custom-select " style="width:250px; " id="periode">
                       <option selected value="">-- Pilih Periode Kueisoner --</option>
-                      @foreach ($periode as $tahun )
+                      @foreach ($periodess as $tahun )
                           <option value="{{$tahun->id_tahun_periode}}" @if($tahun->id_tahun_periode == $id_tahun_periode) selected @endif>{{ $tahun->tahun_periode }}
                           </option>
                       @endforeach

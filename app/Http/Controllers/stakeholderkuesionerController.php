@@ -14,12 +14,12 @@ use App\tb_soal_stakeholder;
 
 class stakeholderkuesionerController extends Controller
 {
-    public function show(){
+    public function index(){
         $id_tahun_periode = tb_tahun_periode::max('id_tahun_periode');
-        $periode = tb_tahun_periode::get();
+        $periodess = tb_tahun_periode::get();
         $prodi = tb_prodi::get();
 
-        return view('kuesioner/stakeholder/kuesionerstakeholder', compact('id_tahun_periode','periode','prodi'));
+        return view('kuesioner/stakeholder/kuesionerstakeholder', compact('id_tahun_periode','periodess','prodi'));
     }
 
     public function detail_kuesioner($id_prodi, $id_periode){

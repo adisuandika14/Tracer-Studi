@@ -21,16 +21,22 @@ use Illuminate\Support\Facades\DB;
 
 class kuesionerController extends Controller
 {
-    public function show(){
-        $max_id_kuesioner = tb_kuesioner::max('id_kuesioner');
-        $id_periode_kuesioner = tb_kuesioner::where('id_kuesioner', $max_id_kuesioner)->first(['id_periode'])->id_periode;
-        $detail = tb_detail_kuesioner::with('relasiDetailtoKuesioner','relasiDetailtoAlumni')->get();
-        $prodi = tb_prodi::all();
-        $kuesioner = tb_kuesioner::where('id_periode', $id_periode_kuesioner)->get();
-        $alumni = tb_alumni::all();
+    public function show($id){
+        $periode = tb_periode_kuesioner::where('id_periode_kuesioner', $id)->first();
+        $tahun_kuesioner = tb_tahun_periode::where('id_tahun_periode', $periode->id_tahun_periode)->first()->tahun_periode;
+        $periode_kuesioner = tb_periode::where('id_periode', $periode->id_periode)->first()->periode;
+
+
+
+
+        //$detail = tb_detail_kuesioner::with('relasiDetailtoKuesioner','relasiDetailtoAlumni')->get();
+        $kuesioner = tb_kuesioner::where('id_periode', $id)->get();
         $tahun_periodes = tb_periode_kuesioner::with('relasiPeriodekuesionertoTahun', 'relasiPeriodekuesionertoPeriode')->get();
-        $opsi = tb_opsi::all();
-            return view('/kuesioner/kuesioner', compact ('alumni','detail','prodi','kuesioner','opsi','tahun_periodes','id_periode_kuesioner'));
+        $max_id_kuesioner = tb_kuesioner::max('id_kuesioner');
+        $id_periode_kuesioner = $id;
+        
+
+            return view('/kuesioner/kuesioner', compact ('kuesioner','tahun_periodes','id_periode_kuesioner','tahun_kuesioner','periode_kuesioner'));
         }
 
     public function create(Request $request){
@@ -45,12 +51,31 @@ class kuesionerController extends Controller
         }
 
         $detail_kuesioner = new tb_kuesioner();
-        $detail_kuesioner->id_periode = $request->create_id_periode;
+        $detail_kuesioner->id_periode = $request->id_periode;
         $detail_kuesioner->type_kuesioner = $request->type_kuesioner;
         $detail_kuesioner->status = "Menunggu Konfirmasi";
         $detail_kuesioner->save();
 
-        return redirect('/admin/kuesioner')->with('statusInput','Data berhasil disimpan!');
+        return redirect ('/admin/kuesioner/'.$request->id_periode)->with('statusInput','Data berhasil ditambahkan!');
+    }
+    public function update(Request $request){
+        $validator = Validator::make($request->all(), [
+            'type_kuesioner' => 'required',
+        ],[
+             'type_kuesioner.required' => "Anda Belum Menambahkan Kuesioner",
+         ]);
+
+        if($validator->fails()){
+            return back()->withErrors($validator);
+        }
+        $res = NULL;
+        $updatedata = tb_kuesioner::find($request->id_kuesioner);
+        $updatedata->id_periode = $request->id_periode;
+        $updatedata->type_kuesioner = $request->type_kuesioner;
+        $updatedata->status = "Menunggu Konfirmasi";
+        $updatedata->update();
+        //dd($updatedata);
+       return redirect('/admin/kuesioner/'.$request->id_periode)->with('statusInput','Data berhasil diperbaharui!');
     }
 
     public function delete($id){
@@ -72,15 +97,7 @@ class kuesionerController extends Controller
     }
     
 
-    public function update(Request $request){
-        $res = NULL;
-        $updatedata = tb_kuesioner::find($request->id_kuesioner);
-        $updatedata->type_kuesioner = $request->type_kuesioner;
 
-        $updatedata->update();
-        //dd($updatedata);
-       return redirect('/admin/kuesioner')->with('statusInput','Data berhasil diupdate!');
-    }
 
 
     public function showtracer(){
