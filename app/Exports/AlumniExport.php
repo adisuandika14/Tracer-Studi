@@ -15,46 +15,35 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
-class AlumniExport implements FromCollection, WithMapping, WithHeadings
+class AlumniExport implements FromCollection
 {
 
 
     public function collection(){
-        return tb_jawaban::get();
+        return tb_alumni::get();
 
     }
 
-    public function map($alumni) : array{
+    // public function map($alumni) : array{
 
-        $alumni = tb_jawaban::with('relasiJawabantoAlumni','relasiJawabantoDetail')->get();
-        return[
-            $alumni->relasiJawabantoAlumni->nama_alumni,
-            $alumni->relasiJawabantoAlumni->alamat,
-            $alumni->relasiJawabantoAlumni->alamat,
-            $alumni->relasiJawabantoAlumni->tahun_lulus,
-            $alumni->relasiJawabantoAlumni->tahun_wisuda,
-            $alumni->relasiJawabantoAlumni->relasiAlumnitoProdi->nama_prodi,
-            $alumni->relasiJawabantoAlumni->relasiAlumnitoAngkatan->tahun_angkatan,
-            $alumni->relasiJawabantoDetail->relasiDetailtoKuesioner->type_kuesioner,
-        ];
+    //     $alumni = tb_alumni::get();
+    //     return[
+    //         $alumni->nama_alumni,
+    //         $alumni->chat_id,
+    //     ];
 
 
 
-    }
+    // }
 
-    public function headings(): array
-    {
-        return[
+    // public function headings(): array
+    // {
+    //     return[
 
-            'Nama Alumni',
-            'Alamat',
-            'Tahun Lulus',
-            'Tahun Wisuda',
-            'Program Studi',
-            'Angkatan',
-            'Status',
-        ];
-    }
+    //         'Nama Alumni',
+    //         'Chat Id',
+    //     ];
+    // }
 
 
 }

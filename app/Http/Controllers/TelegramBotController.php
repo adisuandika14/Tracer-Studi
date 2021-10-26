@@ -37,14 +37,19 @@ class TelegramBotController extends Controller
                 //     'text' => $text
                 // ]);
                 $message = '--PENGUMUMAN--'
-                            .'                                                                                      '.$pengumuman->judul
-                            .'                                                                          Jenis Pengumuman: '.$pengumuman->jenis
-                            .'                                                                          Perihal Pengumuman: '.$pengumuman->perihal
-                            .'                                                                          Sifat Surat: '.$pengumuman->sifat_surat;
+                //.'                                                                                      '.$pengumuman->jenis
+                //.'                                                                                      '
+                .'                                                                                          '.$pengumuman->judul;
+                //.'                                                                                  Pakaian : '.$pengumuman->perihal
+                //.'                                                                                  Info Lengkap          '.$pengumuman->sifat_surat;
+                        //     .'                                                                                      '.$pengumuman->judul
+                        //     .'                                                                          Jenis Pengumuman: '.$pengumuman->jenis;
+                        //     //.'                                                                          Perihal Pengumuman: '.$pengumuman->perihal;
+                        //    // .'                                                                          Sifat Surat: '.$pengumuman->sifat_surat;
                              //.$pengumuman->lampiran
                              //.$pengumuman->InputFile::createFromContents(file_get_contents($lampiran->getRealPath()), Str::random(10) . '.' . $lampiran->getClientOriginalExtension());
                              
-               $url = "https://api.telegram.org/bot1624417891:AAGwDqAhk6CkTguTKt4jmxwABaYWVc4tDVE/sendMessage?chat_id=".$alumni->chat_id."&text=".$message;
+               $url = "https://api.telegram.org/bot1624417891:AAG3RpRFtFqGcRP1W6-TFDQtsOBYbf6i7BI/sendMessage?chat_id=".$alumni->chat_id."&text=".$message;
 
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
@@ -58,7 +63,7 @@ class TelegramBotController extends Controller
                 
                 if($pengumuman->lampiran != NULL){
                     $file_url = $pengumuman->lampiran;
-                    $url = "https://api.telegram.org/bot1624417891:AAGwDqAhk6CkTguTKt4jmxwABaYWVc4tDVE/sendDocument?chat_id=".$alumni->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
+                    $url = "https://api.telegram.org/bot1624417891:AAG3RpRFtFqGcRP1W6-TFDQtsOBYbf6i7BI/sendDocument?chat_id=".$alumni->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
                     curl_setopt($ch, CURLOPT_POST, 0);

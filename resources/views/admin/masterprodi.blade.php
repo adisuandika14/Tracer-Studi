@@ -34,8 +34,8 @@
                             <tr class="success">
                                 <td style="width: fit-content;">{{ $loop->iteration }}</td>
                                 <td>{{ $prodis->nama_prodi }}</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm" data-toggle="modal"
+                                <td class="text-center">
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
                                             data-target="#show{{$prodis->id_prodi}}"><i class="fas fa-eye"></i>
                                     </button>
                                     <!-- Edit -->
@@ -108,7 +108,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Alumni</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Prodi</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -119,7 +119,7 @@
                                     {{ csrf_field() }}
                                         
                                 <div class="form-group">
-                                    <label class="font-weight-bold text-dark">Tahun prodi</label>
+                                    <label class="font-weight-bold text-dark">Program Studi</label>
                                     <input type="text" class="form-control" id="nama_prodi" name="nama_prodi" value="{{$datass->nama_prodi}}" placeholder="">
                                 </div>
 
@@ -148,7 +148,7 @@
 	      	          <form action="/admin/masterprodi/create" method="POST">
                       {{csrf_field()}}
                       <div class="form-group">
-                        <label class="font-weight-bold text-dark">Tahun prodi</label>
+                        <label class="font-weight-bold text-dark">Program Studi</label>
                         <input type="text" class="form-control" id="nama_prodi" name="nama_prodi" placeholder="">
                       </div>
 	      	            <div class="modal-footer">

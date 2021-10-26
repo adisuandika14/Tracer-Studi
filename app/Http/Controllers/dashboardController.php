@@ -14,16 +14,16 @@ use Carbon\Carbon;
 class dashboardController extends Controller
 {
     public function dashboard(){
-        $alumnis = DB::table('tb_alumni')->count('id_alumni');
+        $alumnis = tb_alumni::count('id_alumni');
         $jawaban = DB::table('tb_jawaban')->count('id_jawaban');
         $pengumuman = DB::table('tb_pengumuman')->count('id_pengumuman');
         $lowongan = DB::table('tb_lowongan')->count('id_lowongan');
-        $angkatan = tb_angkatan::all();
+        $angkatan = tb_angkatan::orderBy('tahun_angkatan','asc')->get();
         // dd($angkatan);
         $tahun = [];
         $alumnitot = [] ;
 
-        $angkatan = tb_angkatan::all();
+        $angkatan = tb_angkatan::orderBy('tahun_angkatan','asc')->get();
         foreach($angkatan as $ang){
             $alumni = tb_alumni::where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
             // dd($ang->tahun_angkatan." ".$alumni);
@@ -35,9 +35,9 @@ class dashboardController extends Controller
     }
 
 
-    // public function export(){
-    //     return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
-    // }
+    public function export(){
+        return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
+    }
 
     public function chartjs()
     {

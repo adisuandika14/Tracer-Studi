@@ -146,12 +146,12 @@ body {font-family: Arial, Helvetica, sans-serif;}
                             <form id="form-product" method="post" action="/admin/pengumuman/showpengumuman/send-message/{{$post->id_pengumuman}}" enctype="multipart/form-data">
                               @csrf
                                 <div class="form-group">
-                                <label class="font-weight-bold text-dark">Judul Pengumuman</label>
-                                    <input type="text" class="form-control" style="width: 50%;" placeholder="" value="{{$post->judul}}" disabled></input>
+                                <label class="font-weight-bold text-dark">Jenis Pengumuman</label>
+                                    <input type="text" class="form-control" style="width: 50%;" placeholder="" value="{{$post->jenis}}" disabled></input>
                                 </div>
                                 <div class="form-group">
-                                    <label class="font-weight-bold text-dark">Jenis Pengumuman</label>
-                                    <input type="text" class="form-control" style="width: 50%;" placeholder="" disabled value="{{$post->jenis}}"></input>
+                                    <label class="font-weight-bold text-dark">Judul Pengumuman</label>
+                                    <input type="text" class="form-control" style="width: 50%;" placeholder="" disabled value="{{$post->judul}}"></input>
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-bold text-dark">Perihal Pengumuman</label>

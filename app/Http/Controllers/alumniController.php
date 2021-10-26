@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Exports\AlumniExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Hash;
 use App\tb_alumni;
 use App\tb_angkatan;
 use App\tb_kota;
@@ -20,13 +21,11 @@ use App\tb_soal_alumni;
 use App\tb_periode;
 use App\tb_periodealumni;
 use App\tb_tahun_periode;
-use App\Models\Province;
-use App\Models\Regency;
-use App\Models\District;
-use App\Models\Village;
 use Session;
 use App\Imports\AlumniImport;
 use App\Http\Controllers\Controller;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+
 
 use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
@@ -149,17 +148,13 @@ class alumniController extends Controller
 
     }
 
-    public function delete($id){
+    public function delete($id, Request $request){
+        
         $deletedata = tb_alumni::where('id_alumni', $id);
+        $deletedata->id_periode = $request->id_periode;
         $deletedata->delete();
-        return redirect('/admin/alumni')->with('sukses','Data berhasil dihapus!');
+        return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil dihapus!');
     }
-
-    // public function edit(tb_alumni $id_alumni)
-    // {
-    //     $editdata = tb_alumni::find($id_alumni);
-    //     return response()->json(['sukses' => 'Berhasil', 'alumni' => $editdata]);
-    // }
 
     
     public function update(Request $request){
@@ -182,17 +177,17 @@ class alumniController extends Controller
         $updatedata->status = $request->status;
         $updatedata->update();
         //dd($updatedata);
-       return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil diupdate!');
+       return redirect('/admin/alumni/{id}')->with('sukses','Data berhasil diupdate!');
     }
 
 
-    public function export_mapping() {
-        return Excel::download( new AlumniExport(), 'Data Tracer Lulusan Alumni Dakulltas Teknik.xlsx') ;
-    }
-
-    // public function export(){
-    //     return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
+    // public function export_mapping() {
+    //     return Excel::download( new AlumniExport(), 'Data Tracer Lulusan Alumni Dakulltas Teknik.xlsx') ;
     // }
+
+    public function export(){
+        return Excel::download(new ALumniExport, 'Data Alumni.xlsx');
+    }
 
 
     public function import_excel(Request $request) 
@@ -212,19 +207,16 @@ class alumniController extends Controller
             for ($hitung = 0; $hitung < $hitungs; $hitung++){
                 
                 foreach($prodis as $prodi){
-                    if($prodi->nama_prodi == $rows['nama_prodi']){
+                    if($prodi->nama_prodi == $rows[$count][$hitung]['nama_prodi']){
                         $id_prodi = $prodi->id_prodi;
                     }
                 }
 
                 foreach($angkatans as $angkatan){
-                    if($angkatan->tahun_angkatan == $rows['tahun_angkatan']){
+                    if($angkatan->tahun_angkatan == $rows[$count][$hitung]['tahun_angkatan']){
                         $id_angkatan = $angkatan->id_angkatan;
                     }
                 }
-
-                // $alumni = New tb_angkatan();
-                // $alumni->tahun_angkatan = $rows[$count][$hitung]['tahun_angkatan']; 
 
                 $alumni = New tb_alumni();
                 $alumni->id_periode = $request->id_periode;
@@ -235,13 +227,14 @@ class alumniController extends Controller
                 $alumni->id_angkatan = $id_angkatan;
                 $alumni->id_prodi = $id_prodi;
                 $alumni->alamat_alumni = $rows[$count][$hitung]['alamat_alumni'];
-                $alumni->tahun_lulus = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_lulus'])->format('Y-m-d');
-                $alumni->tahun_wisuda = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_wisuda'])->format('Y-m-d');
+                $alumni->password = Hash::make($rows[$count][$hitung]['nim_alumni']);
+                $alumni->tahun_lulus = Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_lulus'])->format('Y-m-d');
+                $alumni->tahun_wisuda = Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_wisuda'])->format('Y-m-d');
                 $alumni->no_hp = $rows[$count][$hitung]['no_hp'];
                 $alumni->email = $rows[$count][$hitung]['email'];
                 $alumni->id_telegram = $rows[$count][$hitung]['id_telegram'];
                 $alumni->id_line = $rows[$count][$hitung]['id_line'];
-                $alumni->status = "Menunggu Konfirmasi";
+                $alumni->status = "Konfirmasi";
                 $alumni->save();
             }
         }
@@ -264,6 +257,7 @@ class alumniController extends Controller
         }
         elseif($request->status == "Ditolak"){
             $status = new tb_notifikasi();
+            $status->id_periode = $request->id_periode;
             $status->id_alumni = $request->id_alumni;
             $status->notifikasi = $request->notifikasi;
             $status->notifikasi_unique = Str::random(32);

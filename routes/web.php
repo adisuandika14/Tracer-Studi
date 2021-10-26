@@ -50,7 +50,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/periodealumni/createperiode','alumniController@createperiode');
     Route::post('/periodealumni/updateperiode','alumniController@updateperiode');
 
-    Route::get('/alumni/{id}','alumniController@show');
+    Route::get('/alumni/{id}','alumniController@show')->name('alumni');
     Route::post('/alumni/create','alumniController@create');
     //Route::get('/alumni/{id}/edit','alumniController@edit');
     Route::post('/alumni/update','alumniController@update');
@@ -221,8 +221,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
 
 
     // //Export Excel
-    Route::get('/export', 'dashboardController@export');
-    Route::get('/export', 'alumniController@export_mapping')->name('tracer.export') ;
+    Route::get('/export', 'alumniController@export');
 
 
 });

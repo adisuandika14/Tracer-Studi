@@ -254,6 +254,8 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
+
                                     Apakah Anda yakin menghapus data Alumni?</b>
                                 </div>
                                 <div class="modal-footer">
@@ -281,6 +283,8 @@
                       <form action="/admin/alumni/update" method="POST" enctype="multipart/form-data">
                       <input type="hidden" name="id_alumni" value="{{$datass->id_alumni}}">
                       {{ csrf_field() }}
+                      <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
+
                                         
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Nama Dengan Gelar</label>

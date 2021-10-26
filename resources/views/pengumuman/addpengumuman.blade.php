@@ -50,10 +50,13 @@
                         <input type="date" class="form-control" name="tgl_post" placeholder="tgl_post" required>
                     </div>
                 </div> -->
+                
+
                 <div class="row">
                     <div class="col-lg-6 col-sm-12">
-                        <label for="title">Sumber Pengumuman</label>
-                        <input type="text" class="form-control" name="jenis" placeholder="Jenis Pengumuman" required>
+                        <label for="title">Jenis Pengumuman</label>
+                        {{-- <input type="text" class="form-control" name="jenis" placeholder="Jenis Pengumuman" required> --}}
+                        <textarea class="form-control" name="jenis" id="summernote"></textarea>
                     </div>
                 </div>
                 <div class="row">
