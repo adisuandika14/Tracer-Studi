@@ -104,28 +104,39 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 
 </style>
+<div class="container">
 
+  @if (count($errors)>0)
+  <div class="row">
+    <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+          @foreach ($errors->all() as $item)
+              <li>{{$item}}</li>
+          @endforeach
+        </ul>
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
 
+  <!-- {{-- notifikasi form validasi --}} -->
+  @if ($errors->has('file') && $error->any)
+  <span class="invalid-feedback" role="alert">
+    <strong>{{ $errors->first('file') }}</strong>
+  </span>
+  @endif
 
-
-
-
-        @if (count($errors)>0)
-            <div class="row">
-              <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
-                  <ul>
-                    @foreach ($errors->all() as $item)
-                        <li>{{$item}}</li>
-                    @endforeach
-                  </ul>
-                  <button type="button" class="close" data-dismiss="alert"
-                      aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-            </div>
-          @endif
-
+  <!-- {{-- notifikasi sukses --}} -->
+  @if ($sukses = Session::get('sukses'))
+  <div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button> 
+    <strong>{{ $sukses }}</strong>
+  </div>
+  @endif
+</div>
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -170,17 +181,24 @@ body {font-family: Arial, Helvetica, sans-serif;}
                     <input type="file" id="blah" class="form-control-file" name="thumbnail" value="{{$post->thumbnail}}" placeholder="thumbnail">
                 </div> -->
 
-                <div class="form-group mt-4">
-                    <!-- <img id="myImg" src="{{$post->thumbnail}}" /></br> -->
-                    <!-- <div id="image_preview" style="width:300%; max-width:500px"></div> -->
-                    <label for="thumbnail">Thumbnail</label>
-                    <input type="file" id="upload_file" class="form-control-file" name="thumbnail" value="{{$post->thumbnail}}" placeholder="thumbnail" onchange="preview_image();" multiple style="width:300%; max-width:500px">
-                    
-                </div>
-                <div class="form-group mt-4">
-                    <label for="lampiran">File Lampiran</label>
-                    <input type="file" class="form-control-file" id="lampiran" name="lampiran" value="{{$post->lampiran}}" placeholder="lampiran">
-                </div>
+                <div class="form-group mt-4" style="width: 50%">
+                  <label for="transkrip">Thumbnail (Maks: 500kb)</label>
+                  <div class="custom-file">
+                      <input  type="file" class="custom-file-input" accept="application/pdf" id="transkrip" name="transkrip">
+                      <label id="thumbnail" name="thumbnail" value="{{$post->thumbnail}}" class="custom-file-label">
+                              Pilih Thumbnail
+                      </label>
+                  </div>
+              </div>
+              <div class="form-group mt-4" style="width: 50%">
+                  <label for="transkrip">Lampiran (Maks: 500kb)</label>
+                  <div class="custom-file">
+                      <input  type="file" class="custom-file-input" accept="application/pdf" id="transkrip" name="transkrip">
+                      <label id="lampiran" value="{{$post->lampiran}}" name="lampiran" class="custom-file-label">
+                              Pilih Lampiran
+                      </label>
+                  </div>
+              </div>
                 <div class="form-group mt-4">
                     <a href="/admin/pengumuman" class="btn btn-danger"><i class="fa fa-times"></i> Batal</a>
                     <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>

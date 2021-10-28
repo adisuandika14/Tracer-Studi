@@ -11,9 +11,24 @@
 
 <div class="container">
 
+  @if (count($errors)>0)
+  <div class="row">
+    <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+          @foreach ($errors->all() as $item)
+              <li>{{$item}}</li>
+          @endforeach
+        </ul>
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
 
   <!-- {{-- notifikasi form validasi --}} -->
-  @if ($errors->has('file'))
+  @if ($errors->has('file') && $error->any)
   <span class="invalid-feedback" role="alert">
     <strong>{{ $errors->first('file') }}</strong>
   </span>
@@ -134,7 +149,7 @@
 						</div>
 						<div class="modal-body">
 							{{ csrf_field() }}
-              <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
+              <input type="text" class="form-control" id="" value="{{$id_periode_alumni}}" name="id_periode" placeholder="" hidden>
 							<label>Pilih file excel</label>
 							<div class="form-group">
 								<input type="file" name="file" required="required">
@@ -254,7 +269,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
+                                <input type="text" class="form-control" id="" value="{{$id_periode_alumni}}" name="id_periode" placeholder="" hidden>
 
                                     Apakah Anda yakin menghapus data Alumni?</b>
                                 </div>
@@ -283,7 +298,7 @@
                       <form action="/admin/alumni/update" method="POST" enctype="multipart/form-data">
                       <input type="hidden" name="id_alumni" value="{{$datass->id_alumni}}">
                       {{ csrf_field() }}
-                      <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
+                      <input type="text" class="form-control" id="" value="{{$id_periode_alumni}}" name="id_periode" placeholder="" hidden>
 
                                         
                       <div class="form-group">
@@ -381,7 +396,7 @@
                       <form action="/admin/alumni/create" method="POST" enctype="multipart/form-data">
                       {{ csrf_field() }}
                       
-                      <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
+                      <input type="text" class="form-control" id="" value="{{$id_periode_alumni}}" name="id_periode" placeholder="" hidden>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Nama Dengan Gelar</label>
                         <input type="text" class="form-control" id="nama_alumni" name="nama_alumni" placeholder="">
@@ -398,8 +413,8 @@
                         <label for="province_id" class="font-weight-bold text-dark">Jenis Kelamin</label>
                             <select name="jenis_kelamin" class="custom-select" id="jenis_kelamin" required>
                                 <option>-- Pilih Jenis Kelamin --</option>
-                                <option >Laki Laki</option>
-                                <option >Perempuan</option>
+                                <option value="Laki-Laki" >Laki Laki</option>
+                                <option value="Perempuan">Perempuan</option>
                             </select>
                       </div> 
                       <div class="form-group">

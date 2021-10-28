@@ -21,14 +21,10 @@ class TelegramBotController extends Controller
     public function storeMessage($id, Request $request){
         
         //$test = tb_pengumuman::all();
-        $alumni = tb_alumni::all();
+        //$alumni = tb_alumni::get('id_alumni', chunk_split(30) );
+        $alumni = tb_alumni::get();
         $pengumuman=tb_pengumuman::find($id);
-        $text = $pengumuman->judul;
-            // "Pengumuman\n"
-            // . "<b>judul Pengumuman: </b>\n"
-            // . "$text->judul;\n"
-            // . "<b>Message: </b>\n"
-            // . $text->perihal;
+
             foreach ($alumni as $alumni){
                 // Telegram::sendMessage([
                 //     'token' => env('TELEGRAM_BOT_TOKEN', ''),
@@ -37,15 +33,10 @@ class TelegramBotController extends Controller
                 //     'text' => $text
                 // ]);
                 $message = '--PENGUMUMAN--'
-                //.'                                                                                      '.$pengumuman->jenis
-                //.'                                                                                      '
-                .'                                                                                          '.$pengumuman->judul;
-                //.'                                                                                  Pakaian : '.$pengumuman->perihal
-                //.'                                                                                  Info Lengkap          '.$pengumuman->sifat_surat;
-                        //     .'                                                                                      '.$pengumuman->judul
-                        //     .'                                                                          Jenis Pengumuman: '.$pengumuman->jenis;
-                        //     //.'                                                                          Perihal Pengumuman: '.$pengumuman->perihal;
-                        //    // .'                                                                          Sifat Surat: '.$pengumuman->sifat_surat;
+                            .'                                                                                      '.$pengumuman->judul
+                            .'                                                                          Jenis Pengumuman: '.$pengumuman->jenis
+                            .'                                                                          Perihal Pengumuman: '.$pengumuman->perihal
+                           .'                                                                          Sifat Surat: '.$pengumuman->sifat_surat;
                              //.$pengumuman->lampiran
                              //.$pengumuman->InputFile::createFromContents(file_get_contents($lampiran->getRealPath()), Str::random(10) . '.' . $lampiran->getClientOriginalExtension());
                              

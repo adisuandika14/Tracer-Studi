@@ -27,9 +27,12 @@ class banksoalalumnidetailController extends Controller
 
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
-            'id_jenis' => 'required', 
             'pertanyaan' => 'required',
-        ]);
+            'id_jenis'=>'required',
+        ],[
+             'pertanyaan.required' => "Anda Belum Menambahkan Kuesioner",
+             'id_jenis.required' => "Anda Belum memilih jenis kuesioner",
+         ]);
 
         if($validator->fails()){
             return back()->withErrors($validator);
@@ -134,7 +137,7 @@ class banksoalalumnidetailController extends Controller
     public function edit($id)
     {
         $detail_soal = tb_detail_soal_alumni::find($id);
-        $opsis = tb_opsi_bank_soal_alumni::where('id_bank_soal', $detail_soal->id_detail_soal_alumni)->get();
+        $opsis = tb_opsi_bank_soal_alumni::where('id_soal_alumni', $detail_soal->id_detail_soal_alumni)->get();
         return response()->json(['success' => 'Berhasil', 'detail_soal' => $detail_soal, 'opsis' => $opsis]);
     }
 
@@ -154,7 +157,7 @@ class banksoalalumnidetailController extends Controller
 
         $opsis = tb_opsi_bank_soal_alumni::get();
         foreach($opsis as $opsi){
-            if($opsi->id_detail_soal_alumni == $id){
+            if($opsi->id_soal_alumni == $id){
                 $opsi->delete();
             }
         }
@@ -177,65 +180,65 @@ class banksoalalumnidetailController extends Controller
             if($request->edit_opsi1 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi1;
-                $opsi->id_detail_soal_alumni = $detail_soal->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal->id_detail_soal_alumni;
                 $opsi->save();
             }
 
             if($request->edit_opsi2 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi2;
-                $opsi->id_detail_soal_alumni = $detail_soal->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal->id_detail_soal_alumni;
                 $opsi->save();
             }
 
             if($request->edit_opsi3 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi3;
-                $opsi->id_detail_soal_alumni = $detail_soal->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal->id_detail_soal_alumni;
                 $opsi->save();
             }
 
             if($request->edit_opsi4 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi4;
-                $opsi->id_detail_soal_alumni = $detail_soal->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal->id_detail_soal_alumni;
                 $opsi->save();
             }
 
             if($request->edit_opsi5 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi5;
-                $opsi->id_detail_soal_alumni = $detail_soal->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->edit_opsi6 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi6;
-                $opsi->id_detail_soal_alumni = $detail_soal->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->edit_opsi7 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi7;
-                $opsi->id_detail_soal_alumni = $detail_soal->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->edit_opsi8 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi8;
-                $opsi->id_detail_soal_alumni = $detail_soal->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->edit_opsi9 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi9;
-                $opsi->id_detail_soal_alumni = $detail_soal->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal->id_detail_soal_alumni;
                 $opsi->save();
             }
             if($request->edit_opsi10 != ""){
                 $opsi = new tb_opsi_bank_soal_alumni();
                 $opsi->opsi = $request->edit_opsi10;
-                $opsi->id_detail_soal_alumni = $detail_soal ->id_detail_soal_alumni;
+                $opsi->id_soal_alumni = $detail_soal ->id_detail_soal_alumni;
                 $opsi->save();
             }
         }
@@ -256,5 +259,7 @@ class banksoalalumnidetailController extends Controller
         }
         return back()->with('statusInput', 'Pertanyaan berhasil dihapus');
     }
+
+    
 
 }

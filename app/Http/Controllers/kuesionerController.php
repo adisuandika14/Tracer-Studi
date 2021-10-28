@@ -81,7 +81,7 @@ class kuesionerController extends Controller
     public function delete($id){
         $delete = tb_kuesioner::find($id);
         $delete->delete();
-        return redirect ('/admin/kuesioner')->with('statusInput','Data berhasil dihapus!'); 
+        return redirect()->back()->with('statusInput','Data berhasil dihapus!'); 
     }
 
     public function detail($id)

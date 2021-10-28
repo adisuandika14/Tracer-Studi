@@ -49,6 +49,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/periodealumni','alumniController@periode');
     Route::post('/periodealumni/createperiode','alumniController@createperiode');
     Route::post('/periodealumni/updateperiode','alumniController@updateperiode');
+    Route::get('/periodealumni/{id}/delete','alumniController@deleteperiode');
 
     Route::get('/alumni/{id}','alumniController@show')->name('alumni');
     Route::post('/alumni/create','alumniController@create');
@@ -148,7 +149,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::delete('/kuesioner/stakeholder/{id}/delete','stakeholderkuesionerController@delete');
     Route::get('/kuesioner/stakeholder/showkuesioner/{id}/{status}', 'stakeholderkuesionerController@status');
 
-    Route::get('/kuesioner/stakeholder/detail/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@detail_kuesioner');
+    Route::get('/kuesioner/stakeholder/detail/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@detail_kuesioner')->name('kuesioner-stakeholder-detail');
     Route::get('/kuesioner/stakeholder/{id}/edit', 'stakeholderkuesionerController@edit');
     Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionerController@update');
 

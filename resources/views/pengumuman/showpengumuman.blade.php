@@ -161,7 +161,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
                                     <label class="font-weight-bold text-dark">Sifat Surat</label>
                                     <input type="text" class="form-control" style="width: 50%;" placeholder="" disabled value="{{$post->sifat_surat}}"></input>
                                 </div>
-                              
+
                                 <div class="form-group" >                                 
                                   <a href="{{$post->lampiran}}" id="myFile"  rel="noopener noreferrer" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  ><i
                                     class="fas fa-download fa-sm text-white-50"></i> Download Document</a>                                

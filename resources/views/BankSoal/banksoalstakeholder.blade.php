@@ -6,34 +6,36 @@
 @endsection
 <!-- Begin Page Content -->
 <div class="container-fluid">
-    @if (session()->has('statusInput'))
-      <div class="row">
-        <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
-            {{session()->get('statusInput')}}
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
 
-    @if (count($errors)>0)
-      <div class="row">
-        <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
-            <ul>
-              @foreach ($errors->all() as $item)
-                  <li>{{$item}}</li>
-              @endforeach
-            </ul>
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
+<div class="container">
+  @if (session()->has('statusInput'))
+  <div class="row">
+    <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
+        {{session()->get('statusInput')}}
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
 
+@if (count($errors)>0)
+  <div class="row">
+    <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+          @foreach ($errors->all() as $item)
+              <li>{{$item}}</li>
+          @endforeach
+        </ul>
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
+</div>
 
   <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -45,7 +47,7 @@
             <select name="prodi" class="custom-select " style="width:250px; " id="prodi">
                 <option selected value="">-- Pilih Program Studi --</option>
                 @foreach ($prodis as $prodi)
-                    <option  value="{{$prodi->id_prodi}}" @if($prodi->id_prodi == $id_prodi) selected @endif>{{ $prodi->nama_prodi }}
+                    <option  value="{{$prodi->id_prodi}}">{{ $prodi->nama_prodi }}
                     </option>
                 @endforeach
             </select>
@@ -285,9 +287,10 @@
 	                <div class="modal-body" id="bodyEdit">
 	      	          <form action="/admin/banksoal/stakeholder/update/" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
+                      <input type="text" class="form-control" id="edit_id_kuesioner" name="id_prodi" value="{{$id_prodi}}" hidden >
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
-                                    <select name="id_jenis" id="kuesioner" class="custom-select" required>
+                                    <select name="edit_id_jenis" id="edit_id_jenis" class="custom-select" required>
                                       <option value="">-- Pilih Jenis Kuesioner --</option>
                                       <option value="1">Pilihan Ganda</option>
                                       <option value="2">Jawaban Singkat</option>
@@ -378,7 +381,6 @@
 @section('custom_javascript')
 <script>
   //Default periode
-  $('#id_prodi').val({{$id_prodi}});
   //DeleteOpsi
   function deleteOpsi(opsi){
     $('#'+opsi).hide();
@@ -449,7 +451,7 @@ $('#prodi').change(function(){
                       $("#edit_btnTambahOpsi").show();
                     }
                   });
-                }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
+                }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
                   $("#edit_opsi1").prop('required',false);
                   $("#edit_opsi2").prop('required',false);
                   for(let i = 1; i<=11; i++){
@@ -469,7 +471,7 @@ $('#prodi').change(function(){
                   $("#eedit_opsi1").prop('required',true);
                   $("#eedit_opsi2").prop('required',true);
                   $('#edit_btnTambahOpsi').fadeIn();
-              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
+              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
                 $("#edit_opsi1").prop('required',false);
                 $("#edit_opsi2").prop('required',false);
                 for(let i = 1; i<=11; i++){
@@ -492,7 +494,7 @@ $('#prodi').change(function(){
                     $("#edit_btnTambahOpsi").show();
                   }
                 });
-              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
+              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
                 $("#edit_opsi1").prop('required',false);
                 $("#edit_opsi2").prop('required',false);
                 for(let i = 1; i<=11; i++){
@@ -524,7 +526,7 @@ $('#prodi').change(function(){
           $("#oopsi1").prop('required',true);
           $("#oopsi2").prop('required',true);
           $('#btnTambahOpsi').fadeIn();
-        }else if($('#kuesioner').val() == 2 || $('#kuesioner').val() == ""){
+        }else if($('#kuesioner').val() == 2 || $('#kuesioner').val() == 4){
           $("#oopsi1").prop('required',false);
           $("#oopsi2").prop('required',false);
           for(let i = 1; i<=11; i++){

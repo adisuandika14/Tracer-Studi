@@ -12,7 +12,7 @@ class tb_alumni extends Model
     protected $table = 'tb_alumni';
     protected $primaryKey = 'id_alumni';
     protected $fillable = [
-        'id_alumni','id_kota','id_prodi','id_angkatan','jenis_kelamin','nik','email_alumni','nama_alumni', 'nim_alumni', 'tahun_lulus','tahun_wisuda','alamat_alumni','no_hp','id_line','id_telegram',
+        'id_alumni','id_kota','id_prodi','id_angkatan','chat_id','jenis_kelamin','nik','email_alumni','nama_alumni', 'nim_alumni', 'tahun_lulus','tahun_wisuda','alamat_alumni','no_hp','id_line','id_telegram',
     ];
 
 
@@ -30,6 +30,7 @@ class tb_alumni extends Model
             $table->string('nama_alumni');
             $table->string('nik'); 
             $table->string('jenis_kelamin'); 
+            $table->integer('chat_id'); 
             $table->string('nim_alumni'); 
             $table->string('tahun_angkatan'); 
             $table->string('nama_prodi'); 

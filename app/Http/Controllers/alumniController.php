@@ -4,24 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Exports\AlumniExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
 use App\tb_alumni;
 use App\tb_angkatan;
-use App\tb_kota;
-use App\tb_provinsi;
 use App\tb_prodi;
-use App\tb_gender;
 use App\tb_notifikasi;
 use App\tb_jawaban;
 use App\tb_soal_alumni;
 use App\tb_periode;
 use App\tb_periodealumni;
 use App\tb_tahun_periode;
-use Session;
 use App\Imports\AlumniImport;
 use App\Http\Controllers\Controller;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
@@ -43,11 +38,10 @@ class alumniController extends Controller
 
     public function createperiode(Request $request){
         $validator = Validator::make($request->all(), [
-            'id_tahun_periode' => 'required',
-            'id_periode' => 'required',
+            'id_tahun_periode' => 'required|unique:tb_periodealumni,id_tahun_periode',
         ],[
              'id_tahun_periode.required' => "Anda Belum Menambahkan Tahun Periode",
-             'id_periode.required' => "Anda Belum Menambahkan Periode",
+             'id_tahun_periode.unique' => "Tahun yang dimasukkan sudah Terdaftar",
          ]);
 
         if($validator->fails()){
@@ -55,7 +49,6 @@ class alumniController extends Controller
         }
         $periodealumni = new tb_periodealumni;
         $periodealumni->id_tahun_periode = $request->id_tahun_periode;
-        $periodealumni->id_periode = $request->id_periode;
         $periodealumni->save();
 
         return redirect('/admin/periodealumni')->with('sukses','Data Berhasil ditambahkan');
@@ -70,6 +63,13 @@ class alumniController extends Controller
         return redirect ('/admin/periodealumni')->with('sukses','Data Berhasil Diperbaharui');
     }
 
+    public function deleteperiode($id, Request $request)
+    {
+
+        $deleteperiode = tb_alumni::where('id_periode_alumni', $id);
+        return back()->with('sukses','Data berhasil dihapus');
+    }
+
 
     public function show($id){
         // $periodes = tb_periodealumni::where('id_periode_alumni', tb_alumni::find($id)->id_periode)->first();
@@ -77,7 +77,7 @@ class alumniController extends Controller
         // $periode_lulus = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
         $periodes = tb_periodealumni::where('id_periode_alumni', $id)->first();
         $tahun_lulus = tb_tahun_periode::where('id_tahun_periode', $periodes->id_tahun_periode)->first()->tahun_periode;
-        $periode_lulus = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
+        //$periode_lulus = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
 
 
 
@@ -86,11 +86,11 @@ class alumniController extends Controller
         $alumni = tb_alumni::where('id_periode',$id)->with('relasiAlumnitoAngkatan','relasiAlumnitoProdi')->get();
         $id_periode = $id;
         $prodi = tb_prodi::get();
-        $angkatan = tb_angkatan::get();
-        $id_periode_kuesioner = $id;
+        $angkatan = tb_angkatan::orderBy('tahun_angkatan','asc')->get();
+        $id_periode_alumni = $id;
         $status = ['Tolak','Konfirmasi','Menunggu Konfirmasi'];
 
-        return view('/alumni/dataalumni', compact ('id_periode_kuesioner','alumni','prodi','angkatan','tahun_lulus','periode_lulus'), ['alumni'=>$alumni]);
+        return view('/alumni/dataalumni', compact ('id_periode_alumni','alumni','prodi','angkatan','tahun_lulus'), ['alumni'=>$alumni]);
     }
 
     // public function getMenu($id){
@@ -103,14 +103,12 @@ class alumniController extends Controller
     public function create(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'nama_alumni' => 'required',
+            'nama_alumni' => 'required|unique',
             'nik' => 'required',
             'jenis_kelamin' => 'required',
             'alamat_alumni' => 'required',
             'id_prodi' => 'required',
             'id_angkatan' => 'required',
-            'email' => 'required',
-            'no_hp' => 'required',
         ],[
              'nama_alumni.required' => "Nama wajib diisi",
              'nik.required' => "Nik wajib diisi",
@@ -118,8 +116,6 @@ class alumniController extends Controller
              'alamat_alumni.required' => "Alamat wajib diisi",
              'id_prodi.required' => "Program Studi wajib diisi",
              'id_angkatan.required' => "Angkatan wajib diisi",
-             'email.required' => "Email wajib diisi",
-             'no_hp.required' => "No Hp wajib diisi",
          ]);
 
         if($validator->fails()){
@@ -152,8 +148,7 @@ class alumniController extends Controller
         
         $deletedata = tb_alumni::where('id_alumni', $id);
         $deletedata->id_periode = $request->id_periode;
-        $deletedata->delete();
-        return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil dihapus!');
+        return back()->with('sukses','Data berhasil dihapus!');
     }
 
     
@@ -177,7 +172,7 @@ class alumniController extends Controller
         $updatedata->status = $request->status;
         $updatedata->update();
         //dd($updatedata);
-       return redirect('/admin/alumni/{id}')->with('sukses','Data berhasil diupdate!');
+       return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil diupdate!');
     }
 
 
@@ -193,6 +188,7 @@ class alumniController extends Controller
     public function import_excel(Request $request) 
 	{
         $res = NULL;
+
         $file = $request->file('file');
         $rows = Excel::ToCollection(new AlumniImport, $file);
         $prodis = tb_prodi::get();

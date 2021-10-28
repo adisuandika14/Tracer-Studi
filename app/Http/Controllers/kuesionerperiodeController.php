@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\tb_periode_kuesioner;
 use App\tb_tahun_periode;
 use App\tb_periode;
+use Illuminate\Support\Facades\Validator;
 
 class kuesionerperiodeController extends Controller
 {
@@ -21,7 +22,21 @@ class kuesionerperiodeController extends Controller
 
 
     public function create(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id_tahun_periode' => 'required',
+            'id_periode' => 'required',
+            'tanggal_mulai' => 'required',
+            'tanggal_selesai' => 'required',
+        ],[
+             'id_tahun_periode.required' => "Tahun wajib diisi",
+             'id_periode.required' => "Periode wajib diisi",
+             'tanggal_mulai.required' => "Tanggal Mulai wajib diisi",
+             'tanggal_selesai.required' => "Tanggal Selesai wajib diisi",
+         ]);
 
+        if($validator->fails()){
+            return back()->withErrors($validator);
+        }
         $periodekuesioner = new tb_periode_kuesioner;
         $periodekuesioner->id_tahun_periode = $request->id_tahun_periode;
         $periodekuesioner->id_periode = $request->id_periode;
@@ -35,6 +50,18 @@ class kuesionerperiodeController extends Controller
 
     public function update(Request $request){
         $res = NULL;
+        $validator = Validator::make($request->all(), [
+            'id_tahun_periode' => 'required',
+            'id_periode' => 'required',
+            'tanggal_mulai' => 'required',
+            'tanggal_selesai' => 'required',
+        ],[
+             'id_tahun_periode.required' => "Tahun wajib diisi",
+             'id_periode.required' => "Periode wajib diisi",
+             'tanggal_mulai.required' => "Tanggal Mulai wajib diisi",
+             'tanggal_selesai.required' => "Tanggal Selesai wajib diisi",
+         ]);
+
         $updatedata = tb_periode_kuesioner::find($request->id_periode_kuesioner);
         $updatedata->id_tahun_periode = $request->id_tahun_periode;
         $updatedata->id_periode = $request->id_periode;

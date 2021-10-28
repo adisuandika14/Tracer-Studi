@@ -1,5 +1,5 @@
 @extends('layoutadmin.layout')
-@section('title', 'Periode Kuesioners')
+@section('title', 'Periode Kuesioner')
 @section('active3')
       nav-item active
 @endsection
@@ -70,7 +70,26 @@
    </style>
 
 @section('content')
-<div class="container">    
+
+
+<div class="container">  
+  
+  @if (count($errors)>0)
+<div class="row">
+  <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+      <ul>
+        @foreach ($errors->all() as $item)
+            <li>{{$item}}</li>
+        @endforeach
+      </ul>
+      <button type="button" class="close" data-dismiss="alert"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+</div>
+@endif
+
     <!-- {{-- notifikasi form validasi --}} -->
     @if ($errors->has('file'))
     <span class="invalid-feedback" role="alert">

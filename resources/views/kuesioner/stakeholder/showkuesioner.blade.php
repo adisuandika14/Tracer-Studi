@@ -8,33 +8,37 @@
 <div class="container-fluid">
   <h1 class="h4 mb-3 text-gray-800">Periode - {{$tahun}}</h1>
   <h1 class="h5 mb-4 text-gray-800">Program Studi - {{$prodi}}</h1>
-    @if (session()->has('statusInput'))
-      <div class="row">
-        <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
-            {{session()->get('statusInput')}}
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
 
-    @if (count($errors)>0)
-      <div class="row">
-        <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
-            <ul>
-              @foreach ($errors->all() as $item)
-                  <li>{{$item}}</li>
-              @endforeach
-            </ul>
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
+<div class="container">
+  @if (session()->has('statusInput'))
+  <div class="row">
+    <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
+        {{session()->get('statusInput')}}
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
+
+@if (count($errors)>0)
+  <div class="row">
+    <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+          @foreach ($errors->all() as $item)
+              <li>{{$item}}</li>
+          @endforeach
+        </ul>
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
+</div>
+
 
 
   <div class="card shadow mb-4">
@@ -282,6 +286,7 @@
 	                <div class="modal-body" id="bodyEdit">
 	      	          <form action="/admin/kuesioner/stakeholder/update" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
+                      <input type="text" class="form-control" id="edit_id_kuesioner" name="id_kuesioner_stakeholder" value="{{$id_kuesioner_stakeholder}}" hidden>
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="edit_id_jenis" id="edit_id_jenis" class="custom-select" required>
@@ -536,7 +541,7 @@ $('#prodi').change(function(){
                       $("#edit_btnTambahOpsi").show();
                     }
                   });
-                }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
+                }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
                   $("#edit_opsi1").prop('required',false);
                   $("#edit_opsi2").prop('required',false);
                   for(let i = 1; i<=11; i++){
@@ -556,7 +561,7 @@ $('#prodi').change(function(){
                   $("#eedit_opsi1").prop('required',true);
                   $("#eedit_opsi2").prop('required',true);
                   $('#edit_btnTambahOpsi').fadeIn();
-              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
+              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
                 $("#edit_opsi1").prop('required',false);
                 $("#edit_opsi2").prop('required',false);
                 for(let i = 1; i<=11; i++){
@@ -579,7 +584,7 @@ $('#prodi').change(function(){
                     $("#edit_btnTambahOpsi").show();
                   }
                 });
-              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == ""){
+              }else if($('#edit_id_jenis').val() == 2 || $('#edit_id_jenis').val() == 4){
                 $("#edit_opsi1").prop('required',false);
                 $("#edit_opsi2").prop('required',false);
                 for(let i = 1; i<=11; i++){
@@ -611,7 +616,7 @@ $('#prodi').change(function(){
           $("#oopsi1").prop('required',true);
           $("#oopsi2").prop('required',true);
           $('#btnTambahOpsi').fadeIn();
-        }else if($('#id_jenis').val() == 2 || $('#id_jenis').val() == ""){
+        }else if($('#id_jenis').val() == 2 || $('#id_jenis').val() == 4){
           $("#oopsi1").prop('required',false);
           $("#oopsi2").prop('required',false);
           for(let i = 1; i<=11; i++){

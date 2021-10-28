@@ -12,6 +12,22 @@
 <div class="container">
 
 
+    @if (count($errors)>0)
+    <div class="row">
+      <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+          <ul>
+            @foreach ($errors->all() as $item)
+                <li>{{$item}}</li>
+            @endforeach
+          </ul>
+          <button type="button" class="close" data-dismiss="alert"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+  @endif
+
     <!-- {{-- notifikasi form validasi --}} -->
     @if ($errors->has('file'))
     <span class="invalid-feedback" role="alert">
@@ -57,9 +73,9 @@
                                 <td>{{ $periodes->relasiPeriodealumnitoTahun->tahun_periode }}</td>
                                 {{-- <td>{{ $periodes->relasiPeriodealumnitoPeriode->periode }}</td> --}}
                                 <td class="text-center">
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                    {{-- <button class="btn btn-primary btn-sm" data-toggle="modal"
                                             data-target="#show{{$periodes->id_periode_alumni}}"><i class="fas fa-eye"></i>
-                                    </button>
+                                    </button> --}}
                                     <!-- Edit -->
                                     <button class="btn btn-primary btn-sm" data-toggle="modal"
                                             data-target="#update{{$periodes->id_periode_alumni}}"><i class="fas fa-edit"></i>
@@ -101,11 +117,11 @@
                                             <input type="text" class="form-control" id="periode" name="periode"
                                                 value="{{$datass->relasiPeriodealumnitoTahun->tahun_periode}}" readonly>
                                         </div>
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label class="font-weight-bold text-dark">Periode</label>
                                             <input type="text" class="form-control" id="periode" name="periode"
                                                 value="{{$datass->relasiPeriodealumnitoPeriode->periode}}" readonly>
-                                        </div>
+                                        </div> --}}
                                     </table>
                                 </div>
                             </div>
@@ -113,7 +129,7 @@
                     </div>
 
                     <!-- Modal Delete -->
-                    <div class="modal fade" id="delete{{$datass->id_tahun_periode}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="delete{{$datass->id_periode_alumni}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -156,12 +172,12 @@
                                             <select name="id_tahun_periode" id="id_tahun_periode" class="custom-select" required>
                                                 <option>-- Pilih Tahun --</option>
                                                 @foreach($tahun as $tahuns)
-                                                <option value="{{$tahuns->id_periode_alumni}}" @if($tahuns->id_tahun_periode==$tahuns->id_tahun_periode) selected @endif>{{$tahuns->tahun_periode}}</option>
+                                                <option value="{{$tahuns->id_periode_alumni}}" @if($datass->id_tahun_periode==$tahuns->id_tahun_periode) selected @endif>{{$tahuns->tahun_periode}}</option>
                                                 @endforeach
                                             </select>
                                       </div>
                 
-                                      <div class="form-group">
+                                      {{-- <div class="form-group">
                                         <label for="id_periode" class="font-weight-bold text-dark">Periode</label>
                                             <select name="id_periode" id="id_periode" class="custom-select" required>
                                                 <option>-- Pilih Periode --</option>
@@ -169,7 +185,7 @@
                                                 <option value="{{$periodes->id_periode}}" @if($periodes->id_periode==$periodes->id_periode) selected @endif>{{$periodes->periode}}</option>
                                                 @endforeach
                                             </select>
-                                      </div>
+                                      </div> --}}
 
 	      	            <div class="modal-footer">
 		                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -207,7 +223,7 @@
                             </select>
                       </div>
 
-                      <div class="form-group">
+                      {{-- <div class="form-group">
                         <label for="id_periode" class="font-weight-bold text-dark">Periode</label>
                             <select name="id_periode" id="id_periode" class="custom-select" required>
                                 <option>-- Pilih Periode --</option>
@@ -215,7 +231,7 @@
                                 <option value="{{$periodes->id_periode}}">{{$periodes->periode}}</option>
                                 @endforeach
                             </select>
-                      </div>
+                      </div> --}}
 
                     </div>
                     <div class="modal-footer">

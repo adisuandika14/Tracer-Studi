@@ -24,10 +24,12 @@ class stakeholderkuesionerController extends Controller
 
     public function detail_kuesioner($id_prodi, $id_periode){
         $detail = tb_kuesioner_stakeholder::where('id_prodi', $id_prodi)->where('id_tahun_periode', $id_periode)->get();
+        $id_kuesioner_stakeholder = $detail;
+        
         $opsi =tb_opsi_stakeholder::get();
         $tahun = tb_tahun_periode::find($id_periode)->tahun_periode;
         $prodi = tb_prodi::find($id_prodi)->nama_prodi;
-        return view('kuesioner/stakeholder/showkuesioner', compact('detail', 'id_prodi', 'id_periode', 'opsi','tahun','prodi'));
+        return view('kuesioner/stakeholder/showkuesioner', compact('detail', 'id_prodi', 'id_periode', 'opsi','tahun','prodi','id_kuesioner_stakeholder'));
     }
 
     public function create(Request $request){
@@ -310,7 +312,7 @@ class stakeholderkuesionerController extends Controller
             }
         }
 
-        return redirect()->route('stakeholder-kuesioner-show', $request->id_kuesioner)->with('statusInput', 'Pertanyaan berhasil diperbaharui');
+        return redirect()->route('kuesioner-stakeholder-detail')->with('statusInput', 'Pertanyaan berhasil diperbaharui');
     }
 
     public function delete($id)

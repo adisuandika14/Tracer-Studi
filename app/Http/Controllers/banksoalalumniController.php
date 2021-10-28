@@ -27,7 +27,7 @@ class banksoalalumniController extends Controller
             $validator = Validator::make($request->all(), [
                 'pertanyaan' => 'required',
             ],[
-                 'kuesioner.required' => "Anda Belum Menambahkan Kuesioner",
+                 'pertanyaan.required' => "Anda Belum Menambahkan Kuesioner",
              ]);
     
             if($validator->fails()){
@@ -50,9 +50,10 @@ class banksoalalumniController extends Controller
         public function update(Request $request){
             $validator = Validator::make($request->all(), [
                 'pertanyaan' => 'required',
-                'pertanyaan' => 'required',
-            ]);
-    
+            ],[
+                 'pertanyaan.required' => "Anda Belum Menambahkan Kuesioner",
+             ]);
+
             if($validator->fails()){
                 return back()->withErrors($validator);
             }

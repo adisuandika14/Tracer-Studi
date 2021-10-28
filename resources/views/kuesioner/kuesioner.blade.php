@@ -5,36 +5,40 @@
       nav-item active
 @endsection
 
+<div class="container">
+  @if (session()->has('statusInput'))
+  <div class="row">
+    <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
+        {{session()->get('statusInput')}}
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
+
+@if (count($errors)>0)
+  <div class="row">
+    <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+          @foreach ($errors->all() as $item)
+              <li>{{$item}}</li>
+          @endforeach
+        </ul>
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
+</div>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 <h1 class="h3 mb-4 text-gray-800"></h1>
-    @if (session()->has('statusInput'))
-      <div class="row">
-        <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
-            {{session()->get('statusInput')}}
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
 
-    @if (count($errors)>0)
-      <div class="row">
-        <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
-            <ul>
-              @foreach ($errors->all() as $item)
-                  <li>{{$item}}</li>
-              @endforeach
-            </ul>
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Kuesioner Tahun {{$tahun_kuesioner}} - {{$periode_kuesioner}}</h6>
@@ -126,8 +130,8 @@
                                 </div>
                                 <div class="modal-body">
                                   <form action="/admin/kuesioner/update" method="POST" enctype="multipart/form-data">
-                                  <input type="text" name="id_kuesioner" value="{{$datas->id_kuesioner}}">
-                                  <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" >
+                                  <input type="text" name="id_kuesioner" value="{{$datas->id_kuesioner}}" hidden>
+                                  <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
                                     {{ csrf_field() }}
                                         
                                     <div class="form-group">
@@ -153,7 +157,7 @@
 	          <div class="modal-dialog" role="document">
 	             <div class="modal-content">
 	                <div class="modal-header">
-	                  <h5 class="modal-title" id="exampleModalLabel">Masukkan Kuesioenr</h5>
+	                  <h5 class="modal-title" id="exampleModalLabel">Masukkan Kuesioner</h5>
 	                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	                      <span aria-hidden="true">&times;</span>
 	                    </button>
