@@ -9,6 +9,42 @@
 @endsection
 
 @section('content')
+@section('content')
+<div class="container">
+
+    @if (count($errors)>0)
+    <div class="row">
+      <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+          <ul>
+            @foreach ($errors->all() as $item)
+                <li>{{$item}}</li>
+            @endforeach
+          </ul>
+          <button type="button" class="close" data-dismiss="alert"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+  @endif
+  
+    <!-- {{-- notifikasi form validasi --}} -->
+    @if ($errors->has('file') && $error->any)
+    <span class="invalid-feedback" role="alert">
+      <strong>{{ $errors->first('file') }}</strong>
+    </span>
+    @endif
+  
+    <!-- {{-- notifikasi sukses --}} -->
+    @if ($sukses = Session::get('sukses'))
+    <div class="alert alert-success alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button> 
+      <strong>{{ $sukses }}</strong>
+    </div>
+    @endif
+  </div>
+  
+
     <!-- Begin Page Content -->
     <div class="container-fluid">
           <div class="card shadow mb-4">
@@ -32,10 +68,10 @@
                   <tbody>
                         @foreach ($periode as $periodes)
                             <tr class="success">
-                                <td style="width: fit-content;">{{ $loop->iteration }}</td>
-                                <td>{{ $periodes->tahun_periode }}</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm" data-toggle="modal"
+                                <td style="width: 3@">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $periodes->tahun_periode }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
                                             data-target="#show{{$periodes->id_tahun_periode}}"><i class="fas fa-eye"></i>
                                     </button>
                                     <!-- Edit -->
