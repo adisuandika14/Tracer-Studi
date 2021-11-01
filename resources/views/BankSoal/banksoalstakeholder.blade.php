@@ -54,7 +54,7 @@
           </div>
           <div class="form-group">
             <button class="btn btn-success btn-sm mt-3" data-toggle="modal" data-target="#create"><i
-              class="fas fa-plus"></i> Tambah Sub Pertanyaaan
+              class="fas fa-plus"></i> Tambah Pertanyaaan
             </button>
           </div>
         
@@ -177,7 +177,7 @@
 	                <div class="modal-body">
 	      	          <form action="/admin/banksoal/stakeholder/create" method="POST">
                       {{csrf_field()}}
-                      <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}" hidden>
+                      <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}">
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="id_jenis" id="kuesioner" class="custom-select" required>
@@ -287,7 +287,6 @@
 	                <div class="modal-body" id="bodyEdit">
 	      	          <form action="/admin/banksoal/stakeholder/update/" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
-                      <input type="text" class="form-control" id="edit_id_kuesioner" name="id_prodi" value="{{$id_prodi}}" hidden >
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="edit_id_jenis" id="edit_id_jenis" class="custom-select" required>
@@ -380,7 +379,6 @@
 
 @section('custom_javascript')
 <script>
-  //Default periode
   //DeleteOpsi
   function deleteOpsi(opsi){
     $('#'+opsi).hide();
@@ -418,10 +416,12 @@ $('#prodi').change(function(){
     jQuery.ajax({
       url: "/admin/banksoal/stakeholder/"+id+"/edit",
       method: 'get',
+      
       success: function(result){
         let opsi = 1;
         let count = 1;
-        console.log(result);
+        
+        console.log(result);  
             $("#edit_id_jenis").val(result.bank_soal['id_jenis']);
             $("#edit_pertanyaan").val(result.bank_soal['pertanyaan']);
             $("#edit-pertanyaan-form").attr("action", "/admin/banksoal/stakeholder/"+result.bank_soal['id_soal_stakeholder']+"/update");

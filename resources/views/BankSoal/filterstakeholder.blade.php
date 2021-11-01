@@ -14,7 +14,6 @@
                                 <p> {{ $loop->iteration }}. {{$detailss->pertanyaan}}</p>
                               @endif
                               
-                                <!-- <input type="text" class="form-control"  id="essay" name= "jawaban" value="" placeholder="Text Jawaban Singkat"> -->
                                 @foreach ($opsi as $opsis)
                                   @if($detailss->id_soal_stakeholder == $opsis->id_soal_stakeholder)
                                     @if($detailss->id_jenis == 3)

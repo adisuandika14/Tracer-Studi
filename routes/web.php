@@ -154,7 +154,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/kuesioner/stakeholder/{id}/update','stakeholderkuesionerController@update');
 
 
-    Route::get('/kuesioner/stakeholder/get-bank-soal/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@bank_soal_data');
+    Route::get('/kuesioner/stakeholder/get -bank-soal/{id_prodi}/{id_periode}', 'stakeholderkuesionerController@bank_soal_data');
     Route::post('/kuesioner/stakeholder/create/{id_prodi}/{id_periode}','stakeholderkuesionerController@create_from_bank_soal');
     Route::post('/kuesioner/stakeholder/filter','stakeholderkuesionerController@filter')->name('stakeholder-filter');
 

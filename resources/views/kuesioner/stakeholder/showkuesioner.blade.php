@@ -174,7 +174,7 @@
 	                <div class="modal-body">
 	      	          <form action="/admin/kuesioner/stakeholder/create" method="POST">
                       {{csrf_field()}}
-                      <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}" hidden>
+                      {{-- <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}" hidden> --}}
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                         <select name="id_jenis" id="id_jenis" class="custom-select" required>
@@ -185,7 +185,7 @@
                           <option value="4">Tanggal</option>
                         </select>
                       </div>
-                      {{-- <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}" hidden> --}}
+                      <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}" hidden>
                       <input type="text" class="form-control" id="id_tahun_periode" name="id_tahun_periode" value="{{$id_periode}}" hidden>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Pertanyaan</label>
@@ -286,7 +286,7 @@
 	                <div class="modal-body" id="bodyEdit">
 	      	          <form action="/admin/kuesioner/stakeholder/update" method="POST" id="edit-pertanyaan-form">
                       {{csrf_field()}}
-                      <input type="text" class="form-control" id="edit_id_kuesioner" name="id_kuesioner_stakeholder" value="{{$id_kuesioner_stakeholder}}" hidden>
+                     
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="edit_id_jenis" id="edit_id_jenis" class="custom-select" required>

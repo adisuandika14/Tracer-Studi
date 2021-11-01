@@ -156,7 +156,7 @@
                                         
                                 <div class="form-group">
                                     <label class="font-weight-bold text-dark">Tahun prodi</label>
-                                    <input type="text" class="form-control" id="nama_prodi" name="nama_prodi" value="{{$datass->nama_prodi}}" placeholder="">
+                                    <input type="text" class="form-control" id="tahun_periode" name="tahun_periode" value="{{$datass->tahun_periode}}" required placeholder="">
                                 </div>
 
                     

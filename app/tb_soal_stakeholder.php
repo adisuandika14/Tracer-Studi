@@ -20,4 +20,8 @@ class tb_soal_stakeholder extends Model
         return $this->belongsTo('App\tb_opsi_soal_stakeholder','id_opsi_soal_stakeholder','id_opsi_soal_stakeholder');
     }
 
+    public function relasiSoalStakeholdertoProdi()
+    {
+        return $this->belongsTo('App\tb_prodi','id_prodi','id_prodi');
+    }
 }
