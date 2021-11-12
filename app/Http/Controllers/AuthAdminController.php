@@ -29,21 +29,6 @@ class AuthAdminController extends Controller
          return view('adminpages.auth.login');
      }
  
-     public function login(Request $request)
-     {
-         if(Auth::guard()->attempt(['username' => $request->username, 'password' => $request->password])){
-             return redirect()->route('/admin/dashboard');
-         } else {
-             return redirect()->back()->with('error', 'Username atau Password Anda Salah');
-         }
-     }
- 
-     public function logout()
-     {
-         Auth::guard()->logout();
- 
-         return redirect()->route('Index', 'id');
-     }
  
      public function profile()
      {

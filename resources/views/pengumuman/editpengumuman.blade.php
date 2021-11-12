@@ -182,18 +182,18 @@ body {font-family: Arial, Helvetica, sans-serif;}
                 </div> -->
 
                 <div class="form-group mt-4" style="width: 50%">
-                  <label for="transkrip">Thumbnail (Maks: 500kb)</label>
+                  <label for="thumbnail">Thumbnail (Maks: 500kb)</label>
                   <div class="custom-file">
-                      <input  type="file" class="custom-file-input" accept="application/pdf" id="transkrip" name="transkrip">
+                      <input  type="file" class="custom-file-input" accept="application/jpg" id="thumbnail" name="thumbnail">
                       <label id="thumbnail" name="thumbnail" value="{{$post->thumbnail}}" class="custom-file-label">
                               Pilih Thumbnail
                       </label>
                   </div>
               </div>
               <div class="form-group mt-4" style="width: 50%">
-                  <label for="transkrip">Lampiran (Maks: 500kb)</label>
+                  <label for="lampiran">Lampiran (Maks: 500kb)</label>
                   <div class="custom-file">
-                      <input  type="file" class="custom-file-input" accept="application/pdf" id="transkrip" name="transkrip">
+                      <input  type="file" class="custom-file-input" accept="application/pdf" id="lampiran" name="lampiran">
                       <label id="lampiran" value="{{$post->lampiran}}" name="lampiran" class="custom-file-label">
                               Pilih Lampiran
                       </label>

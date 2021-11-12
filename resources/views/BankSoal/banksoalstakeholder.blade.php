@@ -177,7 +177,7 @@
 	                <div class="modal-body">
 	      	          <form action="/admin/banksoal/stakeholder/create" method="POST">
                       {{csrf_field()}}
-                      <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}">
+                      <input type="text" class="form-control" id="id_prodi" name="id_prodi" value="{{$id_prodi}}" hidden>
                       <div class="form-group">
                         <label for="id_jenis" class="font-weight-bold text-dark">Jenis Pertanyaan</label>
                                     <select name="id_jenis" id="kuesioner" class="custom-select" required>

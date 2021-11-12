@@ -167,7 +167,7 @@
                     <a class="@yield('collapse3')" href="/admin/periode">Periode</a>
                 </div>
                 <div class="collapse-item">
-                    <a class="@yield('collapse4')" href="/admin/mastertahun">Tahun</a>
+                    <a class="@yield('collapse4')" href="/admin/mastertahun">Periode Tahun</a>
                 </div>
                 <!-- <div class="collapse-item">
                     <a class="@yield('collapse3')" href="/admin/pertanyaan">Pertanyaan</a>

@@ -72,11 +72,8 @@ class kuesionerperiodeController extends Controller
     }
 
     public function delete($id){
-        
-
         $deletedata = tb_periode_kuesioner::where('id_periode_kuesioner', $id);
         $deletedata->delete();
-
         return back()->with('sukses','Data Berhasil dihapus');
     }
 

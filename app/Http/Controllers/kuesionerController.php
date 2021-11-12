@@ -25,17 +25,10 @@ class kuesionerController extends Controller
         $periode = tb_periode_kuesioner::where('id_periode_kuesioner', $id)->first();
         $tahun_kuesioner = tb_tahun_periode::where('id_tahun_periode', $periode->id_tahun_periode)->first()->tahun_periode;
         $periode_kuesioner = tb_periode::where('id_periode', $periode->id_periode)->first()->periode;
-
-
-
-
-        //$detail = tb_detail_kuesioner::with('relasiDetailtoKuesioner','relasiDetailtoAlumni')->get();
         $kuesioner = tb_kuesioner::where('id_periode', $id)->get();
         $tahun_periodes = tb_periode_kuesioner::with('relasiPeriodekuesionertoTahun', 'relasiPeriodekuesionertoPeriode')->get();
         $max_id_kuesioner = tb_kuesioner::max('id_kuesioner');
         $id_periode_kuesioner = $id;
-        
-
             return view('/kuesioner/kuesioner', compact ('kuesioner','tahun_periodes','id_periode_kuesioner','tahun_kuesioner','periode_kuesioner'));
         }
 

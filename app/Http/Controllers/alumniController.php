@@ -66,21 +66,15 @@ class alumniController extends Controller
     public function deleteperiode($id, Request $request)
     {
 
-        $deleteperiode = tb_alumni::where('id_periode_alumni', $id);
+        $deleteperiode = tb_periodealumni::where('id_periode_alumni', $id);
+        $deleteperiode->delete();
         return back()->with('sukses','Data berhasil dihapus');
     }
 
 
     public function show($id){
-        // $periodes = tb_periodealumni::where('id_periode_alumni', tb_alumni::find($id)->id_periode)->first();
-        // $tahun_lulus = tb_tahun_periode::where('id_tahun_periode', $periodes->id_tahun_periode)->first()->tahun_periode;
-        // $periode_lulus = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
         $periodes = tb_periodealumni::where('id_periode_alumni', $id)->first();
         $tahun_lulus = tb_tahun_periode::where('id_tahun_periode', $periodes->id_tahun_periode)->first()->tahun_periode;
-        //$periode_lulus = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
-
-
-
 
         $periode = tb_periodealumni::find($id);
         $alumni = tb_alumni::where('id_periode',$id)->with('relasiAlumnitoAngkatan','relasiAlumnitoProdi')->get();
@@ -92,13 +86,6 @@ class alumniController extends Controller
 
         return view('/alumni/dataalumni', compact ('id_periode_alumni','alumni','prodi','angkatan','tahun_lulus'), ['alumni'=>$alumni]);
     }
-
-    // public function getMenu($id){
-    //     $menus = Menu::where('id_header', $id)->get();
-    //     return response()->json(
-    //         $menus
-    //     );
-    // }
 
     public function create(Request $request){
 

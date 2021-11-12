@@ -144,7 +144,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Alumni</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Periode</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -185,7 +185,7 @@
                       {{csrf_field()}}
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Masukkan Periode</label>
-                        <label class="dropdown-header font-weight-light text-grey">Contoh: 2020/2021</label>
+                        <label class="dropdown-header font-weight-light text-grey">Contoh: Periode 1</label>
                         <!-- <div class="dropdown-header font-weight-light text-grey">Contoh: 2020/2021</div> -->
                         <input type="text" class="form-control" id="periode" name="periode" placeholder="">
                       </div>

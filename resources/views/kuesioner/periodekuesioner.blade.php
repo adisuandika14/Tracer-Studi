@@ -342,7 +342,7 @@
 
     if (checkBox.checked == true){
       swal({
-          title: 'Anda yakin ingin menerima kuesioner ini?',
+          title: 'Anda yakin ingin mengaktifkan kuesioner ini?',
           icon: 'warning',
           buttons: ["Tidak", "Ya"],
       }).then(function(value) { 
@@ -359,7 +359,7 @@
       });
     } else {
       swal({
-          title: 'Anda yakin ingin menolak kuesioner ini?',
+          title: 'Anda yakin ingin menonaktifkan kuesioner ini?',
           icon: 'warning',
           buttons: ["Tidak", "Ya"],
       }).then(function(value) {

@@ -1,5 +1,5 @@
 @extends('layoutadmin.layout')
-@section('title', 'Add Lowongan')
+@section('title', 'Edit Lowongan')
 @section('content')
 
 @section('active5')
@@ -25,7 +25,7 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Tambah Lowongan</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Edit Lowongan</h6>
             </div>
             <div class="card-body">
             <form id="form-product" method="post" action="/admin/lowongan/{{$post->id_lowongan}}" enctype="multipart/form-data">

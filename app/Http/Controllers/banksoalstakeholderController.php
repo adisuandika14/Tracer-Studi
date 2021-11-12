@@ -16,17 +16,6 @@ class banksoalstakeholderController extends Controller
 {
     public function show()
     {
-        // $id_prodi = tb_soal_stakeholder::with('relasiSoalStakeholdertoProdi')->first()->id_prodi;
-        // $prodis = tb_prodi::get();
-        // $detail = tb_soal_stakeholder::where('id_prodi', $id_prodi)->get();
-        // $opsi = tb_opsi_soal_stakeholder::get();
-
-        // $max_id_soal = tb_soal_stakeholder::max('id_soal_stakeholder');
-        // 
-        // //$detail = tb_detail_kuesioner::with('relasiDetailtoKuesioner','relasiDetailtoAlumni')->get();
-        // $prodis = tb_prodi::all();
-        // $detail = tb_soal_stakeholder::where('id_prodi', $id_prodi)->get();
-
         $max_id_soal = tb_prodi::get();
         $id_prodi = tb_soal_stakeholder::where('id_soal_stakeholder', $max_id_soal)->first(['id_prodi']);
         $prodis = tb_prodi::get();
@@ -139,13 +128,6 @@ class banksoalstakeholderController extends Controller
         return redirect()->route('show-banksoal-stakeholder')->with('statusInput', 'Pertanyaan berhasil ditambahkan');
     }
 
-    public function edit($id)
-    {
-        $bank_soal = tb_soal_stakeholder::find($id);
-        $opsis = tb_opsi_soal_stakeholder::where('id_soal_stakeholder', $bank_soal->id_soal_stakeholder)->get();
-        return response()->json(['success' => 'Berhasil', 'bank_soal' => $bank_soal, 'opsis' => $opsis]);
-    }
-
     public function delete($id)
     {
         $detail_kuesioner = tb_soal_stakeholder::find($id);
@@ -158,6 +140,13 @@ class banksoalstakeholderController extends Controller
             }
         }
         return back()->with('statusInput', 'Pertanyaan berhasil dihapus');
+    }
+
+    public function edit($id)
+    {
+        $bank_soal = tb_soal_stakeholder::find($id);
+        $opsis = tb_opsi_soal_stakeholder::where('id_soal_stakeholder', $bank_soal->id_soal_stakeholder)->get();
+        return response()->json(['success' => 'Berhasil', 'bank_soal' => $bank_soal, 'opsis' => $opsis]);
     }
 
     public function update($id, Request $request){

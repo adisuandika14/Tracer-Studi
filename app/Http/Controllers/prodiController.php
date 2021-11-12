@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class prodiController extends Controller
 {
     public function show(){
-        $prodi = tb_prodi::all();
+        $prodi = tb_prodi::get();
             return view('/admin/masterprodi', compact ('prodi'));
         }
     
