@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Alumni\Auth;
 
 use App\tb_angkatan;
+use App\tb_periode_kuesioner;
 use App\tb_prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -106,6 +107,8 @@ class AlumniRegisterController extends Controller
         }
 
         else{
+            $periode = tb_periode_kuesioner::orderBy('id_periode_kuesioner', 'DESC')
+                ->where('status', 'Aktif')->first();
             $user = new Alumni();
             $user->nama_alumni = $request->nama_alumni;
             $user->nim_alumni = $request->nim_alumni;
@@ -121,6 +124,7 @@ class AlumniRegisterController extends Controller
             $user->id_telegram=$request->id_telegram;
             $user->id_line=$request->id_line;
             $user->no_hp=$request->no_hp;
+            $user->id_periode = $periode->id_periode;
             $user->status="Menunggu Konfirmasi";
 
             if($request->hasFile('transkrip')){

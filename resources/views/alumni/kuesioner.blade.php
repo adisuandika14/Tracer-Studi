@@ -8,6 +8,8 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 <h1 class="h3 mb-4 text-gray-800"></h1>
+    <br><h1 class="h3 mb-2 text-gray-800">Kuesioner {{$tahun_kuesioner[0]->periode}} - {{$tahun_kuesioner[0]->tahun_periode}}</h1>
+    <p class="mb-1">Fakultas Teknik Universitas Udayana</p><br>
 
     @if (count($errors)>0)
       <div class="row">
@@ -58,7 +60,7 @@
                                                 <input class="form-check-input" name="{{$kuesioner->id_detail_kuesioner}}[]" value="{{$opsis->id_opsi}}" type="checkbox" id="flexCheckDefault">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     {{$opsis->opsi}}
-                                                </label>gi
+                                                </label>
                                             </div>
                                         @endif
                                     @endforeach

@@ -152,6 +152,38 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="updateJawabanTanggal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Jawaban</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/admin/kuesioner/update" id="form_jawaban_singkat" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="id_kuesioner" value="">
+                    {{ csrf_field() }}
+
+                    <div class="form-group">
+                        <label class="font-weight-bold text-dark">Kuesioner</label>
+                        <input type="text" class="form-control" id="edit_pertanyaan_singkat" name="type_kuesioner" value="" placeholder="" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold text-dark">Jawaban</label>
+                        <input type="date" class="form-control" id="edit_jawaban_singkat" name="edit_jawaban_singkat" value="" placeholder="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('custom_javascript')
@@ -212,6 +244,12 @@
             });
             iter=0;
             $('#updateJawabanCheckbox').modal('show');
+        }
+        else if(id_jenis == 4) {
+            $('#form_jawaban_singkat').attr("action", "/alumni/hasilKuesioner/update/" + id);
+            $('#edit_pertanyaan_singkat').val(pertanyaan);
+            $('#edit_jawaban_singkat').val(jawaban);
+            $('#updateJawabanTanggal').modal('show');
         }
     }
 

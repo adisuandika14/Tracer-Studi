@@ -9,6 +9,17 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
+                @if (session()->has('error'))
+                    <div class="row">
+                        <div class="col-sm-12 alert alert-danger alert-dismissible fade show" name="alert" role="alert">
+                            {{session()->get('error')}}
+                            <button type="button" class="close" data-dismiss="alert"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                @endif
                 <h6 class="m-0 font-weight-bold text-primary">Notifikasi</h6>
             </div>
             <div class="card-body">

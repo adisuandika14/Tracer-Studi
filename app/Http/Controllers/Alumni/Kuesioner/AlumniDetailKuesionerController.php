@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Alumni\Kuesioner;
 
 use App\Http\Controllers\Controller;
 use App\tb_detail_jawaban;
+use App\tb_kuesioner;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\tb_detail_kuesioner;
@@ -24,42 +25,59 @@ class AlumniDetailKuesionerController extends Controller
 //        dd($request);
         $kuesioners = tb_detail_kuesioner::where('id_kuesioner', $request->jawabanRadio)
             ->where('status', 'Konfirmasi')->get();
+        $kuesioners1 = tb_kuesioner::whereRaw('id_periode = (select max(`id_periode`) from tb_kuesioner)')
+//            ->where('status', 'disetujui')
+            ->get();
 //        dd($kuesioners);
         $opsi = tb_opsi::get();
-        return view('/alumni/kuesioner', compact ('kuesioners','opsi'));
+        $tahun_kuesioner = \DB::table('tb_periode_kuesioner')
+            ->select('periode', 'tahun_periode')
+            ->join('tb_periode', 'tb_periode.id_periode', '=', 'tb_periode_kuesioner.id_periode')
+            ->join('tb_tahun_periode', 'tb_tahun_periode.id_tahun_periode', '=', 'tb_periode_kuesioner.id_tahun_periode')
+            ->where('tb_periode_kuesioner.id_periode_kuesioner',$kuesioners1[0]->id_periode)
+            ->get();
+
+        return view('/alumni/kuesioner', compact ('kuesioners','opsi', 'tahun_kuesioner'));
     }
 
     public function jawabKuesioner(Request $request){
         $kuesioners = tb_detail_kuesioner::count();
         $user = (Auth::user());
-        foreach($request->all() as $key => $value) {
-            if($key != "_token"){
-                if($key !="null"){
-                    if(is_array($value)){
-                        $jawaban = new tb_jawaban;
-                        $jawaban->id_alumni = $user->id_alumni;
-                        $jawaban->id_detail_kuesioner = $key;
-                        $jawaban->jawaban = "";
-                        $jawaban->save();
-                        $jawaban = tb_jawaban::where('id_alumni', $user->id_alumni)->where('id_detail_kuesioner', $key)->first(['id_jawaban']);
-                        foreach($value as $jawab){
-                            $detail_jawaban = new tb_detail_jawaban();
-                            $detail_jawaban->id_jawaban=$jawaban->id_jawaban;
-                            $detail_jawaban->jawaban = $jawab;
-                            $detail_jawaban->save();
+        $alumni = tb_jawaban::where('id_alumni', $user->id_alumni)->first();
+//        dd($alumni);
+        if($alumni!=''){
+            abort(403, 'Anda sudah mengisi Kuesioner.');
+        }
+        else{
+            foreach($request->all() as $key => $value) {
+                if($key != "_token"){
+                    if($key !="null"){
+                        if(is_array($value)){
+                            $jawaban = new tb_jawaban;
+                            $jawaban->id_alumni = $user->id_alumni;
+                            $jawaban->id_detail_kuesioner = $key;
+                            $jawaban->jawaban = "";
+                            $jawaban->save();
+                            $jawaban = tb_jawaban::where('id_alumni', $user->id_alumni)->where('id_detail_kuesioner', $key)->first(['id_jawaban']);
+                            foreach($value as $jawab){
+                                $detail_jawaban = new tb_detail_jawaban();
+                                $detail_jawaban->id_jawaban=$jawaban->id_jawaban;
+                                $detail_jawaban->jawaban = $jawab;
+                                $detail_jawaban->save();
+                            }
+                        }else{
+                            $jawaban = new tb_jawaban;
+                            $jawaban->id_alumni = $user->id_alumni;
+                            $jawaban->id_detail_kuesioner = $key;
+                            $jawaban->jawaban = $value;
+                            $jawaban->save();
                         }
-                    }else{
-                        $jawaban = new tb_jawaban;
-                        $jawaban->id_alumni = $user->id_alumni;
-                        $jawaban->id_detail_kuesioner = $key;
-                        $jawaban->jawaban = $value;
-                        $jawaban->save();
                     }
                 }
+                // dump($key, $value);
             }
-            // dump($key, $value);
+            return redirect('/alumni/hasilKuesioner')->with('success','Data berhasil disimpan!');
         }
-        return redirect('/alumni/hasilKuesioner')->with('success','Data berhasil disimpan!');
     }
 
     public function hasilKuesioner(){
