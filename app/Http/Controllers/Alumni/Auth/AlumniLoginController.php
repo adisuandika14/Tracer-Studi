@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Alumni;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AlumniLoginController extends Controller
 {
@@ -47,6 +48,7 @@ class AlumniLoginController extends Controller
                 //redirect jika sukses login
                 Auth::login($user);
                 session(['alumni'=>true]);
+//                dd(Auth::user());
                 return redirect ('/alumni/dashboard');
             }else {
                 //redirect jika gagal login
@@ -62,5 +64,35 @@ class AlumniLoginController extends Controller
     public function logout(Request $request){
         $request->session()->flush();
         return redirect('/alumni/login');
+    }
+
+    public function password(){
+        return view('alumni.resetPass');
+    }
+
+    public function updatepassword(Request $request){
+        $validator = Validator::make($request->all(), [
+            'password_lama' => 'required',
+            'password' => 'required',
+            'password_confirmation' => 'required|same:password'
+        ],[
+            'password_confirmation.same' => "Konfirmasi password baru tidak sesuai",
+        ]);
+
+        if($validator->fails()){
+            return back()->withErrors($validator);
+        }
+
+        $user = Alumni::find(Auth::user()->id);
+        if (Hash::check($request->password_lama, $user->password)) {
+            Alumni::where('id', $user->id)->update([
+                'password' => bcrypt($request->password)
+            ]);
+            //dd($admin->nama);
+            return redirect()->back()->with('statusInput', 'Password berhasil diganti');
+        } else{
+            //dd($admin->nama);
+            return redirect()->back()->with('error', 'Password lama salah');
+        }
     }
 }

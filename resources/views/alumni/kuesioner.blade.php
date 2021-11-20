@@ -36,10 +36,9 @@
 
                         @foreach($kuesioners as $kuesioner)
                         <div class="card shadow mb-4">
-
                             <div class="card-body">
                                 <p> {{ $loop->iteration }}. {{$kuesioner->pertanyaan}}</p>
-                                <input type="text" class="form-control"  id="{{$kuesioner->id_detail_kuesioner}}" name= "{{$kuesioner->id_detail_kuesioner}}" value="" placeholder="Text Jawaban Singkat" @if($kuesioner->id_jenis == 1 || $kuesioner->id_jenis == 3) hidden @endif>
+                                <input @if($kuesioner->id_jenis == 4) type="date" @else type="text" @endif" class="form-control"  id="{{$kuesioner->id_detail_kuesioner}}" name= "{{$kuesioner->id_detail_kuesioner}}" value="" placeholder="@if($kuesioner->id_jenis == 4) Masukkan Tanggal @else Text Jawaban Singkat @endif" @if($kuesioner->id_jenis == 1 || $kuesioner->id_jenis == 3) hidden @endif>
                                 @if($kuesioner->id_jenis == 1)
                                     @foreach ($opsi as $opsis)
                                     @if($kuesioner->id_detail_kuesioner == $opsis->id_detail_kuesioner)
@@ -59,7 +58,7 @@
                                                 <input class="form-check-input" name="{{$kuesioner->id_detail_kuesioner}}[]" value="{{$opsis->id_opsi}}" type="checkbox" id="flexCheckDefault">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     {{$opsis->opsi}}
-                                                </label>
+                                                </label>gi
                                             </div>
                                         @endif
                                     @endforeach

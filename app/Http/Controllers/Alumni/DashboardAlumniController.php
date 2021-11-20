@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Alumni;
+use App\Alumni;
+use App\Http\Controllers\Alumni\Auth\AlumniRegisterController;
 use App\tb_notifikasi;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardAlumniController extends Controller
 {
@@ -18,6 +22,7 @@ class DashboardAlumniController extends Controller
     public function __construct()
     {
         $this->middleware('auth:alumni');
+        $this->middleware('reset_pass');
     }
     public function dashboard(){
         $notifs = tb_notifikasi::where('id_alumni',Auth::user()->id_alumni)->where('flag','0')->get();

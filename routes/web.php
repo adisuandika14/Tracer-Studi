@@ -147,7 +147,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/kuesioner/get-bank-soal/{id_periode}','kuesionerController@bank_soal_data')->name('get-bank-soal-kuesioner');
     Route::post('/kuesioner/create/{id_periode}','kuesionerController@create_from_bank_soal');
 
-    
+
 
     //Detail Kuesioner
     Route::get('/kuesioner/showkuesioner/{id}','detailkuesionerController@detail')->name('show-kuesioner');
@@ -281,7 +281,7 @@ Route::group(['prefix' => 'pimpinan',  'middleware' => 'PimpinanMiddleware'],fun
 
 Route::group(['prefix' => 'alumni'],function(){
     route::get('/login','Alumni\Auth\AlumniLoginController@index')->name('login-alumni');
-    route::post('/login', [ 'as' => 'login', 'uses' => 'LoginController@login']);
+    route::post('/login', [ 'as' => 'alumni-login', 'uses' => 'LoginController@login']);
     route::post('/logins','Alumni\Auth\AlumniLoginController@login');
     route::get('/logouts','Alumni\Auth\AlumniLoginController@logout');
     route::get('/register','Alumni\Auth\AlumniRegisterController@index')->name('register');
@@ -295,6 +295,8 @@ Route::group(['prefix' => 'alumni'],function(){
         ->middleware('UnverifiedAlumniMiddleware');
     Route::post('/perbaikan-update', 'Alumni\AuthAlumniController@perbaikanAlumni')->name('alumni-perbaikan-update')
         ->middleware('UnverifiedAlumniMiddleware');
+    Route::get('/password', 'Alumni\PasswordController@password')->name('alumni-password-edit');
+    Route::post('/updatepassword', 'Alumni\PasswordController@updatepassword')->name('alumni-password-update');
 });
 
 Route::group(['prefix' => 'alumni',  'middleware' => 'VerifiedAlumniMiddleware'],function(){
@@ -311,7 +313,7 @@ Route::group(['prefix' => 'alumni',  'middleware' => 'VerifiedAlumniMiddleware']
 });
 
 Route::group(['prefix' => 'stakeholder'],function(){
-    route::get('/','Stakeholder\Auth\StakeholderRegisterController@index')->name('register');
+    route::get('/','Stakeholder\Auth\StakeholderRegisterController@index');
     route::post('/', [ 'as' => 'login', 'Stakeholder\Auth\StakeholderRegisterController@index']);
     route::post('/kuesioner','Stakeholder\Auth\StakeholderRegisterController@regisStakeholder')->name('regisStakeholder');
     Route::post('/kuesioner/simpan', 'Stakeholder\Kuesioner\StakeholderDetailKuesionerController@jawabKuesioner')

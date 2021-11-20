@@ -20,6 +20,7 @@ class AuthAlumniController extends Controller
 {
      public function __construct()
      {
+         $this->middleware('reset_pass');
          $this->middleware('auth:alumni');
      }
 

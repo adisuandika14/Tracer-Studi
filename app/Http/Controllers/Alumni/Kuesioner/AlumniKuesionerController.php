@@ -11,6 +11,7 @@ class AlumniKuesionerController extends Controller
     public function __construct()
     {
         $this->middleware('auth:alumni');
+        $this->middleware('reset_pass');
     }
     public function show(){
         //$angkatan = tb_angkatan::all()->groupBy('tahun_angkatan');

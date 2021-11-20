@@ -31,7 +31,9 @@
                     <td style="width: 10%" >
                         @if($details->jawaban == "")
                             @foreach($detail_jawaban as $jawaban)
-                                {{$jawaban->relasiJawabantoOpsi->opsi}},
+                                @if($jawaban->id_jawaban == $details->id_jawaban)
+                                    {{$jawaban->relasiJawabantoOpsi->opsi}},
+                                @endif
                             @endforeach
                         @else
                             {{ $details->jawaban }}
@@ -104,7 +106,6 @@
                         <label class="font-weight-bold text-dark">Kuesioner</label>
                         <input type="text" class="form-control" id="edit_pertanyaan_form_jawaban_checkbox" name="edit_pertanyaan_form_jawaban_checkbox" value="" placeholder="" disabled>
                     </div>
-                    <input type="text" class="form-control"  id="save_jawaban_form_jawaban_checkbox" name="save_jawaban_form_jawaban_checkbox"  hidden required>
                     <div id="edit_jawaban_checkbox">
 
                     </div>
@@ -175,10 +176,10 @@
                         + '<label class="form-check-label" for="flexRadioDefault'+id_detail_kuesioner+'">'
                         + element['opsi'] + '</label>'+'</div>');
                 }
-            })
+            });
             $('#updateJawabanGanda').modal('show');
-        }else if(id_jenis == 2){
-            $('#form_jawaban_singkat').attr("action", "/alumni/hasilKuesioner/update/"+id);
+        }else if(id_jenis == 2) {
+            $('#form_jawaban_singkat').attr("action", "/alumni/hasilKuesioner/update/" + id);
             $('#edit_pertanyaan_singkat').val(pertanyaan);
             $('#edit_jawaban_singkat').val(jawaban);
             $('#updateJawabanSingkat').modal('show');
@@ -190,6 +191,27 @@
             //     </label>
             // </div>
 
+        }else if(id_jenis == 3){
+            $('#form_jawaban_checkbox').attr("action", "/alumni/hasilKuesioner/update/"+id);
+            $('#edit_pertanyaan_form_jawaban_checkbox').val(pertanyaan);
+            $('#edit_jawaban_checkbox').empty();
+            var opsi = {!! json_encode($opsis->toArray()) !!}
+            $('#edit_jawaban_ganda').empty();
+            var iter = 0;
+            opsi.forEach(element => {
+                if(element.id_detail_kuesioner ==  id_detail_kuesioner){
+                    $('#edit_jawaban_checkbox').append('<div class="form-check">' +
+                        '<input class="form-check-input" name="'+ id_detail_kuesioner +'['+iter+']" ' +
+                        'type="checkbox" value="'+ element['id_opsi'] +'" ' +
+                        'onchange="jawabRadio('+id_detail_kuesioner+','+element['id_opsi']+')" ' +
+                        'id="flexRadioDefault'+id_detail_kuesioner+'">' +
+                        '<label class="form-check-label" for="flexRadioDefault'+id_detail_kuesioner+'">' +
+                        element['opsi'] + '</label>'+'</div>');
+                    iter++;
+                }
+            });
+            iter=0;
+            $('#updateJawabanCheckbox').modal('show');
         }
     }
 

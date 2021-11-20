@@ -14,6 +14,7 @@ class AlumniDetailKuesionerController extends Controller
 {
     public function __construct()
     {
+        $this->middleware('reset_pass');
         $this->middleware('auth:alumni');
     }
 
@@ -72,6 +73,7 @@ class AlumniDetailKuesionerController extends Controller
     }
 
     public function updateHasilKuesioner($id, Request $request){
+        $user = (Auth::user());
         $jawaban = tb_jawaban::where('id_jawaban', $id)->first();
         if($request->edit_jawaban_singkat != NULL){
             $jawaban->jawaban = $request->edit_jawaban_singkat;
@@ -80,6 +82,30 @@ class AlumniDetailKuesionerController extends Controller
             $opsi = tb_opsi::where('id_opsi', $request->save_jawaban_ganda)->first();
             $jawaban->jawaban = $opsi->opsi;
             $jawaban->save();
+        }else{
+            $detail_jawaban = tb_detail_jawaban::where('id_jawaban', $jawaban->id_jawaban)->get();
+            foreach($detail_jawaban as $detail_jawaban){
+                $detail_jawaban->delete();
+            }
+            foreach($request->all() as $key => $value) {
+                if($key != "_token"){
+                    if($key !="null"){
+                        if(is_array($value)) {
+                            $jawaban->id_detail_kuesioner = $key;
+                            $jawaban->jawaban = "";
+                            $jawaban->save();
+                            $jawaban = tb_jawaban::where('id_alumni', $user->id_alumni)->where('id_detail_kuesioner', $key)->first(['id_jawaban']);
+                            foreach ($value as $jawab) {
+                                $detail_jawaban = new tb_detail_jawaban();
+                                $detail_jawaban->id_jawaban = $jawaban->id_jawaban;
+                                $detail_jawaban->jawaban = $jawab;
+                                $detail_jawaban->save();
+                            }
+                        }
+                    }
+                }
+                // dump($key, $value);
+            }
         }
 
         return back();

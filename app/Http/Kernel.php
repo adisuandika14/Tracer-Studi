@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'AlumniMiddleware'=>\App\Http\Middleware\AlumniMiddleware::class,
         'VerifiedAlumniMiddleware'=>\App\Http\Middleware\VerifiedAlumniMiddleware::class,
         'UnverifiedAlumniMiddleware'=>\App\Http\Middleware\UnverifiedAlumniMiddleware::class,
+        'reset_pass' => \App\Http\Middleware\ForceChangePassword::class,
     ];
 }
