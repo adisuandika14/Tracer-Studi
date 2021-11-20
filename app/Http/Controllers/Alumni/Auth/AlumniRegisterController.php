@@ -125,6 +125,7 @@ class AlumniRegisterController extends Controller
             $user->id_line=$request->id_line;
             $user->no_hp=$request->no_hp;
             $user->id_periode = $periode->id_periode;
+            $user->id_tahun_periode = $periode->id_tahun_periode;
             $user->status="Menunggu Konfirmasi";
 
             if($request->hasFile('transkrip')){
