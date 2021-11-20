@@ -32,7 +32,7 @@
 <!-- Nav Item - Pages Collapse Menu -->
 <div class="nav-item">
     <li class="@yield('active2')">
-        <a class="nav-link" href="/pimpinan/alumni">
+        <a class="nav-link" href="/pimpinan/periodealumni">
             <i class="fas fa-fw fa-users"></i>
             <span>Alumni</span></a>
     </li>

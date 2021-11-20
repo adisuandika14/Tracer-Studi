@@ -14,35 +14,31 @@ use App\tb_jawaban;
 use App\tb_angkatan;
 use App\tb_periode;
 use App\tb_periode_kuesioner;
-
+use App\tb_tahun_periode;
 use Illuminate\Support\Facades\DB; 
 
 class pimpinankuesionerController extends Controller
 {
     
-    // public function show(){
-
-    //     $detail = tb_detail_kuesioner::with('relasiDetailtoKuesioner','relasiDetailtoAlumni')->get();
-    //     $prodi = tb_prodi::all();
-    //     $kuesioner = tb_kuesioner::all();
-    //     $alumni = tb_alumni::all();
-    //     $master_kuesioner = tb_master_kuesioner::all();
-    //     $opsi = tb_opsi::all();
-    //     $status = ['DiTolak','Disetujui','Menunggu Konfirmasi'];
-    
-    //         return view('/pimpinan/kuesioner/kuesioner', compact ('alumni','detail','prodi','kuesioner','master_kuesioner','opsi','status'));
-    //     }
-
     public function show(){
-        $max_id_kuesioner = tb_kuesioner::max('id_kuesioner');
-        $id_periode_kuesioner = tb_kuesioner::where('id_kuesioner', $max_id_kuesioner)->first(['id_periode'])->id_periode;
-        $detail = tb_detail_kuesioner::with('relasiDetailtoKuesioner','relasiDetailtoAlumni')->get();
-        $prodi = tb_prodi::all();
-        $kuesioner = tb_kuesioner::where('id_periode', $id_periode_kuesioner)->get();
-        $alumni = tb_alumni::all();
+        $periode = tb_periode_kuesioner::get();
+        $tahun = tb_tahun_periode::get();
+        $periodekuesioner = tb_periode::get();
+
+
+        return view('pimpinan/kuesioner/periodekuesioner', compact('periode','tahun','periodekuesioner'));
+    }
+
+    public function showdetail($id){
+        $periode = tb_periode_kuesioner::where('id_periode_kuesioner', $id)->first();
+        $tahun_kuesioner = tb_tahun_periode::where('id_tahun_periode', $periode->id_tahun_periode)->first()->tahun_periode;
+        $periode_kuesioner = tb_periode::where('id_periode', $periode->id_periode)->first()->periode;
+        $kuesioner = tb_kuesioner::where('id_periode', $id)->get();
         $tahun_periodes = tb_periode_kuesioner::with('relasiPeriodekuesionertoTahun', 'relasiPeriodekuesionertoPeriode')->get();
-        $opsi = tb_opsi::all();
-            return view('/pimpinan/kuesioner/kuesioner', compact ('alumni','detail','prodi','kuesioner','opsi','tahun_periodes','id_periode_kuesioner'));
+        $max_id_kuesioner = tb_kuesioner::max('id_kuesioner');
+        $id_periode_kuesioner = $id;
+
+            return view('/pimpinan/kuesioner/kuesioner', compact ('kuesioner','tahun_periodes','id_periode_kuesioner','tahun_kuesioner','periode_kuesioner'));
         }
 
     public function create(Request $request){

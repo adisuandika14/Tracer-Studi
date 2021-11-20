@@ -41,10 +41,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js" integrity="sha256-CgvH7sz3tHhkiVKh05kSUgG97YtzYNnWt6OXcmYzqHY=" crossorigin="anonymous"></script>
 
 
-  
-<!-- summmernote -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> -->
+
+
 </head>
 
 <body id="page-top">
@@ -132,11 +130,16 @@
 <script src="{{ asset('assets/admin/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('assets/admin/js/demo/datatables-demo.js')}}"></script>
 
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
+
+
 
 <!-- Custom Javascript -->
 @yield('custom_javascript')
+
+
+    <!--sweetalert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 

@@ -21,5 +21,9 @@ class tb_tahun_periode extends Model
         return $this->belongsTo('App\tb_periode_kuesioner','id_periode_kuesioner','id_periode_kuesioner');
     }
 
+    public function relasiTahuntoPeriodealumni()
+    {
+        return $this->belongsTo('App\tb_alumni','id_alumni','id_alumni');
+    }
 
 }

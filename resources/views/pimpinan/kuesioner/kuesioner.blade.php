@@ -40,42 +40,7 @@
               <h6 class="m-0 font-weight-bold text-primary">Data Pertanyaan</h6>
             </div>
             <div class="card-body">
-              <div class="form-group" style="width: 250px;">
-                <label class=" font-weight-bold text-grey">Periode Kuesioner</label>
-                  <select name="periode" class="custom-select " style="width:250px; " id="periode">
-                      <option selected value="">-- Pilih Periode Kueisoner --</option>
-                      @foreach ($tahun_periodes as $tahun )
-                          <option value="{{$tahun->id_periode_kuesioner}}" @if($tahun->id_periode_kuesioner == $id_periode_kuesioner) selected @endif>{{ $tahun->relasiPeriodekuesionertoTahun->tahun_periode }} - {{ $tahun->relasiPeriodekuesionertoPeriode->periode }}
-                          </option>
-                      @endforeach
-                  </select>
-                  {{-- <button class="btn btn-success btn-sm mt-3" data-toggle="modal" data-target="#create"><i
-                    class="fas fa-plus"></i> Tambah Pertanyaaan
-                  </button> --}}
-                  <div class="dropdown mt-4">
-                    {{-- <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Tambah Pertanyaan
-                    </button> --}}
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <button class="dropdown-item" data-toggle="modal" data-target="#create"><i class="fas fa-plus"></i> Tambah Pertanyaan Baru</button>
-                      <button class="dropdown-item" type="button" id="pilih_dari_bank_soal"><i class="fas fa-university"></i> Pilih dari Bank Soal</button>
-                    </div>
-                  </div>
-              </div>
-
-              {{-- SPINNER --}}
-              <div id="loading" class="text-center mt-5" style="display:none;">
-                <input id="signup-token" name="_token" type="hidden" value="{{csrf_token()}}">
-                {{-- SPINNER --}}
-                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                  <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-              {{-- SPINNER --}}
-
+              
               <div class="ganti" id="ganti">
                 <div class="table-responsive">
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

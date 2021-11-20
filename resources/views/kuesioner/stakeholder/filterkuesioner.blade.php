@@ -11,12 +11,12 @@
         @foreach ($detail as $detailss)
         <tr class="success">
             
-                <td style="width: 5%;">{{ $loop->iteration }}</td>
+                <td style="width: 5%;" >{{ $loop->iteration }}</td>
                 <td >{{ $detailss->nama_prodi }}</td>
             
-              <td style="width: 10%; align:center;">
+              <td style="width: 20%; "class="text-center">
                   <!-- Show -->
-                    <button type="button" id="show_kuesioner_btn" onclick="show_kuesioner({{$detailss->id_prodi}})" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>
+                    <button type="button" id="show_kuesioner_btn" onclick="show_kuesioner({{$detailss->id_prodi}})" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>Lihat Kuesioner</button>
               </td>
             </tr>
           @endforeach

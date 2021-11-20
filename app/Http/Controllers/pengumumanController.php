@@ -28,21 +28,20 @@ class pengumumanController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'thumbnail' => 'max:512',
+            'lampiran' => 'mimes:pdf|max:512',
+        ],[
+            'thumbnail.max' => "Ukuran File melebihi batas maksimum",
+            'lampiran.mimes' => "Format file PDF",
+            'lampiran.max' => "Ukuran File melebihi batas maksimum",
+        ]);
 
-        // $validator = Validator::make($request->all(), [
-        //     'title_ina' => 'required|min:3|unique:posts',
-        //     'content_ina' => 'required|min:8',
-        //     'title_eng' => 'required|min:3',
-        //     'content_eng' => 'required|min:8',
-        //     'kategori' => 'required',
-        //     'tanggal' => 'required'
-        // ]);
+        // $kategori = Kategori::find($request->kategori);
 
-        // // $kategori = Kategori::find($request->kategori);
-
-        // if($validator->fails()){
-        //     return back()->withErrors($validator);
-        // }
+        if($validator->fails()){
+            return back()->withErrors($validator);
+        }
 
         $arrImage = [];
 
@@ -124,7 +123,7 @@ class pengumumanController extends Controller
         //return  $post;
 
 
-        return redirect('/admin/pengumuman')->with('success', 'Berhasil menambahkan Data');
+        return redirect('/admin/pengumuman')->with('sukses', 'Data berhasil ditambahkan');
     }
 
 
@@ -132,7 +131,7 @@ class pengumumanController extends Controller
     {
     	$post = tb_pengumuman::find($id);
         $post->delete();
-        return redirect('/admin/pengumuman')->with('success', 'Berhasil menghapus Data');
+        return redirect('/admin/pengumuman')->with('sukses', 'Data berhasil dihapus');
     }
 
 
@@ -152,21 +151,20 @@ class pengumumanController extends Controller
 
     public function update($id, Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'title_ina' => 'required|min:3',
-        //     'content_ina' => 'required|min:8',
-        //     'title_eng' => 'required|min:3',
-        //     'content_eng' => 'required|min:8',
-        //     'kategori' => 'required',
-        //     'tanggal' => 'required'
-        // ]);
+        $validator = Validator::make($request->all(), [
+            'thumbnail' => 'max:512',
+            'lampiran' => 'mimes:pdf|max:512',
+        ],[
+            'thumbnail.max' => "Ukuran File melebihi batas maksimum",
+            'lampiran.mimes' => "Format file PDF",
+            'lampiran.max' => "Ukuran File melebihi batas maksimum",
+        ]);
 
-        // $kategori = Kategori::find($request->kategori);
-
-        // if($validator->fails()){
-        //     return back()->withErrors($validator);
-        // }
-
+        
+        if($validator->fails()){
+            return back()->withErrors($validator);
+        }
+        
         $post = tb_pengumuman::find($id);
         $arrImage = [];
         $idImage = [];
@@ -262,23 +260,9 @@ class pengumumanController extends Controller
         //     $pageImage->save();
         // }
 
-        return redirect('/admin/pengumuman')->with('success', 'Post successfully updated from the record');
+        return redirect('/admin/pengumuman')->with('sukses', 'Data Berhasil diperbaharui!');
     }
 
-
-    // public function send(Request $request, $id){
-    //     $send = tb_pengumuman::find($id);
-    //     // for($i=1; $i<=100; $i+=1){
-    //     //     $send->sending = "Sending";
-    //     // }
-    //     // $send->judul = $request->judul;
-    //     // $send->jenis = $request->jenis;
-    //     // $send->perihal = $request->perihal;
-    //     $send->sending = "Sending";
-    //     $send->update();
-    //     dd($send);
-    //     // return redirect('/admin/pengumuman')->with('success', 'Berhasil Mengirim ke Telegram');
-    // }
 
 
     public function TelegrmNotif(array $data){

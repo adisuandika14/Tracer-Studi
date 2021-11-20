@@ -19,7 +19,7 @@ class tahunperiodeController extends Controller
             'tahun_periode'=>$request->tahun_periode,
         ]);
 
-        return redirect('/admin/mastertahun')->with('statusInpput','Data Berhasil ditambahkan');
+        return redirect('/admin/mastertahun')->with('sukses','Data Berhasil ditambahkan');
     }
 
     public function update(Request $request){
@@ -27,12 +27,12 @@ class tahunperiodeController extends Controller
         $updatedata = tb_tahun_periode::find($request->id_tahun_periode);
         $updatedata->tahun_periode = $request->tahun_periode;
         $updatedata->update();
-        return back()->with('statusInput','Data Berhasil diperbaharui');
+        return back()->with('sukses','Data Berhasil diperbaharui');
     }
 
     public function delete($id){
         $deletedata = tb_tahun_periode::find($id);
         $deletedata->delete();
-        return back()->with('statusInput','Data Berhasil diperbaharui');
+        return back()->with('sukses','Data Berhasil diperbaharui');
     }
 }

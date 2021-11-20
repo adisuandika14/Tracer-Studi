@@ -83,7 +83,7 @@
                                                 selected
                                             @endif
                                         @endisset
-                                        >{{ $periodes->relasiPeriodekuesionertoTahun->tahun_periode }} - {{ $periodes->relasiPeriodekuesionertoPeriode->periode }}
+                                        >{{ $periodes->relasiPeriodekuesionertoTahun->tahun_periode }}
                                     </option>
                                     @endforeach
                                 </select>

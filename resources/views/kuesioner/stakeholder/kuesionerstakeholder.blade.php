@@ -44,7 +44,7 @@
                 <label class=" font-weight-bold text-grey">Periode Kuesioner</label>
                   <select name="periode" class="custom-select " style="width:250px; " id="periode">
                       <option selected value="">-- Pilih Periode Kueisoner --</option>
-                      @foreach ($periode as $tahun )
+                      @foreach ($periodess as $tahun )
                           <option value="{{$tahun->id_tahun_periode}}" @if($tahun->id_tahun_periode == $id_tahun_periode) selected @endif>{{ $tahun->tahun_periode }}
                           </option>
                       @endforeach
@@ -80,9 +80,9 @@
                     <tr class="success">
                       <td style="width: 5%;">{{ $loop->iteration }}</td>
                           <td >{{ $prodis->nama_prodi }}</td>
-                          <td style="width: 10%; align:center;">
+                          <td style="width: 20%;" class="text-center">
                               <!-- Show -->
-                                <button type="button" id="show_kuesioner_btn" onclick="show_kuesioner({{$prodis->id_prodi}})" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>
+                                <button type="button" id="show_kuesioner_btn" onclick="show_kuesioner({{$prodis->id_prodi}})" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> Lihat Kuesioner</button>
                           </td>
                         </tr>
                       @endforeach

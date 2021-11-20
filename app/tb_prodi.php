@@ -42,5 +42,9 @@ class tb_prodi extends Model
     {
         return $this->belongsTo('App\tb_kuesioner_stackholder','id_prodi','id_prodi');
     }
+    public function relasiproditoSoalStakeholder()
+    {
+        return $this->belongsTo('App\tb_soal_stakeholder','id_soal_stakeholder','id_soal_stakeholder');
+    }
 
 }

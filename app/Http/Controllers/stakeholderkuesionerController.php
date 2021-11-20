@@ -14,20 +14,22 @@ use App\tb_soal_stakeholder;
 
 class stakeholderkuesionerController extends Controller
 {
-    public function show(){
+    public function index(){
         $id_tahun_periode = tb_tahun_periode::max('id_tahun_periode');
-        $periode = tb_tahun_periode::get();
+        $periodess = tb_tahun_periode::get();
         $prodi = tb_prodi::get();
 
-        return view('kuesioner/stakeholder/kuesionerstakeholder', compact('id_tahun_periode','periode','prodi'));
+        return view('kuesioner/stakeholder/kuesionerstakeholder', compact('id_tahun_periode','periodess','prodi'));
     }
 
     public function detail_kuesioner($id_prodi, $id_periode){
-        $detail = tb_kuesioner_stakeholder::where('id_prodi', $id_prodi)->where('id_tahun_periode', $id_periode)->get();
-        $opsi =tb_opsi_stakeholder::get();
+        $detail = tb_kuesioner_stakeholder::where('id_prodi', $id_prodi)->where('id_tahun_periode', $id_periode)->orderBy('created_at','asc')->get();
+        $id_kuesioner_stakeholder = $detail;
+        
+        $opsi = tb_opsi_stakeholder::get();
         $tahun = tb_tahun_periode::find($id_periode)->tahun_periode;
         $prodi = tb_prodi::find($id_prodi)->nama_prodi;
-        return view('kuesioner/stakeholder/showkuesioner', compact('detail', 'id_prodi', 'id_periode', 'opsi','tahun','prodi'));
+        return view('kuesioner/stakeholder/showkuesioner', compact('detail', 'id_prodi', 'id_periode', 'opsi','tahun','prodi','id_kuesioner_stakeholder'));
     }
 
     public function create(Request $request){
@@ -217,7 +219,7 @@ class stakeholderkuesionerController extends Controller
 
         $opsis = tb_opsi_stakeholder::get();
         foreach($opsis as $opsi){
-            if($opsi->id_kuesioner_stakeholder == $id){
+            if($opsi->id_soal_pengguna == $id){
                 $opsi->delete();
             }
         }
@@ -225,6 +227,7 @@ class stakeholderkuesionerController extends Controller
         if($request->edit_id_jenis ==  2){
             $kuesioner_stakeholder->id_kuesioner_stakeholder = $request->id_kuesioner_stakeholder;
             $kuesioner_stakeholder->id_jenis = 2;
+            
             $kuesioner_stakeholder->pertanyaan = $request->edit_pertanyaan;
             $kuesioner_stakeholder->status = "Menunggu Konfirmasi";
             $kuesioner_stakeholder->update();
@@ -232,6 +235,7 @@ class stakeholderkuesionerController extends Controller
         if($request->edit_id_jenis ==  4){
             $kuesioner_stakeholder->id_kuesioner_stakeholder = $request->id_kuesioner_stakeholder;
             $kuesioner_stakeholder->id_jenis = 4;
+            
             $kuesioner_stakeholder->pertanyaan = $request->edit_pertanyaan;
             $kuesioner_stakeholder->status = "Menunggu Konfirmasi";
             $kuesioner_stakeholder->update();
@@ -240,6 +244,7 @@ class stakeholderkuesionerController extends Controller
         if($request->edit_id_jenis == 1 || $request->edit_id_jenis == 3){
             $kuesioner_stakeholder->id_kuesioner_stakeholder = $request->id_kuesioner_stakeholder;
             $kuesioner_stakeholder->id_jenis = 1;
+            
             $kuesioner_stakeholder->pertanyaan = $request->edit_pertanyaan;
             $kuesioner_stakeholder->status = "Menunggu Konfirmasi";
             $kuesioner_stakeholder->update();
@@ -254,63 +259,63 @@ class stakeholderkuesionerController extends Controller
             if($request->edit_opsi2 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi2;
-                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi3 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi3;
-                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi4 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi4;
-                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
 
             if($request->edit_opsi5 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi5;
-                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi6 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi6;
-                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi7 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi7;
-                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi8 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi8;
-                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi9 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi9;
-                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
             if($request->edit_opsi10 != ""){
                 $opsi = new tb_opsi_stakeholder();
                 $opsi->opsi = $request->edit_opsi10;
-                $opsi->id_kuesioner_stakeholder = $kuesioner_stakeholder->id_kuesioner_stakeholder;
+                $opsi->id_soal_pengguna = $kuesioner_stakeholder->id_kuesioner_stakeholder;
                 $opsi->save();
             }
         }
 
-        return redirect()->route('stakeholder-kuesioner-show', $request->id_kuesioner)->with('statusInput', 'Pertanyaan berhasil diperbaharui');
+        return back()->with('statusInput', 'Pertanyaan berhasil diperbaharui');
     }
 
     public function delete($id)
@@ -320,7 +325,7 @@ class stakeholderkuesionerController extends Controller
 
         $opsis = tb_opsi_stakeholder::get();
         foreach($opsis as $opsi){
-            if($opsi->id_kuesioner_stakeholder == $id){
+            if($opsi->id_soal_penggguna == $id){
                 $opsi->delete();
             }
         }

@@ -21,7 +21,7 @@ class stakeholderreportController extends Controller
             $data = $stakeholder->where('id_periode', $ang->id_periode_kuesioner)->count('id_stakeholder');
             // dd($ang->tahun_angkatan." ".$alumni);
             $dataStakeholder[] = $data;
-            $dataPeriode[] = $ang->relasiPeriodekuesionertoPeriode->periode.' - '.$ang->relasiPeriodekuesionertoTahun->tahun_periode;
+            $dataPeriode[] = $ang->relasiPeriodekuesionertoTahun->tahun_periode;
         }
         return view ('report/reportstakeholder', compact('tracers', 'prodi','periode','stakeholder','dataStakeholder','dataPeriode'));
     }

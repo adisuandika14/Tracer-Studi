@@ -79,33 +79,36 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 <h1 class="h3 mb-4 text-gray-800">{{$judul_kuesioner}}</h1>
-    @if (session()->has('statusInput'))
-      <div class="row">
-        <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
-            {{session()->get('statusInput')}}
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
+<div class="container">
+  @if (session()->has('statusInput'))
+  <div class="row">
+    <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
+        {{session()->get('statusInput')}}
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
 
-    @if (count($errors)>0)
-      <div class="row">
-        <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
-            <ul>
-              @foreach ($errors->all() as $item)
-                  <li>{{$item}}</li>
-              @endforeach
-            </ul>
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
+@if (count($errors)>0)
+  <div class="row">
+    <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+          @foreach ($errors->all() as $item)
+              <li>{{$item}}</li>
+          @endforeach
+        </ul>
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
+</div>
+
 
 
   <div class="card shadow mb-4">
@@ -237,7 +240,7 @@
                       </div>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Pertanyaan</label>
-                        <input type="text" class="form-control" id="pertanyaan" name="pertanyaan" placeholder="">
+                        <input type="text" class="form-control" id="pertanyaan" name="pertanyaan" placeholder="" required>
                       </div>
                       <div class="form-group" id="opsi1" style="display: none;">
                         <label class="font-weight-bold text-dark">Opsi 1</label>
@@ -450,7 +453,7 @@
         console.log(result);
             $("#edit_id_jenis").val(result.detail_soal['id_jenis']);
             $("#edit_pertanyaan").val(result.detail_soal['pertanyaan']);
-            $("#edit-pertanyaan-form").attr("action", "/admin/banksoal/showkueisoner/"+result.detail_soal['id_detail_soal_alumni']+"/update");
+            $("#edit-pertanyaan-form").attr("action", "/admin/banksoal/showkuesioner/"+result.detail_soal['id_detail_soal_alumni']+"/update");
             if(result.detail_soal['id_jenis'] == 1 || result.detail_soal['id_jenis'] == 3){
               $("#edit_opsi1").prop('required',true);
               $("#edit_opsi2").prop('required',true);

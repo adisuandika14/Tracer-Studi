@@ -53,9 +53,9 @@
             <!-- <a style="margin-bottom: 10px;" class= "btn btn-warning dropdown-toggle text-white" id="toggles" ><i class="fas fa-search"></i> Advanced Search</a> -->
             <!-- <form  method="POST" action="/admin/reportalumni/filter">
                 @csrf -->
-                <table class="table" style="width: 85%;" id="example" cellspacing="0">
+                <table class="table"  id="example" cellspacing="0">
                     <tr id="filter_row">
-                        <td style="width: 5%;">
+                        <td>
                             <div class="form-group" >
                                 <select name="prodi" class="custom-select" id="prodi">
                                     <option selected value="">-- Pilih Program Studi --</option>
@@ -72,7 +72,7 @@
                                 </select>
                             </div>
                         </td>
-                        <td style="width: 5%;">
+                        <td >
                             <div class="form-group">
                                 <select name="angkatan" class="custom-select" id="angkatan" >
                                     <option selected value="">-- Pilih Tahun Angkatan --</option>
@@ -89,7 +89,58 @@
                                 </select>
                             </div>
                         </td>
-                        <td style="width: 5%;">
+                        <td >
+                            <div class="form-group">
+                                <select name="tahun_wisuda" class="custom-select" id="tahun_wisuda" >
+                                    <option selected value="">-- Pilih Tahun Wisuda --</option>
+                                    @foreach ($tahun_wisuda as $tw)
+                                        <option value="{{ $tw->tahun }}"
+                                            @isset($pertanyaan)
+                                                @if($tw->tahun == $tahun)
+                                                    selected
+                                                @endif
+                                            @endisset
+                                            >{{$tw->tahun}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </td>
+                        <td >
+                            <div class="form-group">
+                                <select name="tahun_periode" class="custom-select" id="tahun_periode" >
+                                    <option selected value="">-- Pilih Tahun Periode Kuisioner --</option>
+                                    @foreach ($tahun_periode as $tp)
+                                        <option value="{{ $tp->id_tahun_periode }}"
+                                            @isset($pertanyaan)
+                                                @if($tp->tahun_periode == $tahun_periode)
+                                                    selected
+                                                @endif
+                                            @endisset
+                                            >{{$tp->tahun_periode}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </td>
+                        <td >
+                            <div class="form-group">
+                                <select name="periode" class="custom-select" id="periode" >
+                                    <option selected value="">-- Pilih Periode Kuisioner --</option>
+                                    @foreach ($periode as $p)
+                                        <option value="{{ $p->id_periode }}"
+                                            @isset($pertanyaan)
+                                                @if($p->periode == $periode)
+                                                    selected
+                                                @endif
+                                            @endisset
+                                            >{{$p->periode}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </td>
+                        <td >
                             <div class="form-group">
                                 <select name="kategori_1" class="custom-select" id="kategori_1" >
                                     <option selected value="">-- Pilih Kategori Lulusan --</option>
@@ -121,7 +172,7 @@
                     <th style="text-align:center;">Nama Alumni</th>
                     <th style="text-align:center;">Program Studi</th>
                     <th style="text-align:center;">Angkatan</th>
-                    <th style="text-align:center;">Tahun Lulus</th>
+                    <th style="text-align:center;">Tahun Wisuda</th>
                     {{-- <th style="text-align:center;">Periode Kuesioner</th> --}}
                     <th style="text-align:center;">Action</th>
                 </tr>
@@ -133,7 +184,7 @@
                         <td style="width: 15%;">{{ $details->nama_alumni }}</td>
                         <td style="width: 10%;">{{ $details->relasiAlumnitoProdi->nama_prodi }}</td>
                         <td style="width: 5%;" >{{ $details->relasiAlumnitoAngkatan->tahun_angkatan }}</td>
-                        <td style="width: 7%;" >{{ $details->tahun_lulus }}</td>
+                        <td style="width: 7%;" >{{ $details->tahun_wisuda }}</td>
                         {{-- <td style="width: 7%;" >{{ $details->relasiDetailkuesionertoPeriode->id_periode }}</td> --}}
                         <td style="width: 2%; text-align: center;" >
                             <a style="margin-right:7px" href="/admin/reportalumni/{{ $details->id_alumni }}">
@@ -178,9 +229,13 @@
         chart_2({!! json_encode($namaProdi) !!}, {!! json_encode($dataProdi) !!});
         $('#filter').on('click',function(e){
             e.preventDefault();
+            $("#filter").attr('disabled', true);
             const prodi = $('#prodi').val()
             const angkatan = $('#angkatan').val()
             const kategori_1 = $('#kategori_1').val()
+            const tahun_wisuda = $('#tahun_wisuda').val()
+            const tahun_periode = $('#tahun_periode').val()
+            const periode = $('#periode').val()
             // var ctx3 = document.getElementById('pertambahanAnggota');
 
             $.ajax({
@@ -191,9 +246,12 @@
                 prodi : prodi,
                 angkatan : angkatan,
                 kategori_1 : kategori_1,
+                tahun_wisuda : tahun_wisuda,
+                tahun_periode : tahun_periode,
+                periode : periode,
                 },
                 beforeSend : function() {
-                          $("#filter").attr('disabled', true);
+                          
                 },
                 success : (res) => {
                     let httpval = '';

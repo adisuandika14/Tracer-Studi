@@ -53,6 +53,7 @@
                     <tr>
                       <th>No.</th>
                       <th style="text-align:center;">Pertanyaan</th>
+                      <th style="text-align:center;">Sub Pertanyaan</th>
                       <th style="text-align:center;">Action</th>
                     </tr>
                   </thead>
@@ -62,12 +63,13 @@
                     <tr class="success">
                         <td style="width: 5%;">{{ $loop->iteration }}</td>
                             <td >{{ $quiz->pertanyaan }}</td>
+                            <td style="width: 10%" class="text-center">
+                              <!-- Show -->
+                              <a style="margin-right:7px" href="/admin/banksoal/showkuesioner/{{$quiz->id_soal_alumni}}">
+                                  <button type="button" class="btn btn-primary btn-sm"><i class="fas ">Lihat Sub Pertanyaan</i></button></a>
+                          </td>
 
-                            <td style="width: 10%">
-                                <!-- Show -->
-                                <a style="margin-right:7px" href="/admin/banksoal/showkuesioner/{{$quiz->id_soal_alumni}}">
-                                    <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button></a>
-                                    
+                            <td style="width: 10%" class="text-center">
                                 <!-- Edit -->
                                 <button class="btn btn-primary btn-sm" data-toggle="modal"
                                         data-target="#update{{$quiz->id_soal_alumni}}"><i class="fas fa-edit"></i>

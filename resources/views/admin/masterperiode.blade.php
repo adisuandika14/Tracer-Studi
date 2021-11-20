@@ -10,6 +10,41 @@
 @endsection
 
 @section('content')
+<div class="container">
+
+    @if (count($errors)>0)
+    <div class="row">
+      <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+          <ul>
+            @foreach ($errors->all() as $item)
+                <li>{{$item}}</li>
+            @endforeach
+          </ul>
+          <button type="button" class="close" data-dismiss="alert"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    </div>
+  @endif
+  
+    <!-- {{-- notifikasi form validasi --}} -->
+    @if ($errors->has('file') && $error->any)
+    <span class="invalid-feedback" role="alert">
+      <strong>{{ $errors->first('file') }}</strong>
+    </span>
+    @endif
+  
+    <!-- {{-- notifikasi sukses --}} -->
+    @if ($sukses = Session::get('sukses'))
+    <div class="alert alert-success alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button> 
+      <strong>{{ $sukses }}</strong>
+    </div>
+    @endif
+  </div>
+  
+  
     <!-- Begin Page Content -->
     <div class="container-fluid">
           <div class="card shadow mb-4">
@@ -109,7 +144,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Alumni</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Periode</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -150,7 +185,7 @@
                       {{csrf_field()}}
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Masukkan Periode</label>
-                        <label class="dropdown-header font-weight-light text-grey">Contoh: 2020/2021</label>
+                        <label class="dropdown-header font-weight-light text-grey">Contoh: Periode 1</label>
                         <!-- <div class="dropdown-header font-weight-light text-grey">Contoh: 2020/2021</div> -->
                         <input type="text" class="form-control" id="periode" name="periode" placeholder="">
                       </div>

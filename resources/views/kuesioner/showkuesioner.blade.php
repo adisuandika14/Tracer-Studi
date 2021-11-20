@@ -75,35 +75,41 @@
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-<h1 class="h4 mb-1 text-gray-800">{{$tahun_kuesioner}} - {{$periode_kuesioner}}</h1>
+<h1 class="h4 mb-1 text-gray-800">Kuesioner Tahun {{$tahun_kuesioner}} - {{$periode_kuesioner}}</h1>
+<!-- Divider -->
+<!-- Dotted divider -->
+<hr class="dotted" style="margin-left: 0px" width="25%">
 <h1 class="h5 mb-4 text-gray-800">{{$judul_kuesioner}}</h1>
-    @if (session()->has('statusInput'))
-      <div class="row">
-        <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
-            {{session()->get('statusInput')}}
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
+<div class="container">
+  @if (session()->has('statusInput'))
+  <div class="row">
+    <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
+        {{session()->get('statusInput')}}
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
 
-    @if (count($errors)>0)
-      <div class="row">
-        <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
-            <ul>
-              @foreach ($errors->all() as $item)
-                  <li>{{$item}}</li>
-              @endforeach
-            </ul>
-            <button type="button" class="close" data-dismiss="alert"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-      </div>
-    @endif
+@if (count($errors)>0)
+  <div class="row">
+    <div class="col-sm-12 alert alert-danger alert-dismissible fade show" role="alert">
+        <ul>
+          @foreach ($errors->all() as $item)
+              <li>{{$item}}</li>
+          @endforeach
+        </ul>
+        <button type="button" class="close" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+  </div>
+@endif
+</div>
+
 
 
   <div class="card shadow mb-4">

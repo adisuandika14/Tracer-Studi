@@ -16,9 +16,6 @@ class banksoalalumniController extends Controller
 
         $bank_soal = tb_soal_alumni::get();
         $prodi = tb_prodi::all();
-        //$kuesioner = tb_kuesioner::all();
-        // $alumni = tb_alumni::all();
-        // $master_kuesioner = tb_master_kuesioner::all();
         $opsi = tb_opsi_bank_soal_alumni::all();
             return view('/BankSoal/banksoalalumni', compact ('bank_soal','prodi','opsi'));
         }
@@ -27,7 +24,7 @@ class banksoalalumniController extends Controller
             $validator = Validator::make($request->all(), [
                 'pertanyaan' => 'required',
             ],[
-                 'kuesioner.required' => "Anda Belum Menambahkan Kuesioner",
+                 'pertanyaan.required' => "Anda Belum Menambahkan Kuesioner",
              ]);
     
             if($validator->fails()){
@@ -50,9 +47,10 @@ class banksoalalumniController extends Controller
         public function update(Request $request){
             $validator = Validator::make($request->all(), [
                 'pertanyaan' => 'required',
-                'pertanyaan' => 'required',
-            ]);
-    
+            ],[
+                 'pertanyaan.required' => "Anda Belum Menambahkan Kuesioner",
+             ]);
+
             if($validator->fails()){
                 return back()->withErrors($validator);
             }

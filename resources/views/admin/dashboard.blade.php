@@ -16,12 +16,12 @@
         
     </div>
 
-    <a href="{{url('admin/export')}}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i>  Data Alumni</a>
+    {{-- <a href="{{url('admin/export')}}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i>  Data Alumni</a> --}}
 
 
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i>  Data Tracer </a>
+    {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i>  Data Tracer </a> --}}
 
 
     <!-- Content Row -->
@@ -34,8 +34,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Jumlah lulusan</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php print_r($alumni); ?></div>
+                                Jumlah Alumni</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php print_r($alumnis); ?></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -52,7 +52,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Jumlah Lulusan</div>
+                                Data Tracer</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php print_r($jawaban); ?></div>
                         </div>
                         <div class="col-auto">
@@ -102,7 +102,7 @@
 
     <div class="row">
         <!-- Bar Chart -->
-        <div class="col-xl-8 col-lg-7">
+        <div class="col-xl-12 col-lg-7">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div

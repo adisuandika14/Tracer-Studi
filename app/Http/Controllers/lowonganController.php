@@ -30,19 +30,10 @@ class lowonganController extends Controller
 
         $arrImage = [];
 
-
-        // $post = new tb_lowongan();
-        // $post->lowongan = $request->lowongan;
-        // $post->tgl_post = $request->tgl_post;
-
         $post = new tb_lowongan();
         $post->nama_perusahaan = $request->nama_perusahaan;
         $post->jenis_pekerjaan = $request->jenis_pekerjaan;
         $post->tgl_post = $request->tgl_post;
-        //$post->judul = Str::slug($request->judul);
-        //$post->status = 'aktif';
-        //$post->tgl_post = $request->tgl_post;
-
 
         if($request->file('lampiran')!=""){
             $file = $request->file('lampiran');
@@ -142,20 +133,6 @@ class lowonganController extends Controller
 
     public function update($id, Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'title_ina' => 'required|min:3',
-        //     'content_ina' => 'required|min:8',
-        //     'title_eng' => 'required|min:3',
-        //     'content_eng' => 'required|min:8',
-        //     'kategori' => 'required',
-        //     'tanggal' => 'required'
-        // ]);
-
-        // $kategori = Kategori::find($request->kategori);
-
-        // if($validator->fails()){
-        //     return back()->withErrors($validator);
-        // }
 
         $post = tb_lowongan::find($id);
         $arrImage = [];
@@ -164,10 +141,6 @@ class lowonganController extends Controller
         $post->nama_perusahaan = $request->nama_perusahaan;
         $post->jenis_pekerjaan = $request->jenis_pekerjaan;
         $post->tgl_post = $request->tgl_post;
-        //$post->title_slug = Str::slug($request->title_ina);
-        //$post->status = 'aktif';
-        //$post->tgl_post = $request->tgl_post;
-        //$post->lowongan = $request->lowongan;
 
 
         if($request->file('lampiran')!=""){

@@ -24,15 +24,15 @@
 <!-- Divider -->
 <hr class="sidebar-divider">
 
-<!-- Heading -->
+{{-- <!-- Heading -->
 <div class="sidebar-heading">
     Data Tracer
-</div>
+</div> --}}
 
 <!-- Nav Item - Pages Collapse Menu -->
 <div class="nav-item ">
     <li  class="@yield('active2')">
-        <a class="nav-link" href="/admin/alumni">
+        <a class="nav-link" href="/admin/periodealumni">
             <i class="fas fa-fw fa-users"></i>
             <span>Alumni</span></a>
     </li>
@@ -50,7 +50,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <!-- //<h6 class="collapse-header">Login Screens:</h6> -->
                 <div class="collapse-item">
-                    <a class="@yield('collapse1')" href="/admin/kuesioner">Kuesioner Alumni</a>
+                    <a class="@yield('collapse1')" href="/admin/periodekuesioner">Kuesioner Alumni</a>
                 </div>
                 <div class="collapse-item">
                     <a class="@yield('collapse2')" href="/admin/kuesioner/stakeholder">Kuesioner Stakeholder</a>
@@ -83,21 +83,21 @@
     </li>
 </div>
 
-<div class="nav-item">
+{{-- <div class="nav-item">
     <li class="@yield('active9')">
         <a class="nav-link" href="/admin/periodekuesioner">
             <i class="fas fa-fw fa-users"></i>
             <span>Periode Kuesioner</span></a>
     </li>
-</div>
+</div> --}}
 
-<div class="nav-item">
+{{-- <div class="nav-item">
     <li class="@yield('active8')">
         <a class="nav-link" href="/admin/tracer">
             <i class="fas fa-fw fa-users"></i>
             <span>Data Tracer</span></a>
     </li>
-</div>
+</div> --}}
 
 <!-- Nav Item - Pages Collapse Menu -->
 <div class="nav-item">
@@ -167,7 +167,7 @@
                     <a class="@yield('collapse3')" href="/admin/periode">Periode</a>
                 </div>
                 <div class="collapse-item">
-                    <a class="@yield('collapse4')" href="/admin/mastertahun">Tahun</a>
+                    <a class="@yield('collapse4')" href="/admin/mastertahun">Periode Tahun</a>
                 </div>
                 <!-- <div class="collapse-item">
                     <a class="@yield('collapse3')" href="/admin/pertanyaan">Pertanyaan</a>

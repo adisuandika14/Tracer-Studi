@@ -49,13 +49,13 @@
                   </div>
                 @endif
             <div class="table-responsive">
-            <div class="small mb-1">Filter Data Tracer </div>
+            {{-- <div class="small mb-1">Filter Data Tracer </div> --}}
             <!-- <a style="margin-bottom: 10px;" class= "btn btn-warning dropdown-toggle text-white" id="toggles" ><i class="fas fa-search"></i> Advanced Search</a> -->
             <form  method="POST" action="/pimpinan/reportstakeholder/filterreport">
                 @csrf
                 <table class="table" style="width: 85%;" id="example" cellspacing="0">
                     <tr>
-                        <td style="width: 5%;">
+                        {{-- <td style="width: 5%;">
                             <div class="form-group" >
                                 <select name="prodi" class="custom-select" id="prodi">
                                     <option selected value="">-- Pilih Program Studi --</option>
@@ -71,8 +71,8 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </td>
-                        <td style="width: 5%;">
+                        </td> --}}
+                        {{-- <td style="width: 5%;">
                             <div class="form-group">  
                                 <select name="periode" class="custom-select" id="periode" >
                                     <option selected value="">-- Pilih Periode Kuesioner --</option>
@@ -83,16 +83,16 @@
                                                 selected
                                             @endif
                                         @endisset
-                                        >{{ $periodes->tahun_periode }}
+                                        >{{ $periodes->periode_kuesioner }}
                                     </option>
                                     @endforeach
                                 </select>
                             </div> 
-                        </td>
-                        <td style="width: 5%;">
-                            <button style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" type="submit" > <i class="fas fa-search"></i> Filter</button>
+                        </td> --}}
+                        {{-- <td style="width: 5%;">
+                            <button style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles"> <i class="fas fa-search"></i> Filter</button>
                             <a style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" href="/pimpinan/reportstakeholder" > <i class="fas fa-sync"></i> Reset</a>
-                        </td>
+                        </td> --}}
                     </tr>
                 </table>
             </form>
@@ -145,7 +145,58 @@
 
 @section('custom_javascript')
 <script>
-$(document).ready(function () {
+    // $(document).ready(function(){
+    //     $('#filter').on('click',function(e){
+    //         e.preventDefault();
+    //         const prodi = $('#prodi').val()
+    //         const angkatan = $('#angkatan').val()
+    //         const kategori_1 = $('#kategori_1').val()
+    //         // var ctx3 = document.getElementById('pertambahanAnggota');
+
+    //         $.ajax({
+    //             method : 'POST',
+    //             url : '/pimpinan/reportstakeholder/filterreport',
+    //             data : {
+    //             "_token" : "{{ csrf_token() }}",
+    //             prodi : prodi,
+    //             angkatan : angkatan,
+    //             kategori_1 : kategori_1,
+    //             },
+    //             beforeSend : function() {
+    //                       $("#filter").attr('disabled', true);
+    //             },
+    //             success : (res) => {
+    //                 let httpval = '';
+    //                 let i = 0;
+    //                 let z = 1;
+    //                 res.tracers.map(i => {
+    //                     httpval +=`
+    //                     <tr class="success" >
+    //                         <td style="width: 1%;">${z}</td>
+    //                         <td style="width: 15%;">${i.nama_alumni}</td>
+    //                         <td style="width: 10%;">${i.relasi_alumnito_prodi.nama_prodi}</td>
+    //                         <td style="width: 5%;" >${i.relasi_alumnito_angkatan.tahun_angkatan}</td>
+    //                         <td style="width: 7%;" >${i.tahun_lulus}</td>
+    //                         <td style="width: 2%; text-align: center;" >
+    //                             <a style="margin-right:7px" href="/admin/reportalumni/${i.id_alumni}">
+    //                                 <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye">Lihat Data</i></button></a>
+    //                         </td>
+    //                     </tr>`;
+    //                     i += 1;
+    //                     z += 1;
+    //                 })
+    //                 alert('Data Berhasil di Filter');
+    //                 $("#filter").removeAttr('disabled');
+    //                 $("#datacell").empty();
+    //                 $("#datacell").html(`
+    //                     ${httpval} 
+    //                 `);
+    //             },
+    //         }).done(()=>{})
+    //     })
+    // })
+
+    $(document).ready(function () {
         var ctx = document.getElementById("myBarChart");
         const config = {
             type: 'bar',
