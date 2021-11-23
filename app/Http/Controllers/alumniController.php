@@ -250,13 +250,15 @@ class alumniController extends Controller
         return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil diperbaharui!');
     }
 
-    public function bacaNotif($id)
+    public function bacaNotif($notifikasi_unique)
     {
-        $notif = tb_notifikasi::find($id);
+        $id = tb_notifikasi::where('notifikasi_unique', $notifikasi_unique)->first();
+        $notif = $id->id_notifikasi;
+        $notif = tb_notifikasi::find($notif);
         $notif->flag = '1';
         $notif->save();
 
-        return redirect('/admin/alumni');
+        return redirect()->back();
     }
 
     public function tracer(){

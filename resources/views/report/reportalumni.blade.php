@@ -53,11 +53,11 @@
             <!-- <a style="margin-bottom: 10px;" class= "btn btn-warning dropdown-toggle text-white" id="toggles" ><i class="fas fa-search"></i> Advanced Search</a> -->
             <!-- <form  method="POST" action="/admin/reportalumni/filter">
                 @csrf -->
-                <table class="table"  id="example" cellspacing="0">
-                    <tr id="filter_row">
-                        <td>
+                <table class="table"  id="example" cellspacing="0" style="width: 60%" >
+                    <tr id="filter_row"  >
+                        <td style="width: 15%" >
                             <div class="form-group" >
-                                <select name="prodi" class="custom-select" id="prodi">
+                                <select name="prodi" class="custom-select" id="prodi" >
                                     <option selected value="">-- Pilih Program Studi --</option>
                                     @foreach ($prodi as $prodis)
                                         <option  value="{{$prodis->id_prodi}}"
@@ -72,7 +72,7 @@
                                 </select>
                             </div>
                         </td>
-                        <td >
+                        <td style="width: 15%">
                             <div class="form-group">
                                 <select name="angkatan" class="custom-select" id="angkatan" >
                                     <option selected value="">-- Pilih Tahun Angkatan --</option>
@@ -89,13 +89,13 @@
                                 </select>
                             </div>
                         </td>
-                        <td >
+                        <td style="width: 15%">
                             <div class="form-group">
                                 <select name="tahun_wisuda" class="custom-select" id="tahun_wisuda" >
                                     <option selected value="">-- Pilih Tahun Wisuda --</option>
                                     @foreach ($tahun_wisuda as $tw)
                                         <option value="{{ $tw->tahun }}"
-                                            @isset($pertanyaan)
+                                            @isset($type_kuesioners)
                                                 @if($tw->tahun == $tahun)
                                                     selected
                                                 @endif
@@ -106,13 +106,14 @@
                                 </select>
                             </div>
                         </td>
-                        <td >
+                        <tr>
+                        <td style="width: 15%">
                             <div class="form-group">
                                 <select name="tahun_periode" class="custom-select" id="tahun_periode" >
                                     <option selected value="">-- Pilih Tahun Periode Kuisioner --</option>
                                     @foreach ($tahun_periode as $tp)
                                         <option value="{{ $tp->id_tahun_periode }}"
-                                            @isset($pertanyaan)
+                                            @isset($type_kuesioners)
                                                 @if($tp->tahun_periode == $tahun_periode)
                                                     selected
                                                 @endif
@@ -123,13 +124,13 @@
                                 </select>
                             </div>
                         </td>
-                        <td >
+                        <td style="width: 15%">
                             <div class="form-group">
                                 <select name="periode" class="custom-select" id="periode" >
                                     <option selected value="">-- Pilih Periode Kuisioner --</option>
                                     @foreach ($periode as $p)
                                         <option value="{{ $p->id_periode }}"
-                                            @isset($pertanyaan)
+                                            @isset($type_kuesioners)
                                                 @if($p->periode == $periode)
                                                     selected
                                                 @endif
@@ -140,27 +141,33 @@
                                 </select>
                             </div>
                         </td>
-                        <td >
+                        <td style="width: 15%">
                             <div class="form-group">
                                 <select name="kategori_1" class="custom-select" id="kategori_1" >
                                     <option selected value="">-- Pilih Kategori Lulusan --</option>
                                     @foreach ($kategori_1 as $k)
-                                        <option value="{{ $k->id_soal_alumni }}"
-                                            @isset($pertanyaan)
-                                                @if($k->id_soal_alumni == $id_soal_alumni)
+                                        <option value="{{ $k->id_kuesioner }}"
+                                            @isset($type_kuesioner)
+                                                @if($k->id_kuesioner == $id_kuesioner)
                                                     selected
                                                 @endif
                                             @endisset
-                                            >{{$k->pertanyaan}}
+                                            >{{$k->type_kuesioner}}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                         </td>
+                    </tr>
                         <td style="width: 5%;">
                             <a  style="margin-bottom: 10px;" class= "btn btn-info text-white" id="filter"> <i class="fas fa-search"></i> Filter </a>
                             <!-- <button style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" type="" id="filter" > <i class="fas fa-search"></i> Filter</button> -->
                             <a style="margin-bottom: 10px;" class= "btn btn-info text-white" id="toggles" href="/admin/reportalumni" > <i class="fas fa-sync"></i> Reset</a>
+                            {{-- <a href="{{url('admin/export')}}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i>Generate Rerport</a> --}}
+
+                            <button class="btn btn-primary" onclick="tablesToExcel(['export'],  ['tb_jawaban'],'Report Aumni.xls', 'Excel')"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Export to Excel</button>
                         </td>
                     </tr>
                 </table>
