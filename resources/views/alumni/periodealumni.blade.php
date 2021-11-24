@@ -60,9 +60,10 @@
                     <tr>
                       <th style="width: fit-content;">No.</th>
                       <th style="text-align:center;">Tahun Lulus </th>
-                      {{-- <th style="text-align:center;">Periode </th>                       --}}
+                      <th style="text-align:center;">Periode </th>
+                      <th style="text-align:center;">Data Alumni </th>                      
                       <th style="text-align:center;">Aksi</th>
-                      <th style="text-align:center;">Data Alumni </th>
+                      
                     </tr>
                   </thead>
 
@@ -70,25 +71,26 @@
                         @foreach ($periodealumni as $periodes)
                             <tr class="success">
                                 <td style="width: fit-content;">{{ $loop->iteration }}</td>
-                                <td>{{ $periodes->relasiPeriodealumnitoTahun->tahun_periode }}</td>
-                                {{-- <td>{{ $periodes->relasiPeriodealumnitoPeriode->periode }}</td> --}}
+                                <td>{{ $periodes->relasiPeriodekuesionertoTahun->tahun_periode }}</td>
+                                <td>{{ $periodes->relasiPeriodekuesionertoPeriode->periode }}</td>
+                                <td class="text-center">
+                                    <a href="/admin/alumni/{{$periodes->id_periode_kuesioner}}">
+                                        <button type="button" class="btn btn-primary btn-sm text-center"><i class="fas fa-eye">Lihat Data Alumni</i></button></a>
+                                </td>
                                 <td class="text-center">
                                     {{-- <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                            data-target="#show{{$periodes->id_periode_alumni}}"><i class="fas fa-eye"></i>
+                                            data-target="#show{{$periodes->id_periode_kuesioner}}"><i class="fas fa-eye"></i>
                                     </button> --}}
                                     <!-- Edit -->
                                     <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                            data-target="#update{{$periodes->id_periode_alumni}}"><i class="fas fa-edit"></i>
+                                            data-target="#update{{$periodes->id_periode_kuesioner}}"><i class="fas fa-edit"></i>
                                     </button>
                                     <!--Delete -->
                                     <button class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#delete{{$periodes->id_periode_alumni}}"><i class="fas fa-trash"></i>
+                                            data-target="#delete{{$periodes->id_periode_kuesioner}}"><i class="fas fa-trash"></i>
                                     </button>
                                 </td>
-                                <td class="text-center">
-                                    <a href="/admin/alumni/{{$periodes->id_periode_alumni}}">
-                                        <button type="button" class="btn btn-primary btn-sm text-center"><i class="fas fa-eye">Lihat Data Alumni</i></button></a>
-                                </td>
+
                             </tr>
                         @endforeach
                   </tbody>
@@ -99,7 +101,7 @@
 
           @foreach($periodealumni as $datass)
         <!-- Modal Show -->
-        <div class="modal fade"  id="show{{$datass->id_periode_alumni}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal fade"  id="show{{$datass->id_periode_kuesioner}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                         <div class="modal-dialog"  role="document" >
                             <div class="modal-content" >
                                 <div class="modal-header">
@@ -111,11 +113,11 @@
                                 <div class="modal-body">
                                     <table width="100%" cellspacing="30">
                                         <td>
-                                        <input type="hidden" name="id_lab" value="{{$datass->id_periode_alumni}}">
+                                        <input type="hidden" name="id_lab" value="{{$datass->id_periode_kuesioner}}">
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Tahun</label>
                                             <input type="text" class="form-control" id="periode" name="periode"
-                                                value="{{$datass->relasiPeriodealumnitoTahun->tahun_periode}}" readonly>
+                                                value="{{$datass->relasiPeriodekuesionertoTahun->tahun_periode}}" readonly>
                                         </div>
                                         {{-- <div class="form-group">
                                             <label class="font-weight-bold text-dark">Periode</label>
@@ -129,7 +131,7 @@
                     </div>
 
                     <!-- Modal Delete -->
-                    <div class="modal fade" id="delete{{$datass->id_periode_alumni}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="delete{{$datass->id_periode_kuesioner}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -143,7 +145,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Tidak</button>
-                                    <a href="/admin/periodealumni/{{$datass->id_periode_alumni}}/delete"><button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Ya</button></a>
+                                    <a href="/admin/periodealumni/{{$datass->id_periode_kuesioner}}/delete"><button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Ya</button></a>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +153,7 @@
                     <!-- End Modal Delete -->
 
                     <!-- //Update -->
-                    <div class="modal fade" id="update{{$datass->id_periode_alumni}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="update{{$datass->id_periode_kuesioner}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -162,7 +164,7 @@
                                 </div>
                                 <div class="modal-body">
                                   <form action="/admin/periodealumni/updateperiode" method="POST" enctype="multipart/form-data">
-                                  <input type="hidden" name="id_periode_alumni" value="{{$datass->id_periode_alumni}}">
+                                  <input type="hidden" name="id_periode_kuesioner" value="{{$datass->id_periode_kuesioner}}">
                                     {{ csrf_field() }}
                                         
                                     
@@ -172,12 +174,12 @@
                                             <select name="id_tahun_periode" id="id_tahun_periode" class="custom-select" required>
                                                 <option>-- Pilih Tahun --</option>
                                                 @foreach($tahun as $tahuns)
-                                                <option value="{{$tahuns->id_periode_alumni}}" @if($datass->id_tahun_periode==$tahuns->id_tahun_periode) selected @endif>{{$tahuns->tahun_periode}}</option>
+                                                <option value="{{$tahuns->id_periode_kuesioner}}" @if($datass->id_tahun_periode==$tahuns->id_tahun_periode) selected @endif>{{$tahuns->tahun_periode}}</option>
                                                 @endforeach
                                             </select>
                                       </div>
                 
-                                      {{-- <div class="form-group">
+                                      <div class="form-group">
                                         <label for="id_periode" class="font-weight-bold text-dark">Periode</label>
                                             <select name="id_periode" id="id_periode" class="custom-select" required>
                                                 <option>-- Pilih Periode --</option>
@@ -185,7 +187,7 @@
                                                 <option value="{{$periodes->id_periode}}" @if($periodes->id_periode==$periodes->id_periode) selected @endif>{{$periodes->periode}}</option>
                                                 @endforeach
                                             </select>
-                                      </div> --}}
+                                      </div>
 
 	      	            <div class="modal-footer">
 		                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -223,7 +225,7 @@
                             </select>
                       </div>
 
-                      {{-- <div class="form-group">
+                      <div class="form-group">
                         <label for="id_periode" class="font-weight-bold text-dark">Periode</label>
                             <select name="id_periode" id="id_periode" class="custom-select" required>
                                 <option>-- Pilih Periode --</option>
@@ -231,7 +233,7 @@
                                 <option value="{{$periodes->id_periode}}">{{$periodes->periode}}</option>
                                 @endforeach
                             </select>
-                      </div> --}}
+                      </div>
 
                     </div>
                     <div class="modal-footer">

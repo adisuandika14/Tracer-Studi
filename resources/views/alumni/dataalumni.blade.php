@@ -50,7 +50,7 @@
           <div class="card shadow mb-4">
             
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Daftar Alumni Periode - {{$tahun_lulus}}</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Daftar Alumni Periode - {{$tahun_lulus}} - {{$periodealumni}}</h6>
             </div>
          
             <div class="card-body">
@@ -149,7 +149,7 @@
 						</div>
 						<div class="modal-body">
 							{{ csrf_field() }}
-              <input type="text" class="form-control" id="" value="{{$id_periode_alumni}}" name="id_periode" placeholder="" hidden>
+              <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
 							<label>Pilih file excel</label>
 							<div class="form-group">
 								<input type="file" name="file" required="required">
@@ -269,7 +269,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                <input type="text" class="form-control" id="" value="{{$id_periode_alumni}}" name="id_periode" placeholder="" hidden>
+                                <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
 
                                     Apakah Anda yakin menghapus data Alumni?</b>
                                 </div>
@@ -298,7 +298,7 @@
                       <form action="/admin/alumni/update" method="POST" enctype="multipart/form-data">
                       <input type="hidden" name="id_alumni" value="{{$datass->id_alumni}}">
                       {{ csrf_field() }}
-                      <input type="text" class="form-control" id="" value="{{$id_periode_alumni}}" name="id_periode" placeholder="" hidden>
+                      <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
 
                                         
                       <div class="form-group">
@@ -396,7 +396,7 @@
                       <form action="/admin/alumni/create" method="POST" enctype="multipart/form-data">
                       {{ csrf_field() }}
                       
-                      <input type="text" class="form-control" id="" value="{{$id_periode_alumni}}" name="id_periode" placeholder="" hidden>
+                      <input type="text" class="form-control" id="" value="{{$id_periode_kuesioner}}" name="id_periode" placeholder="" hidden>
                       <div class="form-group">
                         <label class="font-weight-bold text-dark">Nama Dengan Gelar</label>
                         <input type="text" class="form-control" id="nama_alumni" name="nama_alumni" placeholder="">

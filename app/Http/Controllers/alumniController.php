@@ -19,6 +19,7 @@ use App\tb_periodealumni;
 use App\tb_tahun_periode;
 use App\Imports\AlumniImport;
 use App\Http\Controllers\Controller;
+use App\tb_periode_kuesioner;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 
@@ -29,7 +30,7 @@ class alumniController extends Controller
 {
 
     public function periode(){
-        $periodealumni = tb_periodealumni::get();
+        $periodealumni = tb_periode_kuesioner::get();
         $tahun = tb_tahun_periode::get();
         $periode = tb_periode::get();
 
@@ -37,25 +38,27 @@ class alumniController extends Controller
     }
 
     public function createperiode(Request $request){
-        $validator = Validator::make($request->all(), [
-            'id_tahun_periode' => 'required|unique:tb_periodealumni,id_tahun_periode',
-        ],[
-             'id_tahun_periode.required' => "Anda Belum Menambahkan Tahun Periode",
-             'id_tahun_periode.unique' => "Tahun yang dimasukkan sudah Terdaftar",
-         ]);
+        // $validator = Validator::make($request->all(), [
+        //     'id_tahun_periode' => 'required|unique:tb_periode_kuesioner,id_tahun_periode',
+        //     'id_periode' => 'required|unique:tb_periode_kuesioner,id_periode',
+        // ],[
+        //      'id_tahun_periode.required' => "Anda Belum Menambahkan Tahun Periode",
+        //      'id_periode.unique' => "Tahun yang dimasukkan sudah Terdaftar",
+        //  ]);
 
-        if($validator->fails()){
-            return back()->withErrors($validator);
-        }
-        $periodealumni = new tb_periodealumni;
+        // if($validator->fails()){
+        //     return back()->withErrors($validator);
+        // }
+        $periodealumni = new tb_periode_kuesioner;
         $periodealumni->id_tahun_periode = $request->id_tahun_periode;
+        $periodealumni->id_periode = $request->id_periode;
         $periodealumni->save();
 
         return redirect('/admin/periodealumni')->with('sukses','Data Berhasil ditambahkan');
     }
 
     public function updateperiode(Request $request){
-        $updateperiode = tb_periodealumni::find($request->id_periode_alumni);
+        $updateperiode = tb_periode_kuesioner::find($request->id_periode_kuesioner);
         $updateperiode->id_tahun_periode = $request->id_tahun_periode;
         $updateperiode->id_periode = $request->id_periode;
         $updateperiode->update();
@@ -66,25 +69,26 @@ class alumniController extends Controller
     public function deleteperiode($id, Request $request)
     {
 
-        $deleteperiode = tb_periodealumni::where('id_periode_alumni', $id);
+        $deleteperiode = tb_periode_kuesioner::where('id_periode_kuesioner', $id);
         $deleteperiode->delete();
         return back()->with('sukses','Data berhasil dihapus');
     }
 
 
     public function show($id){
-        $periodes = tb_periodealumni::where('id_periode_alumni', $id)->first();
+        $periodes = tb_periode_kuesioner::where('id_periode_kuesioner', $id)->first();
         $tahun_lulus = tb_tahun_periode::where('id_tahun_periode', $periodes->id_tahun_periode)->first()->tahun_periode;
+        $periodealumni = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
 
-        $periode = tb_periodealumni::find($id);
+        $periode = tb_periode_kuesioner::find($id);
         $alumni = tb_alumni::where('id_periode',$id)->with('relasiAlumnitoAngkatan','relasiAlumnitoProdi')->get();
         $id_periode = $id;
         $prodi = tb_prodi::get();
         $angkatan = tb_angkatan::orderBy('tahun_angkatan','asc')->get();
-        $id_periode_alumni = $id;
+        $id_periode_kuesioner = $id;
         $status = ['Tolak','Konfirmasi','Menunggu Konfirmasi'];
 
-        return view('/alumni/dataalumni', compact ('id_periode_alumni','alumni','prodi','angkatan','tahun_lulus'), ['alumni'=>$alumni]);
+        return view('/alumni/dataalumni', compact ('id_periode_kuesioner','alumni','prodi','angkatan','tahun_lulus','periodealumni'), ['alumni'=>$alumni]);
     }
 
     public function create(Request $request){
