@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\tb_pengumuman;
 use App\tb_lowongan;
 use App\tb_alumni;
+use App\tb_periodealumni;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Telegram\Bot\FileUpload\InputFile;
@@ -18,9 +19,13 @@ class TelegramBotController extends Controller
         dd($activity);
     }
 
-    public function storeMessage($id, Request $request){
+    public function storeMessage($id){
 
-        $alumni = tb_alumni::get();
+        $data = [];
+        $periode = tb_periodealumni::get();
+        $alumni = tb_alumni::get(['id_periode'])->toarray();
+
+        dd($data);
         $pengumuman=tb_pengumuman::find($id);
 
             foreach ($alumni as $alumni){
@@ -30,7 +35,7 @@ class TelegramBotController extends Controller
                             .'                                                                          Jenis Pengumuman: '.$pengumuman->jenis
                             .'                                                                          Perihal Pengumuman: '.$pengumuman->perihal
                            .'                                                                          Sifat Surat: '.$pengumuman->sifat_surat;
-               $url = "https://api.telegram.org/bot1624417891:AAG3RpRFtFqGcRP1W6-TFDQtsOBYbf6i7BI/sendMessage?chat_id=".$alumni->chat_id."&text=".$message;
+               $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendMessage?chat_id=".$alumni->chat_id."&text=".$message;
 
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
@@ -44,7 +49,7 @@ class TelegramBotController extends Controller
                 
                 if($pengumuman->lampiran != NULL){
                     $file_url = $pengumuman->lampiran;
-                    $url = "https://api.telegram.org/bot1624417891:AAG3RpRFtFqGcRP1W6-TFDQtsOBYbf6i7BI/sendDocument?chat_id=".$alumni->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
+                    $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendDocument?chat_id=".$alumni->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
                     curl_setopt($ch, CURLOPT_POST, 0);

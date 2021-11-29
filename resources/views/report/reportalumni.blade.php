@@ -146,13 +146,13 @@
                                 <select name="kategori_1" class="custom-select" id="kategori_1" >
                                     <option selected value="">-- Pilih Kategori Lulusan --</option>
                                     @foreach ($kategori_1 as $k)
-                                        <option value="{{ $k->id_kuesioner }}"
-                                            @isset($type_kuesioner)
-                                                @if($k->id_kuesioner == $id_kuesioner)
+                                        <option value="{{ $k->id_soal_alumni }}"
+                                            @isset($pertanyaan)
+                                                @if($k->id_soal_alumni == $id_soal_alumni)
                                                     selected
                                                 @endif
                                             @endisset
-                                            >{{$k->type_kuesioner}}
+                                            >{{$k->pertanyaan}}
                                         </option>
                                     @endforeach
                                 </select>
@@ -229,7 +229,7 @@
         </div>
     </div>
 </div>
-
+<script src="{{URL :: to('js_export/export.js')}}">
 <script>
     $(document).ready(function(){
         chart_1({!! json_encode($tahunAngkatan) !!}, {!! json_encode($dataAngkatan) !!});

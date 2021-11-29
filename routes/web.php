@@ -61,6 +61,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/tracer','alumniController@tracer');
     Route::get('/tracer/{id}','alumniController@detailtracer');
     Route::post('/tracer/filter','alumniController@filtertracer');
+    
+    Route::get('/periodealumni/{id}/{statusperiode}', 'alumniController@statusperiode');
 
     //Import Excel
     Route::post('/alumni/import_excel', 'alumniController@import_excel');
@@ -77,7 +79,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::post('/pengumuman/{id}', 'pengumumanController@update');
 
     // Route::post('/pengumuman/{id}', 'pengumumanController@send');
-    Route::post('/pengumuman/showpengumuman/send-message/{id}', 'TelegramBotController@storeMessage');
+    Route::get('/pengumuman/showpengumuman/send-message/{id_pengumuman}/{id_periode}', 'pengumumanController@storeMessage');
 
     //Lowongan
     Route::get('/lowongan','lowonganController@show');
@@ -222,9 +224,10 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
 
 
     // //Export Excel
-    Route::get('/export', 'alumniController@export');
+    // Route::get('/export', 'alumniController@export');
 
-
+    Route::get('/alumni/export/alumni','exportalumniController@exportalumni')->name('admin-export-alumni');
+    Route::post('/alumni/export/alumni/submit','exportalumniController@excel')->name('admin-export-alumni');
 });
 
 

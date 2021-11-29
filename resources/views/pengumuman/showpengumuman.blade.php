@@ -103,7 +103,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </style>
 
 <div class="container-fluid">
-<h1 class="h3 mb-4 text-gray-800"></h1>
+
+  <h1 class="h3 mb-4 text-gray-800"></h1>
     @if (session()->has('statusInput'))
       <div class="row">
         <div class="col-sm-12 alert alert-success alert-dismissible fade show" role="alert">
@@ -161,7 +162,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
                                     <label class="font-weight-bold text-dark">Sifat Surat</label>
                                     <input type="text" class="form-control" style="width: 50%;" placeholder="" disabled value="{{$post->sifat_surat}}"></input>
                                 </div>
-
+                                <div class="form-group">                                       
+                                    <img id="myImg" src="{{$post->thumbnail}}" alt="{{$post->thumbnail_name}}" style="width:100%; max-width:100px">
+                                </div>
                                 <div class="form-group" >                                 
                                   <a href="{{$post->lampiran}}" id="myFile"  rel="noopener noreferrer" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  ><i
                                     class="fas fa-download fa-sm text-white-50"></i> Download Document</a>                                
@@ -172,29 +175,66 @@ body {font-family: Arial, Helvetica, sans-serif;}
                                             <i class="fas fa-arrow-left"></i>
                                         </span>
                                         <span class="text">Kembali</span>
-                                    </a>
-                                    <!-- <button type="submit" class="btn btn-primary"><i class="fa fa-tel;egram"></i> Simpan</button> -->
-                                    <button type="submit" class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fa fa-telegram"></i>
-                                        </span>
-                                        <span class="text">Kirim Telegram</span>
-                                    </button>
-                                    
-                                  </form>
+                                    </a>   
+                                   
+                                                                  
+
+                                  {{-- <button class="btn btn-primary btn-icon-split" data-toggle="modal" id="#pilih_periode_alumni">
+                                    <span class="icon text-white-50">
+                                        <i class="fa fa-telegram"></i>
+                                    </span>
+                                    <span class="text" >Kirim Telegram</span>
+                                </button> --}}
                                 </div>
                             </td>
+
                             <td>
-                                <div class="form-group">                                       
-                                  <img id="myImg" src="{{$post->thumbnail}}" alt="{{$post->thumbnail_name}}" style="width:300%; max-width:500px">
-                                </div>
+                              <label class="font-weight-bold text-dark">Pilih Periode untuk mengirim ke Telegram</label>
+                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                  <tr>
+                                    <th style="width: fit-content;">No.</th>
+                                    <th style="text-align:center;">Tahun Lulus </th>
+                                    <th style="text-align:center;">Periode </th>                      
+                                    <th style="text-align:center;">Aksi</th>
                                     
+                                  </tr>
+                                </thead>
+              
+                                <tbody>
+                                      @foreach ($alumniperiode as $periodes)
+                                          <tr class="success" name="periode">
+                                              <td style="width: fit-content;">{{ $loop->iteration }}</td>
+                                              <td>{{ $periodes->relasiPeriodealumnitoTahun->tahun_periode }}</td>
+                                              <td>{{ $periodes->relasiPeriodealumnitoPeriode->periode }}</td>
+                                              <td class="text-center">
+                                                <button type="button" id="show_kuesioner_btn" onclick="send_message({{$periodes->id_alumni}})" class="btn btn-primary btn-sm">
+                                                  <i class="fas fa-eye"></i> Lihat Kuesioner</button>
+                                              </td>
+                                              {{-- <td class="text-center">
+                                                <button type="submit" class="btn btn-primary btn-icon-split">
+                                                  <span class="icon text-white-50">
+                                                      <i class="fa fa-telegram"></i>
+                                                  </span>
+                                                  <span class="text">Kirim Telegram</span>
+                                              </button>
+                                              </td> --}}
+              
+                                          </tr>
+                                      @endforeach
+                                </tbody>
+                              </table>
                             </td>
+                            </form> 
                         </table>
                     </div>
                 </div>
-            </div>
-          </div>
+            </div>       
+
+</div>
+
+
+    
 @endsection
 
 
@@ -211,6 +251,15 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </div>
 
 @section('custom_javascript')
+
+<script>
+    function send_message(id_alumni){
+    window.location.href = "/admin/pengumuman/showpengumuman/send-message/"+id_alumni+"/"+$('#periode').val();
+  };
+</script>
+
+
+
 <script>
 // Get the modal
 var modal = document.getElementById("myModal");

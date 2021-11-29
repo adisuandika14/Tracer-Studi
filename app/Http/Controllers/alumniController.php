@@ -73,6 +73,14 @@ class alumniController extends Controller
         return back()->with('sukses','Data berhasil dihapus');
     }
 
+    public function statusperiode($id, $status)
+    {
+        $statusinput = tb_periodealumni::where('id_periode_alumni', $id)->first();
+        $statusinput->status = $status;
+        $statusinput->update();
+        return response()->json(['sukses' => 'Status Kuesioner berhasil diganti']);
+    }
+    
 
     public function show($id){
         $periodes = tb_periodealumni::where('id_periode_alumni', $id)->first();
@@ -310,4 +318,6 @@ class alumniController extends Controller
         //dd($detailjawaban);
         return view ('/kuesioner/detailtracer', compact('alumni', 'jawaban'));
     }
+
+
 }

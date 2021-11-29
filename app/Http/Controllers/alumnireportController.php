@@ -15,7 +15,7 @@ use App\tb_detail_kuesioner;
 use App\tb_tahun_periode;
 use App\tb_periode_kuesioner;
 use DB;
-
+use Maatwebsite\Excel\Events\AfterSheet;
 
 class alumnireportController extends Controller
 {
@@ -88,6 +88,13 @@ class alumnireportController extends Controller
                         $data['tracers'] = $tracers;
                         $data['prodi'] = $prodi;
                         $data['angkatan'] = $angkatan;
+
+                            return [
+                                AfterSheet::class => function(AfterSheet $event) {
+                                    $event->sheet->getDelegate()->setRightToLeft(true);
+                                },
+                            ];
+
                         // $data['id_angkatan'] = $id_angkatan;
                         return response()->json($data, 200);
                         // return redirect ('/admin/reportalumni');
@@ -2190,4 +2197,5 @@ class alumnireportController extends Controller
         $angkatan = tb_angkatan::get();
         return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan'));
     }
+
 }

@@ -8,6 +8,71 @@
       nav-item active
 @endsection
 
+<style>
+    /* The switch - the box around the slider */
+    .switch {
+     position: relative;
+     display: inline-block;
+     width: 60px;
+     height: 34px;
+   }
+   
+   /* Hide default HTML checkbox */
+   .switch input {
+     opacity: 0;
+     width: 0;
+     height: 0;
+   }
+   
+   /* The slider */
+   .slider {
+     position: absolute;
+     cursor: pointer;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background-color: #ccc;
+     -webkit-transition: .4s;
+     transition: .4s;
+   }
+   
+   .slider:before {
+     position: absolute;
+     content: "";
+     height: 26px;
+     width: 26px;
+     left: 4px;
+     bottom: 4px;
+     background-color: white;
+     -webkit-transition: .4s;
+     transition: .4s;
+   }
+   
+   input:checked + .slider {
+     background-color: #2196F3;
+   }
+   
+   input:focus + .slider {
+     box-shadow: 0 0 1px #2196F3;
+   }
+   
+   input:checked + .slider:before {
+     -webkit-transform: translateX(26px);
+     -ms-transform: translateX(26px);
+     transform: translateX(26px);
+   }
+   
+   /* Rounded sliders */
+   .slider.round {
+     border-radius: 34px;
+   }
+   
+   .slider.round:before {
+     border-radius: 50%;
+   } 
+   </style>
+
 @section('content')
 <div class="container">
 
@@ -61,33 +126,45 @@
                       <th style="width: fit-content;">No.</th>
                       <th style="text-align:center;">Tahun Lulus </th>
                       <th style="text-align:center;">Periode </th>
+                      <th style="text-align:center;">Status </th>
                       <th style="text-align:center;">Data Alumni </th>                      
                       <th style="text-align:center;">Aksi</th>
+
                       
                     </tr>
                   </thead>
 
                   <tbody>
-                        @foreach ($periodealumni as $periodes)
+                        @foreach ($periodealumni as $periodes => $status)
                             <tr class="success">
                                 <td style="width: fit-content;">{{ $loop->iteration }}</td>
-                                <td>{{ $periodes->relasiPeriodealumnitoTahun->tahun_periode }}</td>
-                                <td>{{ $periodes->relasiPeriodealumnitoPeriode->periode }}</td>
+                                <td>{{ $status->relasiPeriodealumnitoTahun->tahun_periode }}</td>
+                                <td>{{ $status->relasiPeriodealumnitoPeriode->periode }}</td>
+                                <td style="width: fit-content;" class="text-center">
+                                    <label class="switch"  >
+                                        @if($status->status == "Aktif")
+                                          <input type="checkbox" id="status_{{$status->id_periode_alumni}}" onclick="statusBtn({{$status->id_periode_alumni}})" checked>
+                                        @else
+                                          <input type="checkbox" id="status_{{$status->id_periode_alumni}}" onclick="statusBtn({{$status->id_periode_alumni}})">
+                                        @endif
+                                      <span class="slider round"></span>
+                                    </label>
+                                </td>
                                 <td class="text-center">
-                                    <a href="/admin/alumni/{{$periodes->id_periode_alumni}}">
+                                    <a href="/admin/alumni/{{$status->id_periode_alumni}}">
                                         <button type="button" class="btn btn-primary btn-sm text-center"><i class="fas fa-eye">Lihat Data Alumni</i></button></a>
                                 </td>
                                 <td class="text-center">
                                     {{-- <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                            data-target="#show{{$periodes->id_periode_alumni}}"><i class="fas fa-eye"></i>
+                                            data-target="#show{{$status->id_periode_alumni}}"><i class="fas fa-eye"></i>
                                     </button> --}}
                                     <!-- Edit -->
                                     <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                            data-target="#update{{$periodes->id_periode_alumni}}"><i class="fas fa-edit"></i>
+                                            data-target="#update{{$status->id_periode_alumni}}"><i class="fas fa-edit"></i>
                                     </button>
                                     <!--Delete -->
                                     <button class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#delete{{$periodes->id_periode_alumni}}"><i class="fas fa-trash"></i>
+                                            data-target="#delete{{$status->id_periode_alumni}}"><i class="fas fa-trash"></i>
                                     </button>
                                 </td>
 
@@ -244,7 +321,58 @@
                 </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
+
+@endsection
+
+@section('custom_javascript')
+<script>
+//Switch Status Pengumuman
+  function statusBtn(id) {
+    var checkBox = document.getElementById("status_"+id);
+    // If the checkbox is checked, display the output text
+
+    if (checkBox.checked == true){
+      swal({
+          title: 'Anda yakin ingin mengaktifkan kuesioner ini?',
+          icon: 'warning',
+          buttons: ["Tidak", "Ya"],
+      }).then(function(value) { 
+          if (value) {
+            jQuery.ajax({  
+              url: "/admin/periodealumni/"+id+"/Aktif",
+              type: "GET",
+              success: function(result){
+              }
+          });
+        }else{
+          document.getElementById("status_"+id).checked = false;
+        }
+      });
+    } else {
+      swal({
+          title: 'Anda yakin ingin menonaktifkan kuesioner ini?',
+          icon: 'warning',
+          buttons: ["Tidak", "Ya"],
+      }).then(function(value) {
+          if (value) {
+            jQuery.ajax({
+              url: "/admin/periodealumni/"+id+"/Tidak Aktif",
+              type: "GET",
+              success: function(result){
+              }
+          });
+        }else{  
+          document.getElementById("status_"+id_peruide_alumni).checked = true;
+        }
+      });
+    }
+
+  }
+  $('#sidebarPengumuman').addClass("active");
+
+</script>
+
 
 @endsection
