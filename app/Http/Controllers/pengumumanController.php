@@ -129,7 +129,7 @@ class pengumumanController extends Controller
     }
 
 
-    public function delete($id) 
+    public function delete($id)
     {
     	$post = tb_pengumuman::find($id);
         $post->delete();
@@ -137,22 +137,62 @@ class pengumumanController extends Controller
     }
 
     public function storeMessage($id ){
+        $periode = tb_periodealumni::get();
+        $alumni = tb_alumni::get();
+        $send = tb_periodealumni::whereIn('id_periode',$alumni)->get();
 
-        $periode = tb_periodealumni::find($id);
-        $alumni = tb_alumni::whereIn('id_periode', $periode)->get(['id_periode']);
-        $send = tb_alumni::where('id_periode', $alumni);
-
-        dd($send);
+        //dd($send);
         $pengumuman=tb_pengumuman::find($id);
-
-            foreach ($alumni as $alumni){
-
+        dd($send);
+            foreach ($send as $send){
                 $message = '--PENGUMUMAN--'
                             .'                                                                                      '.$pengumuman->judul
                             .'                                                                          Jenis Pengumuman: '.$pengumuman->jenis
                             .'                                                                          Perihal Pengumuman: '.$pengumuman->perihal
                            .'                                                                          Sifat Surat: '.$pengumuman->sifat_surat;
-               $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendMessage?chat_id=".$alumni->chat_id."&text=".$message;
+               $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendMessage?chat_id=".$send->chat_id."&text=".$message;
+
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_POST, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                    $response = curl_exec ($ch);
+                    $err = curl_error($ch);  //if you need
+                    curl_close ($ch);
+                    // return $response;
+                
+                if($pengumuman->lampiran != NULL){
+                    $file_url = $pengumuman->lampiran;
+                    $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendDocument?chat_id=".$alumni->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_POST, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                    $response = curl_exec ($ch);
+                    $err = curl_error($ch);  //if you need
+                    curl_close ($ch);
+                }
+            }
+            // dd($text);
+        return redirect()->back()->with('statusInput','Data berhasil dikirim!');
+    }
+
+    public function storeMessagePeriodeAlumni(Request $request, $id){
+        $periode = tb_periodealumni::get();
+        $alumni = tb_alumni::where('id_periode', $request->id_periode_alumni)->get();
+        $send = tb_periodealumni::whereIn('id_periode',$alumni)->get();
+
+        //dd($send);
+        $pengumuman=tb_pengumuman::find($id);
+            foreach ($alumni as $send){
+                $message = '--PENGUMUMAN--'
+                            .'                                                                                             '.$pengumuman->judul
+                            .'                                                                                  Jenis Pengumuman: '.$pengumuman->jenis
+                            .'                                                                                 Perihal Pengumuman: '.$pengumuman->perihal
+                           .'                                                                                 Sifat Surat: '.$pengumuman->sifat_surat;
+               $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendMessage?chat_id=".$send->chat_id."&text=".$message;
 
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
@@ -183,7 +223,7 @@ class pengumumanController extends Controller
 
     public function detail($id)
     {
-
+        // $id_periode = tb_periodealumni::get();
         $alumniperiode = tb_periodealumni::get();
         $post = tb_pengumuman::where('id_pengumuman', $id)->first();
         //dd($post);

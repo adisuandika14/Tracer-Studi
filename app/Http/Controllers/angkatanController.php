@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\Validator;
 class angkatanController extends Controller
 {
     public function show(){
-        $angkatan = tb_angkatan::orderBy('tahun_angkatan','asc')->get();
+        $angkatan = tb_angkatan::orderBy('tahun_angkatan','asc')->where('deleted_at',NULL)->get();
             return view('/admin/masterangkatan', compact ('angkatan'));
         }
     
         public function create(Request $request){
             $validator = Validator::make($request->all(), [
-                'tahun_angkatan' => 'required|unique:tb_angkatan,tahun_angkatan',
+                'tahun_angkatan' => "required|min:3",
+
             ],[
                  'tahun_angkatan.required' => "Anda Belum Menambahkan Tahun Periode",
                  'tahun_angkatan.unique' => "Tahun yang dimasukkan sudah Terdaftar",

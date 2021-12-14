@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Validator;
 class periodeController extends Controller
 {
     public function show(){
-        $periode = tb_periode::get();
+        $periode = tb_periode::orderBy('periode','asc')->get();
 
         return view ('/admin/masterperiode',compact('periode'));
     }
 
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
-            'periode' => 'required|unique:tb_periode,periode',
+            'periode' => 'required',
         ],[
              'periode.required' => "Anda Belum Menambahkan Periode",
              'periode.unique' => "Periode yang dimasukkan sudah Terdaftar",
@@ -26,9 +26,15 @@ class periodeController extends Controller
             return back()->withErrors($validator);
         }
 
-        tb_periode::create([
-            'periode'=>$request->periode,
-        ]);
+        $periode = new tb_periode();
+        $periode->periode = $request->periode;
+        $periode->save();
+
+
+
+        // tb_periode::create([
+        //     'periode'=>$request->periode,
+        // ]);
 
         return redirect('/admin/periode')->with('sukses','Data Berhasil ditambahkan');
     }

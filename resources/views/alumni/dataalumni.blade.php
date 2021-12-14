@@ -370,6 +370,10 @@
                         <label class="font-weight-bold text-dark">Tahun Wisuda</label>
                         <input type="date" class="form-control" id="tahun_wisuda" name= "tahun_wisuda" value="{{$datass->tahun_wisuda}}" placeholder="">
                       </div>
+                      <div class="form-group">
+                        <label class="font-weight-bold text-dark">Status</label>
+                        <input type="text" class="form-control" id="status" name= "status" value="{{$datass->status}}" placeholder="">
+                      </div>
 	      	            <div class="modal-footer">
 		                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
 		                      <button type="submit" class="btn btn-success">Simpan</button>

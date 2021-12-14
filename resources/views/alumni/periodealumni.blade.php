@@ -137,6 +137,7 @@
                   <tbody>
                         @foreach ($periodealumni as $periodes => $status)
                             <tr class="success">
+                             
                                 <td style="width: fit-content;">{{ $loop->iteration }}</td>
                                 <td>{{ $status->relasiPeriodealumnitoTahun->tahun_periode }}</td>
                                 <td>{{ $status->relasiPeriodealumnitoPeriode->periode }}</td>
@@ -167,7 +168,7 @@
                                             data-target="#delete{{$status->id_periode_alumni}}"><i class="fas fa-trash"></i>
                                     </button>
                                 </td>
-
+                               
                             </tr>
                         @endforeach
                   </tbody>

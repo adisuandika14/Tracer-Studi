@@ -144,7 +144,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
                     <div class="card border-0 bg-grey hover">
                         <table class="table table">
                             <td style="width: 50%;">
-                            <form id="form-product" method="post" action="/admin/pengumuman/showpengumuman/send-message/{{$post->id_pengumuman}}" enctype="multipart/form-data">
+                            <form id="form-product" name="id_pengumuman" id="id_pengumuman" method="post" action="/admin/pengumuman/showpengumuman/send-message/{{$post->id_pengumuman}}" enctype="multipart/form-data">
                               @csrf
                                 <div class="form-group">
                                 <label class="font-weight-bold text-dark">Jenis Pengumuman</label>
@@ -179,15 +179,16 @@ body {font-family: Arial, Helvetica, sans-serif;}
                                    
                                                                   
 
-                                  {{-- <button class="btn btn-primary btn-icon-split" data-toggle="modal" id="#pilih_periode_alumni">
+                                  <button class="btn btn-primary btn-icon-split" data-toggle="modal" id="#pilih_periode_alumni">
                                     <span class="icon text-white-50">
                                         <i class="fa fa-telegram"></i>
                                     </span>
                                     <span class="text" >Kirim Telegram</span>
-                                </button> --}}
+                                </button>
                                 </div>
                             </td>
-
+                          </form>
+                           
                             <td>
                               <label class="font-weight-bold text-dark">Pilih Periode untuk mengirim ke Telegram</label>
                               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -203,29 +204,31 @@ body {font-family: Arial, Helvetica, sans-serif;}
               
                                 <tbody>
                                       @foreach ($alumniperiode as $periodes)
+                                      <form id="form-product" name="id_pengumuman" id="id_pengumuman" method="post" action="/admin/pengumuman/showpengumuman/periode/send-message/{{$post->id_pengumuman}}" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="id_periode_alumni" value="{{$periodes->id_periode_alumni}}" />
                                           <tr class="success" name="periode">
                                               <td style="width: fit-content;">{{ $loop->iteration }}</td>
                                               <td>{{ $periodes->relasiPeriodealumnitoTahun->tahun_periode }}</td>
                                               <td>{{ $periodes->relasiPeriodealumnitoPeriode->periode }}</td>
-                                              <td class="text-center">
-                                                <button type="button" id="show_kuesioner_btn" onclick="send_message({{$periodes->id_alumni}})" class="btn btn-primary btn-sm">
-                                                  <i class="fas fa-eye"></i> Lihat Kuesioner</button>
-                                              </td>
                                               {{-- <td class="text-center">
+                                                <button type="button" id="show_kuesioner_btn" onclick="send_message({{$periodes->id_periode_alumni}})" class="btn btn-primary btn-sm">
+                                                  <i class="fas fa-eye"></i> Kirim Pengumuman</button>
+                                              </td> --}}
+                                              <td class="text-center">
                                                 <button type="submit" class="btn btn-primary btn-icon-split">
                                                   <span class="icon text-white-50">
                                                       <i class="fa fa-telegram"></i>
                                                   </span>
                                                   <span class="text">Kirim Telegram</span>
                                               </button>
-                                              </td> --}}
-              
+                                              </td>
                                           </tr>
+                                        </form> 
                                       @endforeach
                                 </tbody>
                               </table>
-                            </td>
-                            </form> 
+                            </td> 
                         </table>
                     </div>
                 </div>
@@ -253,8 +256,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 @section('custom_javascript')
 
 <script>
-    function send_message(id_alumni){
-    window.location.href = "/admin/pengumuman/showpengumuman/send-message/"+id_alumni+"/"+$('#periode').val();
+    function send_message(id_periode_alumni){
+    window.location.href = "/admin/pengumuman/showpengumuman/send-message/"+id_periode_alumni+"/"+$('#id_pengumuman').val();
   };
 </script>
 

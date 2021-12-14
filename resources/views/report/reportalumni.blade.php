@@ -229,7 +229,7 @@
         </div>
     </div>
 </div>
-<script src="{{URL :: to('js_export/export.js')}}">
+
 <script>
     $(document).ready(function(){
         chart_1({!! json_encode($tahunAngkatan) !!}, {!! json_encode($dataAngkatan) !!});

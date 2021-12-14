@@ -67,11 +67,11 @@
 
                   <tbody>
                         @foreach ($periode as $periodes)
-                            <tr class="success">
+                            <tr class="success" >
                                 <td style="width: fit-content;">{{ $loop->iteration }}</td>
                                 <td>{{ $periodes->periode }}</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm" data-toggle="modal"
+                                <td class="text-center">
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
                                             data-target="#show{{$periodes->id_periode}}"><i class="fas fa-eye"></i>
                                     </button>
                                     <!-- Edit -->
@@ -183,12 +183,30 @@
 	                <div class="modal-body">
 	      	          <form action="/admin/masterperiode/create" method="POST">
                       {{csrf_field()}}
+
                       <div class="form-group">
+                        <label for="id_periode" class="font-weight-bold text-dark">Periode</label>
+                            <select name="periode" id="periode" class="custom-select" required>
+                                <option>-- Pilih Tahun --</option>
+                                <option id="periode" name="periode" value="Periode 1">Periode 1</option>
+                                <option id="periode" name="periode" value="Periode 2">Periode 2</option>
+                                <option id="periode" name="periode" value="Periode 3">Periode 3</option>
+                                <option id="periode" name="periode" value="Periode 4">Periode 4</option>
+                                <option id="periode" name="periode" value="Periode 5">Periode 5</option>
+                                <option id="periode" name="periode" value="Periode 6">Periode 6</option>
+
+                                
+                            </select>
+                      </div>
+                      
+
+
+                      {{-- <div class="form-group">
                         <label class="font-weight-bold text-dark">Masukkan Periode</label>
                         <label class="dropdown-header font-weight-light text-grey">Contoh: Periode 1</label>
                         <!-- <div class="dropdown-header font-weight-light text-grey">Contoh: 2020/2021</div> -->
                         <input type="text" class="form-control" id="periode" name="periode" placeholder="">
-                      </div>
+                      </div> --}}
 	      	            <div class="modal-footer">
 		                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
 		                      <button type="submit" class="btn btn-success">Simpan</button>

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class tb_angkatan extends Model
 {
     use SoftDeletes;
+    public $timestamp = true;
     protected $table = 'tb_angkatan';
     protected $primaryKey = 'id_angkatan';
     protected $fillable = [

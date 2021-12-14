@@ -117,13 +117,13 @@
                                     <td>
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Email</label>
-                                            <input type="email" class="form-control" id="email_alumni" name="email_alumni"
-                                                value="{{$datass->email_alumni}}" readonly>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                value="{{$datass->email}}" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Jenis Kelamin</label>
-                                            <input type="text" class="form-control" id="gender" name="gender"
-                                                value="{{$datass->gender}}" readonly>
+                                            <input type="text" class="form-control" id="jenis_kelamin" name="jenis_kelamin"
+                                                value="{{$datass->jenis_kelamin}}" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label class="font-weight-bold text-dark">Handphone</label>

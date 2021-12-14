@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AlumniExport;
+use App\HeadingExcel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\tb_jawaban;
@@ -15,7 +17,8 @@ use App\tb_detail_kuesioner;
 use App\tb_tahun_periode;
 use App\tb_periode_kuesioner;
 use DB;
-use Maatwebsite\Excel\Events\AfterSheet;
+use League\CommonMark\Block\Element\Heading;
+use Maatwebsite\Excel\Facades\Excel;
 
 class alumnireportController extends Controller
 {
@@ -52,13 +55,36 @@ class alumnireportController extends Controller
         //dd($detailjawaban);
         return view ('/report/detail-tracer', compact('alumni', 'jawaban'));
     }
+    public function array_remove_by_value($array, $value){
+        return array_values(array_diff_key($array, array($value)));
+    }
+    
+    public function delete_col(&$array, $key) {
+        return array_walk($array, function (&$v) use ($key) {
+            unset($v[$key]);
+        });
+    }
 
+    //
     public function filtertracer(Request $request){
+
+
         $data = [];
+        
         if($request->prodi == "" && $request->angkatan == "" && $request->kategori_1 == ""){
             if($request->tahun_wisuda != ""){
                 if($request->tahun_periode != ""){
                     if($request->periode != ""){
+                        
+                        $alumniarray = array();
+                        $alumniHead = array();
+                        $alumniarr = array();
+                        $headings = HeadingExcel::get();
+                        $default = array('Nama Alumni', 'NIK', 'Nim Alumni','Program Studi','Angkatan');
+                        $condition = array_diff($request->planned_checked, $default);
+                        $heading = $headings->map->heading->toArray();
+
+
                         $periode_kuisioner = tb_periode_kuesioner::where('id_periode', $request->periode)->where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
                         // dd($periode_kuisioner);
                         $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
@@ -89,15 +115,37 @@ class alumnireportController extends Controller
                         $data['prodi'] = $prodi;
                         $data['angkatan'] = $angkatan;
 
-                            return [
-                                AfterSheet::class => function(AfterSheet $event) {
-                                    $event->sheet->getDelegate()->setRightToLeft(true);
-                                },
-                            ];
-
+                        if(is_null($request->row_nama)){
+                            return redirect()->back()->with('error', 'Tidak ada data yang dicetak!');
+                        }else{
+                            $countnip = count($request->row_nama);
+                            if($condition == []){
+                                for ($nims = 0; $nims < $countnip; $nims++) {
+                                    $dosenArray[] = array(
+                                        "Nama Alumni"=>$request->row_ta[$nims],
+                                        "NIK"=>$request->row_nik[$nims],
+                                        "Nim Alumni"=>$request->row_nim[$nims],
+                                        "Jenis Kelamin"=>$request->row_jk[$nims],
+                                        "Alamat"=>$request->row_al[$nims],
+                                        "No Hp"=>$request->row_nohp[$nims],
+                                        "Email"=>$request->row_email[$nims],
+                                        "Program Studi"=>$request->row_pro[$nims],
+                                        "Angkatan"=>$request->row_ang[$nims],
+                                        "Tahun Lulus"=>$request->row_tl[$nims],
+                                        "Tahun Wisuda"=>$request->row_tw[$nims],
+                                    );
+                                }
+                                    $alumniHead[] = (
+                                        null
+                                    );
+                                }
+                            }
+                                //return Excel::download(new DosenExports($dosenArray,$dosenHead), 'Dosen.xlsx');
+ 
                         // $data['id_angkatan'] = $id_angkatan;
-                        return response()->json($data, 200);
+                        return response()->json($data, 200)->with(Excel::download(new AlumniExport($alumniarray,$alumniHead), 'Alumni.xlsx'));
                         // return redirect ('/admin/reportalumni');
+                        
                     }else{
                         $periode_kuisioner = tb_periode_kuesioner::where('id_tahun_periode', $request->tahun_periode)->get(['id_periode_kuesioner'])->toArray();
                         $kuisperiod = tb_kuesioner::whereIn('id_periode', $periode_kuisioner)->get(['id_kuesioner'])->toArray();
@@ -2197,5 +2245,4 @@ class alumnireportController extends Controller
         $angkatan = tb_angkatan::get();
         return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan'));
     }
-
 }

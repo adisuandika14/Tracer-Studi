@@ -57,6 +57,7 @@
                     <tr>
                       <th style="width: fit-content;">No.</th>
                       <th style="text-align:center;">Tahun Lulus </th>
+                      <th style="text-align:center;">Periode</th>
                       <th style="text-align:center;">Data Alumni </th>
                     </tr>
                   </thead>
@@ -66,6 +67,7 @@
                             <tr class="success">
                                 <td style="width: 5%;">{{ $loop->iteration }}</td>
                                 <td class="text-center">{{ $periodes->relasiPeriodealumnitoTahun->tahun_periode }}</td>
+                                <td class="text-center">{{ $periodes->relasiPeriodealumnitoPeriode->periode }}</td>
                                 <td class="text-center">
                                     <a href="/pimpinan/alumni/{{$periodes->id_periode_alumni}}">
                                         <button type="button" class="btn btn-primary btn-sm text-center"><i class="fas fa-eye">Lihat Data Alumni</i></button></a>

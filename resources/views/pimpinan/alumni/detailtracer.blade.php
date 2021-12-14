@@ -1,6 +1,6 @@
-@extends('layoutpimpinan.layout')
+@extends('layoutadmin.layout')
 @section('title', 'Kuesioner')
-@section('active11')
+@section('active8')
       nav-item active
 @endsection
 
