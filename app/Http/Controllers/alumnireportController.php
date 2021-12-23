@@ -28,7 +28,7 @@ class alumnireportController extends Controller
         $kategori_1 = tb_soal_alumni::all();
         // $kategori_2 = tb_soal_alumni::all();
         $prodi = tb_prodi::get();
-        $angkatan = tb_angkatan::get();
+        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
         $tahun_wisuda = tb_alumni::select(DB::raw('YEAR(tahun_wisuda) as tahun'))->distinct()->get();
         // dd($tahun_wisuda);
         $tahun_periode = tb_tahun_periode::all();
@@ -92,9 +92,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        // $angkatan = tb_angkatan::all();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -153,9 +153,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -187,9 +187,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -216,9 +216,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -253,9 +253,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -285,9 +285,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -319,9 +319,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -348,9 +348,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -386,9 +386,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        // $angkatan = tb_angkatan::all();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -414,9 +414,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        // $angkatan = tb_angkatan::all();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -447,9 +447,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        // $angkatan = tb_angkatan::all();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -475,9 +475,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        // $angkatan = tb_angkatan::all();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -510,9 +510,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        // $angkatan = tb_angkatan::all();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -538,9 +538,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        // $angkatan = tb_angkatan::all();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -571,9 +571,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        // $angkatan = tb_angkatan::all();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -599,9 +599,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -637,9 +637,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -668,9 +668,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -701,9 +701,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -729,9 +729,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -764,9 +764,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -795,9 +795,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -828,9 +828,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -856,9 +856,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -894,9 +894,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -925,9 +925,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -958,9 +958,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -988,9 +988,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1023,9 +1023,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1054,9 +1054,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1087,9 +1087,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1117,9 +1117,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $periode = tb_periode::get();
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1155,10 +1155,10 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1189,10 +1189,10 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1224,10 +1224,10 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1254,10 +1254,10 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1291,10 +1291,10 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1325,10 +1325,10 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1360,10 +1360,10 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1390,10 +1390,10 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1433,9 +1433,9 @@ class alumnireportController extends Controller
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
                         $angkatan = tb_angkatan::get();
-                        $id_angkatan = $request->angkatan;
+                        // $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1466,10 +1466,10 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1502,10 +1502,10 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1535,10 +1535,10 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1573,10 +1573,10 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1607,10 +1607,10 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1643,10 +1643,10 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1676,10 +1676,10 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
                         $id_prodi = $request->prodi;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1717,9 +1717,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1748,9 +1748,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1781,9 +1781,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1811,9 +1811,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1846,9 +1846,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1877,9 +1877,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1910,9 +1910,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1940,9 +1940,9 @@ class alumnireportController extends Controller
                         $all_jawaban = tb_jawaban::whereIn('id_detail_kuesioner', $detailkues)->get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -1979,9 +1979,9 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -2011,9 +2011,9 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -2045,9 +2045,9 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -2076,9 +2076,9 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereYear('tahun_wisuda', $request->tahun_wisuda)->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -2112,9 +2112,9 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -2144,9 +2144,9 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -2178,9 +2178,9 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -2209,9 +2209,9 @@ class alumnireportController extends Controller
                         // $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
                         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->where('id_angkatan', $request->angkatan)->where('id_prodi', $request->prodi)->get();
                         $prodi = tb_prodi::get();
-                        $angkatan = tb_angkatan::get();
+                        // $angkatan = tb_angkatan::get();
                         $id_angkatan = $request->angkatan;
-                        $angkatan = tb_angkatan::all();
+                        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
                         foreach($angkatan as $ang){
                             $alumni = $tracers->where('id_angkatan', $ang->id_angkatan)->count('id_alumni', 'tahun');
                             // dd($ang->tahun_angkatan." ".$alumni);
@@ -2242,7 +2242,7 @@ class alumnireportController extends Controller
         $all_jawaban = tb_jawaban::get(['id_alumni'])->toArray();
         $tracers = tb_alumni::with('relasiAlumnitoProdi')->with('relasiAlumnitoAngkatan')->whereIn('id_alumni', $all_jawaban)->get();
         $prodi = tb_prodi::get();
-        $angkatan = tb_angkatan::get();
+        $angkatan = tb_angkatan::orderBy('tahun_angkatan', 'ASC')->get();
         return view ('/report/reportalumni', compact('tracers', 'prodi', 'angkatan'));
     }
 }
