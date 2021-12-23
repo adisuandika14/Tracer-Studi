@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use AMBERSIVE\DocumentViewer\Abstracts\DocumentAbstract;
+use App\tb_alumni;
 use App\tb_lowongan;
+use App\tb_periodealumni;
 
 class lowonganController extends Controller
 {
@@ -121,8 +123,9 @@ class lowonganController extends Controller
 
     public function detail($id)
     {
+        $alumniperiode = tb_periodealumni::get();
         $post = tb_lowongan::where('id_lowongan', $id)->first();
-        return view('/lowongan/showlowongan', compact('post'));
+        return view('/lowongan/showlowongan', compact('post','alumniperiode'));
     }
 
 
@@ -227,4 +230,89 @@ class lowonganController extends Controller
 
         return redirect('/admin/lowongan')->with('statusInput', 'Post successfully updated from the record');
     }
+
+
+    public function storeMessage($id ){
+        $periode = tb_periodealumni::get();
+        $alumni = tb_alumni::get();
+        $send = tb_periodealumni::whereIn('id_periode',$alumni)->get();
+
+        //dd($send);
+        $lowongan=tb_lowongan::find($id);
+        dd($send);
+            foreach ($send as $send){
+                $message = '--WE ARE HIRING--'
+                            .'                                                                          Jenis Pekerjaan: '.$lowongan->jenis_pekerjaan
+                            .'                                                                          Nama perusahaan: '.$lowongan->nama_perusahaan;
+               $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendMessage?chat_id=".$send->chat_id."&text=".$message;
+
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_POST, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                    $response = curl_exec ($ch);
+                    $err = curl_error($ch);  //if you need
+                    curl_close ($ch);
+                    // return $response;
+                
+                if($lowongan->lampiran != NULL){
+                    $file_url = $lowongan->lampiran;
+                    $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendDocument?chat_id=".$send->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_POST, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                    $response = curl_exec ($ch);
+                    $err = curl_error($ch);  //if you need
+                    curl_close ($ch);
+                }
+            }
+            // dd($text);
+        return redirect()->back()->with('statusInput','Data berhasil dikirim!');
+    }
+
+    public function storeMessagePeriodeAlumni(Request $request, $id){
+        $periode = tb_periodealumni::get();
+        $alumni = tb_alumni::where('id_periode', $request->id_periode_alumni)->get();
+        $send = tb_periodealumni::whereIn('id_periode',$alumni)->get();
+
+        //dd($send);
+        $lowongan=tb_lowongan::find($id);
+            foreach ($alumni as $send){
+                $message = '--WE ARE HIRING--'
+                            .'                                                                          Jenis Pekerjaan: '.$lowongan->jenis_pekerjaan
+                            .'                                                                          Nama perusahaan: '.$lowongan->nama_perusahaan;
+               $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendMessage?chat_id=".$send->chat_id."&text=".$message;
+
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_POST, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                    $response = curl_exec ($ch);
+                    $err = curl_error($ch);  //if you need
+                    curl_close ($ch);
+                    // return $response;
+                
+                if($lowongan->lampiran != NULL){
+                    $file_url = $lowongan->lampiran;
+                    $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendDocument?chat_id=".$send->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_POST, 0);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+                    $response = curl_exec ($ch);
+                    $err = curl_error($ch);  //if you need
+                    curl_close ($ch);
+                }
+            }
+            // dd($text);
+        return redirect()->back()->with('statusInput','Data berhasil dikirim!');
+    }
+
+
+
 }

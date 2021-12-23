@@ -90,7 +90,10 @@ Route::group(['prefix' => 'admin',  'middleware' => 'AdminMiddleware'],function(
     Route::get('/lowongan/showlowongan/{id}', 'lowonganController@detail');
     Route::get('/lowongan/{id}/edit', 'lowonganController@edit');
     Route::post('/lowongan/{id}', 'lowonganController@update');
-    Route::post('/lowongan/showlowongan/send-message/{id}', 'TelegramBotController@storelowongan');
+
+    Route::post('/lowongan/showlowongan/send-message/{id}', 'lowonganController@storeMessage');
+    Route::post('/lowongan/showlowongan/periode/send-message/{id}', 'lowonganController@storeMessagePeriodeAlumni');
+
 
     //Master Angkatan
     Route::get('/angkatan','angkatanController@show');

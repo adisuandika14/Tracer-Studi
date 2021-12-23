@@ -164,7 +164,7 @@ class pengumumanController extends Controller
                 
                 if($pengumuman->lampiran != NULL){
                     $file_url = $pengumuman->lampiran;
-                    $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendDocument?chat_id=".$alumni->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
+                    $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendDocument?chat_id=".$send->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
                     curl_setopt($ch, CURLOPT_POST, 0);
@@ -206,7 +206,7 @@ class pengumumanController extends Controller
                 
                 if($pengumuman->lampiran != NULL){
                     $file_url = $pengumuman->lampiran;
-                    $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendDocument?chat_id=".$alumni->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
+                    $url = "https://api.telegram.org/bot1624417891:AAFRsj75ibhwajmTXII6e74uzypWyjzTmLw/sendDocument?chat_id=".$send->chat_id."&document=".request()->getSchemeAndHttpHost()."".$file_url;
                     $ch = curl_init();
                     curl_setopt($ch, CURLOPT_URL, $url);
                     curl_setopt($ch, CURLOPT_POST, 0);

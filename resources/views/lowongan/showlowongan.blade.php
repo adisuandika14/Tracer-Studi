@@ -153,10 +153,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
                                     <label class="font-weight-bold text-dark">Jenis Pekerjaan</label>
                                     <input type="text" class="form-control" style="width: 50%;" id="jenis_pekerjaan" name= "jenis_pekerjaan" value="{{$post->jenis_pekerjaan}}" placeholder="">
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label class="font-weight-bold text-dark">Keterangan</label>
-                                    <input type="text" class="form-control" style="width: 50%;" id="keterangan" name= "keterangan" value="{{$post->keterangan}}" placeholder="">
-                                </div> -->
+                                <div class="form-group">                                       
+                                  <img id="myImg" src="{{$post->thumbnail}}" alt="{{$post->thumbnail_name}}" style="width:100%; max-width:100px">
+                              </div>
                                 <div class="form-group" >                                 
                                   <a href="{{$post->lampiran}}" id="myFile" rel="noopener noreferrer" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  ><i
                                     class="fas fa-download fa-sm text-white-50"></i> Download Document</a>                                
@@ -178,14 +177,51 @@ body {font-family: Arial, Helvetica, sans-serif;}
                                 </div>
                             </td>
                             <td>
-                                <div class="form-group">                                       
+                                {{-- <div class="form-group">                                       
                                         <img id="myImg" src="{{$post->thumbnail}}" alt="{{$post->thumbnail_name}}" style="width:300%; max-width:500px">
 
-                                </div>
+                                </div> --}}
                                     
                             </td>
-                        </table>
+                        
                         </form>
+                        <td>
+                          <label class="font-weight-bold text-dark">Pilih Periode untuk mengirim ke Telegram</label>
+                          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th style="width: fit-content;">No.</th>
+                                <th style="text-align:center;">Tahun Lulus </th>
+                                <th style="text-align:center;">Periode </th>                      
+                                <th style="text-align:center;">Aksi</th>
+                                
+                              </tr>
+                            </thead>
+          
+                            <tbody>
+                                  @foreach ($alumniperiode as $periodes)
+                                  <form id="form-product" name="id_lowongan" id="id_lowongan" method="post" action="/admin/lowongan/showlowongan/periode/send-message/{{$post->id_lowongan}}" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="id_periode_alumni" value="{{$periodes->id_periode_alumni}}" />
+                                      <tr class="success" name="periode">
+                                          <td style="width: fit-content;">{{ $loop->iteration }}</td>
+                                          <td>{{ $periodes->relasiPeriodealumnitoTahun->tahun_periode }}</td>
+                                          <td>{{ $periodes->relasiPeriodealumnitoPeriode->periode }}</td>
+                                          <td class="text-center">
+                                            <button type="submit" class="btn btn-primary btn-icon-split">
+                                              <span class="icon text-white-50">
+                                                  <i class="fa fa-telegram"></i>
+                                              </span>
+                                              <span class="text">Kirim Telegram</span>
+                                          </button>
+                                          </td>
+                                      </tr>
+                                    </form> 
+                                  @endforeach
+                            </tbody>
+                          </table>
+                        </td> 
+                      </table>
                     </div>
                     
                 </div>

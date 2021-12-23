@@ -18,10 +18,9 @@ class pimpinanalumniController extends Controller
 {
 
     public function periode(){
-        $periodealumni = tb_periodealumni::get();
-        $tahun = tb_tahun_periode::get();
-        $periode = tb_periode::get();
-
+        $periodealumni = tb_periodealumni::orderby('id_tahun_periode','asc')->orderby('id_periode','asc')->get();
+        $tahun = tb_tahun_periode::orderby('tahun_periode','asc')->get();
+        $periode = tb_periode::orderby('periode','asc')->get();
         return view ('/pimpinan/alumni/alumniperiode',compact('periodealumni','tahun','periode'));
     }
 
@@ -29,6 +28,7 @@ class pimpinanalumniController extends Controller
 
         $periodes = tb_periodealumni::where('id_periode_alumni', $id)->first();
         $tahun_lulus = tb_tahun_periode::where('id_tahun_periode', $periodes->id_tahun_periode)->first()->tahun_periode;
+        $periodealumni = tb_periode::where('id_periode', $periodes->id_periode)->first()->periode;
 
         $periode = tb_periodealumni::find($id);
         $alumni = tb_alumni::where('id_periode',$id)->with('relasiAlumnitoAngkatan','relasiAlumnitoProdi')->get();
@@ -38,7 +38,7 @@ class pimpinanalumniController extends Controller
         $id_periode_alumni = $id;
         $status = ['Tolak','Konfirmasi','Menunggu Konfirmasi'];
   
-            return view('/pimpinan/alumni/dataalumni', compact ('id_periode_alumni','alumni','prodi','angkatan','tahun_lulus'), ['alumni'=>$alumni]);
+            return view('/pimpinan/alumni/dataalumni', compact ('id_periode_alumni','alumni','prodi','angkatan','tahun_lulus','periodealumni'), ['alumni'=>$alumni]);
         }
 
 }

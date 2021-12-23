@@ -336,7 +336,7 @@
 
     if (checkBox.checked == true){
       swal({
-          title: 'Anda yakin ingin mengaktifkan kuesioner ini?',
+          title: 'Anda yakin ingin mengaktifkan periode ini?',
           icon: 'warning',
           buttons: ["Tidak", "Ya"],
       }).then(function(value) { 
@@ -353,7 +353,7 @@
       });
     } else {
       swal({
-          title: 'Anda yakin ingin menonaktifkan kuesioner ini?',
+          title: 'Anda yakin ingin menonaktifkan periode ini?',
           icon: 'warning',
           buttons: ["Tidak", "Ya"],
       }).then(function(value) {
@@ -365,7 +365,7 @@
               }
           });
         }else{  
-          document.getElementById("status_"+id_peruide_alumni).checked = true;
+          document.getElementById("status_"+id_periode_alumni).checked = true;
         }
       });
     }

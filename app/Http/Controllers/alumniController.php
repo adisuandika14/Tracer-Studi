@@ -19,19 +19,21 @@ use App\tb_tahun_periode;
 use App\Imports\AlumniImport;
 use App\Http\Controllers\Controller;
 use App\tb_periodealumni;
+use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 
 use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat\DateFormatter;
 
 class alumniController extends Controller
 {
 
     public function periode(){
-        $periodealumni = tb_periodealumni::get();
-        $tahun = tb_tahun_periode::get();
-        $periode = tb_periode::get();
+        $periodealumni = tb_periodealumni::orderby('id_tahun_periode','asc')->orderby('id_periode','asc')->get();
+        $tahun = tb_tahun_periode::orderby('tahun_periode','asc')->get();
+        $periode = tb_periode::orderby('periode','asc')->get();
 
         return view ('/alumni/periodealumni',compact('periodealumni','tahun','periode'));
     }
@@ -222,8 +224,8 @@ class alumniController extends Controller
                 $alumni->id_prodi = $id_prodi;
                 $alumni->alamat_alumni = $rows[$count][$hitung]['alamat_alumni'];
                 $alumni->password = Hash::make($rows[$count][$hitung]['nim_alumni']);
-                $alumni->tahun_lulus = Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_lulus'])->format('Y-m-d');
-                $alumni->tahun_wisuda = Date::excelToDateTimeObject($rows[$count][$hitung]['tahun_wisuda'])->format('Y-m-d');
+                $alumni->tahun_lulus = $this->transformDateTime($rows[$count][$hitung]['tahun_lulus'])->format('Y-m-d');
+                $alumni->tahun_wisuda = $this->transformDateTime($rows[$count][$hitung]['tahun_wisuda'])->format('Y-m-d');
                 $alumni->no_hp = $rows[$count][$hitung]['no_hp'];
                 $alumni->email = $rows[$count][$hitung]['email'];
                 $alumni->id_telegram = $rows[$count][$hitung]['id_telegram'];
@@ -234,6 +236,16 @@ class alumniController extends Controller
         }
 	    return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil ditambahkan!');
 	}
+
+    private function transformDateTime(string $value, string $format = 'Y-m-d')
+{
+     try {
+            return Carbon::instance(Date::excelToDateTimeObject($value))->format($format);
+         } catch (\ErrorException $e) {
+            return Carbon::createFromFormat($format, $value);
+         }
+}
+
 
     public function status(Request $request)
     {
