@@ -49,7 +49,7 @@
                   </div>
                 @endif
             <div class="table-responsive">
-            <div class="small mb-1">Filter Data Tracer </div>
+            {{-- <div class="small mb-1">Filter Data Tracer </div>
             <!-- <a style="margin-bottom: 10px;" class= "btn btn-warning dropdown-toggle text-white" id="toggles" ><i class="fas fa-search"></i> Advanced Search</a> -->
             <form  method="POST" action="/admin/reportstakeholder/filter">
                 @csrf
@@ -95,7 +95,7 @@
                         </td>
                     </tr>
                 </table>
-            </form>
+            </form> --}}
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
                 <thead>
                 <tr>
@@ -129,7 +129,7 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Chart Data Angkatan Alumni Fakultas Teknik</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Chart Data Stakeholder</h6>
         </div>
         <div class="card-body">
             <div class="card card-body">

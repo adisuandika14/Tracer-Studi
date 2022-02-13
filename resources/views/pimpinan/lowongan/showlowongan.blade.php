@@ -121,10 +121,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
                                     <label class="font-weight-bold text-dark">Jenis Pekerjaan</label>
                                     <input type="text" class="form-control" style="width: 50%;" id="jenis_pekerjaan" name= "jenis_pekerjaan" value="{{$post->jenis_pekerjaan}}" placeholder="">
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label class="font-weight-bold text-dark">Keterangan</label>
                                     <input type="text" class="form-control" style="width: 50%;" id="keterangan" name= "keterangan" value="{{$post->keterangan}}" placeholder="">
-                                </div>
+                                </div> --}}
                                 <div class="form-group" >                                 
                                   <a href="{{$post->lampiran}}" id="myFile" rel="noopener noreferrer" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  ><i
                                     class="fas fa-download fa-sm text-white-50"></i> Download Document</a>                                

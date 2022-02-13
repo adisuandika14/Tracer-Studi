@@ -1,4 +1,4 @@
-@extends('layoutadmin.layout')
+@extends('layoutpimpinan.layout')
 @section('title', 'Report Alumni')
 @section('active11')
       nav-item active
@@ -166,8 +166,8 @@
                             {{-- <a href="{{url('admin/export')}}" target="_blank" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i>Generate Rerport</a> --}}
 
-                            <button class="btn btn-primary" onclick="tablesToExcel(['export'],  ['tb_jawaban'],'Report Aumni.xls', 'Excel')"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Export to Excel</button>
+                            {{-- <button class="btn btn-primary" onclick="tablesToExcel(['export'],  ['tb_jawaban'],'Report Aumni.xls', 'Excel')"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Export to Excel</button> --}}
                         </td>
                     </tr>
                 </table>

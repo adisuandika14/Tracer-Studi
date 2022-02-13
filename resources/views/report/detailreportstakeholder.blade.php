@@ -59,7 +59,7 @@
                 @foreach($jawaban as $details)
                 <tr class="success">
                     <td style="width: 1%;">{{ $loop->iteration }}</td>
-                        <td style="width: 15%;">{{ $details->relasiJawabanstakeholdertoStakeholder->pertanyaan }}</td>
+                        <td style="width: 15%;">{{ $details->relasiJawabantoKuesioner->pertanyaan }}</td>
                         <td style="width: 10%;">{{ $details->jawaban }}</td>
                 </tr>
                 @endforeach 

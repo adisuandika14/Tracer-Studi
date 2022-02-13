@@ -90,9 +90,6 @@ class kuesionerController extends Controller
     }
     
 
-
-
-
     public function showtracer(){
         $tracer = tb_jawaban::with('relasiJawabantoAlumni','relasijawabantoDetail')->get();
 
@@ -130,7 +127,7 @@ class kuesionerController extends Controller
             }
             
         }
-        return redirect('/admin/kuesioner')->with('statusInput','Data berhasil disimpan!');
+        return redirect('/admin/kuesioner/'.$request->id_periode)->with('statusInput','Data berhasil disimpan!');
     }
 
 }
