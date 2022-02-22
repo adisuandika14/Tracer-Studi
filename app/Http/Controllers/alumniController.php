@@ -25,6 +25,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat\DateFormatter;
 
 class alumniController extends Controller
@@ -39,17 +40,11 @@ class alumniController extends Controller
     }
 
     public function createperiode(Request $request){
-        // $validator = Validator::make($request->all(), [
-        //     'id_tahun_periode' => 'required|unique:tb_periodealumni,id_tahun_periode',
-        //     'id_periode' => 'required|unique:tb_periodealumni,id_periode',
-        // ],[
-        //      'id_tahun_periode.required' => "Anda Belum Menambahkan Tahun Periode",
-        //      'id_periode.unique' => "Tahun yang dimasukkan sudah Terdaftar",
-        //  ]);
 
-        // if($validator->fails()){
-        //     return back()->withErrors($validator);
-        // }
+        $cek_periode_alumni = tb_periodealumni::where('id_tahun_periode', $request->id_tahun_periode)->where('id_periode', $request->id_periode)->first();
+        if($cek_periode_alumni != ''){
+            return back()->with('error', 'Data yang dimasukkan sudah terdaftar');
+        }
         $periodealumni = new tb_periodealumni;
         $periodealumni->id_tahun_periode = $request->id_tahun_periode;
         $periodealumni->id_periode = $request->id_periode;
@@ -59,6 +54,10 @@ class alumniController extends Controller
     }
 
     public function updateperiode(Request $request){
+        $cek_periode_alumni = tb_periodealumni::where('id_tahun_periode', $request->id_tahun_periode)->where('id_periode', $request->id_periode)->first();
+        if($cek_periode_alumni != ''){
+            return back()->with('error', 'Data yang dimasukkan sudah terdaftar');
+        }
         $updateperiode = tb_periodealumni::find($request->id_periode_alumni);
         $updateperiode->id_tahun_periode = $request->id_tahun_periode;
         $updateperiode->id_periode = $request->id_periode;
@@ -203,48 +202,34 @@ class alumniController extends Controller
             for ($hitung = 0; $hitung < $hitungs; $hitung++){
                 
                 foreach($prodis as $prodi){
-                    if($prodi->nama_prodi == $rows[$count][$hitung]['nama_prodi']){
+                    if($prodi->nama_prodi ==  $rows[$count][$hitung]['prodi']){
                         $id_prodi = $prodi->id_prodi;
                     }
                 }
 
                 foreach($angkatans as $angkatan){
-                    if($angkatan->tahun_angkatan == $rows[$count][$hitung]['tahun_angkatan']){
+                    if($angkatan->tahun_angkatan == $rows[$count][$hitung]['angkatan']){
                         $id_angkatan = $angkatan->id_angkatan;
                     }
                 }
 
                 $alumni = New tb_alumni();
                 $alumni->id_periode = $request->id_periode;
-                $alumni->nama_alumni = $rows[$count][$hitung]['nama_alumni'];
-                $alumni->nik = $rows[$count][$hitung]['nik'];
-                $alumni->jenis_kelamin = $rows[$count][$hitung]['jenis_kelamin'];
-                $alumni->nim_alumni = $rows[$count][$hitung]['nim_alumni'];
+                $alumni->nama_alumni = $rows[$count][$hitung]['nama'];
+                $alumni->nim_alumni = $rows[$count][$hitung]['nim'];
+                $alumni->lama_studi = $rows[$count][$hitung]['lama_studi'];
+                $alumni->periode_wisuda = $rows[$count][$hitung]['periode_wisuda'];
+                $alumni->tahun_lulus = $rows[$count][$hitung]['tgl_lulus'];
                 $alumni->id_angkatan = $id_angkatan;
                 $alumni->id_prodi = $id_prodi;
-                $alumni->alamat_alumni = $rows[$count][$hitung]['alamat_alumni'];
-                $alumni->password = Hash::make($rows[$count][$hitung]['nim_alumni']);
-                $alumni->tahun_lulus = $this->transformDateTime($rows[$count][$hitung]['tahun_lulus'])->format('Y-m-d');
-                $alumni->tahun_wisuda = $this->transformDateTime($rows[$count][$hitung]['tahun_wisuda'])->format('Y-m-d');
-                $alumni->no_hp = $rows[$count][$hitung]['no_hp'];
-                $alumni->email = $rows[$count][$hitung]['email'];
-                $alumni->id_telegram = $rows[$count][$hitung]['id_telegram'];
-                $alumni->id_line = $rows[$count][$hitung]['id_line'];
+                $alumni->alamat_alumni = $rows[$count][$hitung]['tempat'];
+                $alumni->password = Hash::make($hitung['nim']);
                 $alumni->status = "Konfirmasi";
                 $alumni->save();
             }
         }
 	    return redirect('/admin/alumni/'.$request->id_periode)->with('sukses','Data berhasil ditambahkan!');
 	}
-
-    private function transformDateTime(string $value, string $format = 'Y-m-d')
-{
-     try {
-            return Carbon::instance(Date::excelToDateTimeObject($value))->format($format);
-         } catch (\ErrorException $e) {
-            return Carbon::createFromFormat($format, $value);
-         }
-}
 
 
     public function status(Request $request)

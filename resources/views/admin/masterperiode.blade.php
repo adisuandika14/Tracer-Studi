@@ -42,6 +42,15 @@
       <strong>{{ $sukses }}</strong>
     </div>
     @endif
+
+      <!-- {{-- notifikasi gagal --}} -->
+      @if ($error = Session::get('error'))
+      <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{{ $error }}</strong>
+      </div>
+      @endif
+    </div>
   </div>
   
   
@@ -187,15 +196,13 @@
                       <div class="form-group">
                         <label for="id_periode" class="font-weight-bold text-dark">Periode</label>
                             <select name="periode" id="periode" class="custom-select" required>
-                                <option>-- Pilih Tahun --</option>
+                                <option>-- Pilih Periode --</option>
                                 <option id="periode" name="periode" value="Periode 1">Periode 1</option>
                                 <option id="periode" name="periode" value="Periode 2">Periode 2</option>
                                 <option id="periode" name="periode" value="Periode 3">Periode 3</option>
                                 <option id="periode" name="periode" value="Periode 4">Periode 4</option>
                                 <option id="periode" name="periode" value="Periode 5">Periode 5</option>
                                 <option id="periode" name="periode" value="Periode 6">Periode 6</option>
-
-                                
                             </select>
                       </div>
                       

@@ -3,9 +3,11 @@
 namespace App\Imports;
 
 use App\tb_alumni;
+use Illuminate\Database\Schema\Blueprint;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -25,6 +27,7 @@ class AlumniImport implements ToCollection, WithHeadingRow, WithValidation
 
     public function collection(Collection $rows)
     {
+
         $this->data = $rows;
     }
 

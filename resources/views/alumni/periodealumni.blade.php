@@ -107,6 +107,14 @@
       <strong>{{ $sukses }}</strong>
     </div>
     @endif
+
+    <!-- {{-- notifikasi gagal --}} -->
+    @if ($error = Session::get('error'))
+    <div class="alert alert-danger alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button> 
+      <strong>{{ $error }}</strong>
+    </div>
+    @endif
   </div>
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -252,7 +260,7 @@
                                             <select name="id_tahun_periode" id="id_tahun_periode" class="custom-select" required>
                                                 <option>-- Pilih Tahun --</option>
                                                 @foreach($tahun as $tahuns)
-                                                <option value="{{$tahuns->id_periode_alumni}}" @if($datass->id_tahun_periode==$tahuns->id_tahun_periode) selected @endif>{{$tahuns->tahun_periode}}</option>
+                                                <option value="{{$tahuns->id_tahun_periode}}" @if($datass->id_tahun_periode==$tahuns->id_tahun_periode) selected @endif>{{$tahuns->tahun_periode}}</option>
                                                 @endforeach
                                             </select>
                                       </div>
@@ -262,7 +270,7 @@
                                             <select name="id_periode" id="id_periode" class="custom-select" required>
                                                 <option>-- Pilih Periode --</option>
                                                 @foreach($periode as $periodes)
-                                                <option value="{{$periodes->id_periode}}" @if($periodes->id_periode==$periodes->id_periode) selected @endif>{{$periodes->periode}}</option>
+                                                <option value="{{$periodes->id_periode}}" @if($periodes->id_periode==$datass->id_periode) selected @endif>{{$periodes->periode}}</option>
                                                 @endforeach
                                             </select>
                                       </div>

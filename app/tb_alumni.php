@@ -32,7 +32,7 @@ class tb_alumni extends Model
             $table->string('jenis_kelamin'); 
             $table->integer('chat_id'); 
             $table->string('nim_alumni'); 
-            $table->string('tahun_angkatan'); 
+            $table->foreign('tahun_angkatan')->unsigned(); 
             $table->string('nama_prodi'); 
             $table->string('alamat_alumni'); 
             $table->string('tahun_lulus'); 

@@ -43,7 +43,15 @@
       <strong>{{ $sukses }}</strong>
     </div>
     @endif
-  </div>
+  
+      <!-- {{-- notifikasi gagal --}} -->
+      @if ($error = Session::get('error'))
+      <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>{{ $error }}</strong>
+      </div>
+      @endif
+    </div>
 
     <!-- Begin Page Content -->
     <div class="container-fluid" >

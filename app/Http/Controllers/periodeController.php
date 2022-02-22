@@ -15,40 +15,22 @@ class periodeController extends Controller
     }
 
     public function create(Request $request){
-        $validator = Validator::make($request->all(), [
-            'periode' => 'required',
-        ],[
-             'periode.required' => "Anda Belum Menambahkan Periode",
-             'periode.unique' => "Periode yang dimasukkan sudah Terdaftar",
-         ]);
-
-        if($validator->fails()){
-            return back()->withErrors($validator);
+        $cek_priode = tb_periode::where('periode', $request->periode)->first();
+        if($cek_priode != ''){
+            return back()->with('error', 'Data yang dimasukkan sudah terdaftar');
         }
 
         $periode = new tb_periode();
         $periode->periode = $request->periode;
         $periode->save();
 
-
-
-        // tb_periode::create([
-        //     'periode'=>$request->periode,
-        // ]);
-
         return redirect('/admin/periode')->with('sukses','Data Berhasil ditambahkan');
     }
 
     public function update(Request $request){
-        $validator = Validator::make($request->all(), [
-            'periode' => 'required|unique:tb_periode,periode',
-        ],[
-             'periode.required' => "Anda Belum Menambahkan Periode",
-             'periode.unique' => "Periode yang dimasukkan sudah Terdaftar",
-         ]);
-
-        if($validator->fails()){
-            return back()->withErrors($validator);
+        $cek_priode = tb_periode::where('periode', $request->periode)->first();
+        if($cek_priode != ''){
+            return back()->with('error', 'Data yang dimasukkan sudah terdaftar');
         }
         $res = NULL;
         $updatedata = tb_periode::find($request->id_periode);
